@@ -77,8 +77,8 @@ function Signup() {
   };
   return (
     <Container>
-      <GoogleMap />
-      <GetAddress show={show} handleToggle={handleToggle} />
+      {/* <GoogleMap /> */}
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -141,14 +141,15 @@ function Signup() {
                 />
               </Form.Group>
               <Form.Group className="mb-3 " controlId="formBasicEmail">
-                <Form.Label>Address</Form.Label>
+                <GetAddress show={show} handleToggle={handleToggle} />
+                {/* <Form.Label>Address</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Address"
                   onChange={(e) => setAddress(e.target.value)}
                   value={address}
                   required
-                />
+                /> */}
               </Form.Group>
               <Form.Group controlId="formBasicPhone" className="mb-3 ">
                 <Form.Label>Phone</Form.Label>

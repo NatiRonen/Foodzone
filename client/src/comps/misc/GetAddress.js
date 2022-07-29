@@ -1,43 +1,42 @@
-import React, { useState } from "react";
-import { authC, Autocomplete } from "@react-google-maps/api";
-import { Button, Col, Modal, Row, Form, FloatingLabel } from "react-bootstrap";
-import { MapContainer } from "./GoogleMap";
+import React, { useRef, useState } from "react";
+import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { Form } from "react-bootstrap";
 
 function GetAddress(props) {
-  const [loading, setLoading] = useState(false);
-  let show = props.show;
-  let handleToggle = props.handleToggle;
+  const [address, setAddress] = useState({});
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyC8zU9_yw3KHYx1p4ZEqsVPQWF8jKEoK00",
+    libraries: ["places"],
+  });
+
+  const addressRef = useRef();
+
+  // onLoad (e) {
+  //   console.log('autocomplete: ', e.target.value);
+  // }
+
+  const onPlaceChanged = (e) => {
+    // if (autocomplete !== null) {
+    //   console.log(autocomplete.getPlace())
+    // } else {
+    //   console.log('Autocomplete is not loaded yet!')
+    // }
+    console.log(addressRef.current.value);
+  };
+
+  if (!isLoaded) return <div>Loading...</div>;
   return (
-    <Modal
-      show={show}
-      onHide={handleToggle}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
+    <Autocomplete
+      //  onLoad={onLoad}
+      onPlaceChanged={onPlaceChanged}
+      types={address}
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <FloatingLabel controlId="floatingTextarea" label="Comments" className="mb-3">
-          <Form.Control as="textarea" placeholder="Leave a comment here" />
-        </FloatingLabel>
-        {/* <Autocomplete>
-          <input type="text" />
-        </Autocomplete> */}
-        <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </Form.Select>
-      </Modal.Body>
-
-      <Modal.Footer>
-        <Button onClick={handleToggle}>Close</Button>
-      </Modal.Footer>
-    </Modal>
+      <Form.Group className="mb-3" controlId="formBasicAddress">
+        <Form.Label>Address</Form.Label>
+        <Form.Control type="address" ref={addressRef} placeholder="Enter Your Address" required />
+      </Form.Group>
+    </Autocomplete>
   );
 }
 
