@@ -18,7 +18,7 @@ exports.corsAccessControl = (app) => {
   app.all(process.env.CLIENT_URL, function (req, res, next) {
     if (!req.get("Origin")) return next();
 
-    res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
     res.header("Access-Control-Allow-credentials", "true");
     res.set(
