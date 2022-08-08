@@ -16,15 +16,17 @@ exports.routesInit = (app) => {
 
 exports.corsAccessControl = (app) => {
   app.all(process.env.CLIENT_URL, function (req, res, next) {
-    // if (!req.get("Origin")) return next();
+    if (!req.get("Origin")) return next();
 
     res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
     res.header("Access-Control-Allow-credentials", true);
-    res.set(
+    res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With,Content-Type,auth-token, Accept, Authorization"
+      "Origin, X-Requested-With, Content-Type, auth-token, Accept, Authorization"
     );
+    if (req.method === "OPTIONS") {
+      res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+    }
     next();
   });
 };

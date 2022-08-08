@@ -30,6 +30,20 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
+app.use((req, res, next) => {
+  // if (!req.get("Origin")) return next();
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  res.header("Access-Control-Allow-credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, auth-token, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+    return res.status(200).json({});
+  }
+  next();
+});
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
@@ -58,7 +72,7 @@ app.use(
     store: store,
   })
 );
-corsAccessControl(app);
+// corsAccessControl(app);
 routesInit(app);
 
 let port = process.env.PORT || "3002";
