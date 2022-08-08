@@ -46,15 +46,15 @@ app.use((req, res, next) => {
 });
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    method: ["GET", "POST", "DELETE", "PATCH", "PUT"],
-    credentials: true,
-    optionSuccessStatus: 200,
-  })
-);
-app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL,
+//     method: ["GET", "POST", "DELETE", "PATCH", "PUT"],
+//     credentials: true,
+//     optionSuccessStatus: 200,
+//   })
+// );
+// app.use(cookieParser());
 
 app.use(
   session({

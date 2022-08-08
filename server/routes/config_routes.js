@@ -26,6 +26,7 @@ exports.corsAccessControl = (app) => {
     );
     if (req.method === "OPTIONS") {
       res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+      return res.status(200).json({});
     }
     next();
   });
