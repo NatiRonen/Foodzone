@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import "./css/myStores.css";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
-import { saveStoresIdsLocall } from "../services/localService";
 import AuthClientComp from "../comps/auth/authClientComp";
 import MyStoreItem from "../comps/store/myStoreItem";
 
@@ -27,16 +26,10 @@ function MyStores(props) {
       console.log(resp.data);
       setAr(resp.data);
       setArSort(resp.data);
-      saveShortIdTolacal(resp.data);
       console.log(resp.data);
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const saveShortIdTolacal = (_ar) => {
-    let short_id_ar = _ar.map((item) => item.short_id);
-    saveStoresIdsLocall(short_id_ar);
   };
 
   const delStore = async (_idDel, _short_id) => {

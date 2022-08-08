@@ -20,7 +20,10 @@ exports.corsAccessControl = (app) => {
 
     res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
-    res.set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,auth-token");
+    res.set(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With,Content-Type,auth-token, Accept, Authorization"
+    );
     next();
   });
 };
