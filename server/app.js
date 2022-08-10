@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const { Server } = require("socket.io");
 const { routesInit, corsAccessControl } = require("./routes/config_routes");
+const { env } = require("process");
 
 const app = express();
 
@@ -15,7 +16,7 @@ const server = http.createServer(app);
 
 //the defualt is to sotre in memory sotre
 const store = new MongoDBStore({
-  uri: "mongodb://localhost:27017/foodzone",
+  uri: process.env.DB,
   collection: "sessions",
 });
 store.on("error", function (error) {
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 });
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.options("*", cors());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
