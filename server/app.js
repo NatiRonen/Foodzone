@@ -29,7 +29,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+app.use(cookieParser());
 app.use(express.json());
 app.use((req, res, next) => {
   // if (!req.get("Origin")) return next();
@@ -67,8 +67,9 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 15 * 1000, // 15 minutes
       sameSite: "none",
-      secure: false,
-      httpOnly: false,
+      secure: true,
+      httpOnly: true,
+      domain: process.env.CLIENT_URL,
     },
     store: store,
   })
