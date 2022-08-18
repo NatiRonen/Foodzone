@@ -65,8 +65,8 @@ app.use(
     saveUninitialized: false, //store session only if initialized
     cookie: {
       maxAge: 1000 * 60 * 15, // 15 minutes
-      sameSite: false,
-      secure: false,
+      sameSite: "none",
+      secure: true,
       httpOnly: false,
     },
     store: store,
