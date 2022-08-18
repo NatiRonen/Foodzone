@@ -57,6 +57,7 @@ app.use(
     optionSuccessStatus: 200,
   })
 );
+app.set("trust proxy", 1);
 app.use(
   session({
     name: process.env.SESSION_NAME,
