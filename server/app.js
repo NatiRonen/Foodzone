@@ -68,6 +68,8 @@ app.use(
       maxAge: 1000 * 60 * 15 * 1000, // 15 minutes
       sameSite: "none",
       secure: true,
+      domain: process.env.CLIENT_URL,
+      path: "/",
     },
     store: store,
   })
