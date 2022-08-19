@@ -11,7 +11,7 @@ function HomeStrip(props) {
         animate={{ x: 0 }}
         transition={{ delay: 0.5, duration: 0.7 }}
       >
-        <h2>Welcome to foodzon</h2>
+        <h2>Welcome to ShipMarket</h2>
         <h4>Buy your meal from home</h4>
       </motion.div>
     </div>

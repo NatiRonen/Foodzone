@@ -7,7 +7,7 @@ import { useLogoutUserMutation } from "../../redux/appApi";
 
 function AuthAdminComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("FOODZONE_SESSION");
+  let session = Cookies.get("SHIP_MARKET_SESSION");
   const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
 
   useEffect(() => {

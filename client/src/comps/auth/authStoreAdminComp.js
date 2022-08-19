@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 
 function AuthStoreAdminComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("FOODZONE_SESSION");
+  let session = Cookies.get("SHIP_MARKET_SESSION");
   const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
   let params = useParams();
 

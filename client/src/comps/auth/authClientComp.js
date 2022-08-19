@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 function AuthClientComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("FOODZONE_SESSION");
+  let session = Cookies.get("FOODSHIP_MARKET_SESSION");
   const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
 
   useEffect(() => {

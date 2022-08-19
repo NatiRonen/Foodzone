@@ -45,7 +45,7 @@ exports.resetPassEmail = async (_email, _code) => {
     from: process.env.SENDER_EMAIL_ADDRESS,
     replyTo: process.env.SENDER_EMAIL_ADDRESS,
     to: _email,
-    subject: "Reset password - Foodzone",
+    subject: "Reset password - ShipMarket",
     html: ResetPassEmailCentent(_code),
   };
   await sendOutlookMail(mailOptions);
