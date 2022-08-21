@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { auth, authAdmin } = require("../middlewares/auth");
-const { UserModel } = require("../models/userModel");
+const { UserModel, genToken } = require("../models/userModel");
 const { genShortId } = require("../utils/genShortId");
 const decrypt = require("../utils/decryption");
 const { resetPassEmail } = require("../utils/sendEmail");
@@ -77,11 +77,7 @@ router.post("/", async (req, res) => {
     user.short_id = await genShortId(UserModel);
     user.status = "online";
     await user.save();
-    req.session.authenticated = true; //initial session
-
-    req.session.user = user; //initial session
-
-    res.status(201).json({ cookie: req.session.cookie, user: user });
+    res.status(200).json({ token: genToken(user._id, user.role), user: user });
   } catch (error) {
     let msg;
     if (error.code === 11000) {
@@ -106,10 +102,8 @@ router.post("/login", async (req, res) => {
     if (!validPass) {
       return res.status(401).json({ err: "Email or password is wrong" });
     }
-    req.session.authenticated = true; //initial session
-    req.session.user = user; //initial session
     await UserModel.updateOne({ email: req.body.email }, { status: "online" });
-    res.status(200).json({ user: user, cookie: req.session.cookie });
+    res.status(200).json({ token: genToken(user._id, user.role), user: user });
   } catch (error) {
     console.log(error);
     res.status(400).json({ err: error.message });

@@ -49,6 +49,13 @@ function HeaderStore(props) {
               </Nav.Link>
               <Nav.Link
                 onClick={() => {
+                  nav("./categories");
+                }}
+              >
+                Categories
+              </Nav.Link>
+              <Nav.Link
+                onClick={() => {
                   nav("./products");
                 }}
               >

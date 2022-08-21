@@ -12,6 +12,8 @@ function ProductForm(props) {
   const [imgUrl, setImgUrl] = useState("");
   const [info, setInfo] = useState("");
   const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
@@ -22,6 +24,7 @@ function ProductForm(props) {
     setImgUrl(item?.imgUrl);
     setInfo(item?.info);
     setPrice(item?.price);
+    setCategory(item?.category);
   }, [item]);
 
   const handleSubmit = (e) => {
@@ -85,6 +88,17 @@ function ProductForm(props) {
             value={price}
             required
           ></Form.Control>
+        </Form.Group>
+
+        <Form.Group className="mb-3 ">
+          <Form.Label>Category</Form.Label>
+          <Form.Select
+            type="string"
+            placeholder="Ptoduct price"
+            onChange={(e) => setPrice(e.target.value)}
+            value={price}
+            required
+          ></Form.Select>
         </Form.Group>
 
         <Button variant="primary" type="submit">
