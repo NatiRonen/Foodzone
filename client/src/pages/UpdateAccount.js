@@ -24,7 +24,7 @@ function UpdateAccount() {
   const [newPassword, setNewPassword] = useState("");
   const [phone, setPhone] = useState(user?.phone);
   const [address, setAddress] = useState(user?.address);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   //image upload states
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);

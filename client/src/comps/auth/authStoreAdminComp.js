@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet } from "../../services/apiService";
-import { STORE_SHORT_IDS } from "../../services/localService";
-import { useLogoutUserMutation } from "../../redux/appApi";
-import Cookies from "js-cookie";
+import { checkTokenLocal } from "../../services/localService";
 
 function AuthStoreAdminComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("SHIP_MARKET_SESSION");
-  const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
-  let params = useParams();
 
   useEffect(() => {
-    if (session) {
+    if (checkTokenLocal()) {
       doApi();
     } else {
-      toast.error("Please log in first");
-      logoutUser();
-      nav("../login");
+      // nav to login
+      nav("/logout");
+      // show toast message in yellow that the user must be connected
+      toast.warning("Please login first");
     }
   }, []);
 
@@ -26,7 +22,7 @@ function AuthStoreAdminComp(props) {
     let url = API_URL + "/users/myInfo";
     try {
       let resp = await doApiGet(url);
-      if (resp.data.role === "admin") {
+      if (resp.data.role === "store_admin" || resp.data.role === "admin") {
         props.setAuthorized(true);
         return;
       } else {

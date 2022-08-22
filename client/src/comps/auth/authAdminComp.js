@@ -2,21 +2,19 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet } from "../../services/apiService";
-import Cookies from "js-cookie";
-import { useLogoutUserMutation } from "../../redux/appApi";
+import { checkTokenLocal } from "../../services/localService";
 
 function AuthAdminComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("SHIP_MARKET_SESSION");
-  const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
 
   useEffect(() => {
-    if (session) {
+    if (checkTokenLocal()) {
       doApi();
     } else {
-      toast.error("Please log in first");
-      logoutUser();
-      nav("/login");
+      // nav to login
+      nav("/logout");
+      // show toast message in yellow that the user must be connected
+      toast.warning("Please login first");
     }
   }, []);
 

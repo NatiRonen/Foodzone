@@ -46,7 +46,7 @@ router.get("/amount", async (req, res) => {
 // user info
 router.get("/myInfo", auth, async (req, res) => {
   try {
-    let data = await UserModel.findOne({ _id: req.session.user._id });
+    let data = await UserModel.findOne({ _id: req.tokenData._id });
     console.log(data);
     res.json(data);
   } catch (err) {
@@ -54,18 +54,11 @@ router.get("/myInfo", auth, async (req, res) => {
     return res.status(500).json(err);
   }
 });
-
-router.get("/logout", async (req, res) => {
-  req.session.destroy(async (err) => {
-    if (err) {
-      return res.redirect("/");
-    }
-    try {
-      await UserModel.updateOne({ _id: req.session.user._id }, { status: "offline" });
-      res.status(200).clearCookie(process.env.SESSION_NAME).json({ msg: "logged out" });
-    } catch (error) {
-      res.status(500).json(error);
-    }
+router.get("/checkUserToken", auth, async (req, res) => {
+  res.json({
+    status: "ok",
+    msg: "token has been verified",
+    tokenData: req.tokenData,
   });
 });
 
@@ -118,7 +111,7 @@ router.put("/update", auth, async (req, res) => {
     decryptNewPass = decrypt(newPassword);
   }
   try {
-    let user = await UserModel.findOne({ _id: req.session.user._id });
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
     let validPass = await bcrypt.compare(decryptPass, user.password);
     if (!validPass) {
       return res.status(403).json({ err: "wrong password" });
@@ -202,15 +195,11 @@ router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
   let role = req.params.role;
   try {
     // prevent from user to changch himself or the first admin
-    if (userId != req.session.user._id) {
-      let data = await UserModel.findOneAndUpdate({ _id: userId }, { role: role });
-      if (!data) {
-        return res.status(404).json({ err: "user not found" });
-      }
-      res.json(data);
-    } else {
-      res.status(401).json({ err: "You cant change your self" });
+    let data = await UserModel.findOneAndUpdate({ _id: userId }, { role: role });
+    if (!data) {
+      return res.status(404).json({ err: "user not found" });
     }
+    res.json(data);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -219,13 +208,14 @@ router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
 
 router.delete("/", auth, async (req, res) => {
   let password = req.header("x-api-key");
+  let user = await UserModel.find({ _id: req.tokenData._id });
   let decryptPass = decrypt(password);
-  let validPass = await bcrypt.compare(decryptPass, req.session.user.password);
+  let validPass = await bcrypt.compare(decryptPass, user.password);
   if (!validPass) {
     return res.status(403).json({ err: "wrong password" });
   }
   try {
-    let data = await UserModel.deleteOne({ _id: req.session.user._id });
+    let data = await UserModel.deleteOne(uesr);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json(error); // failed to delete
@@ -236,15 +226,11 @@ router.delete("/", auth, async (req, res) => {
 router.delete("/delete/:delId", authAdmin, async (req, res) => {
   let delId = req.params.delId;
   try {
-    if (delId != req.session.user._id) {
-      let data = await UserModel.deleteOne({
-        _id: delId,
-      });
-      // deletedCount -> 1 del success msg
-      res.json(data);
-    } else {
-      res.status(401).json({ err: "You cant delete your self Or the superAdmin" });
-    }
+    let data = await UserModel.deleteOne({
+      _id: delId,
+    });
+    // deletedCount -> 1 del success msg
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

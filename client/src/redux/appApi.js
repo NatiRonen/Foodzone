@@ -24,19 +24,16 @@ const appApi = createApi({
         body: user,
       }),
     }),
-    //logout
-    logoutUser: builder.mutation({
-      query: () => ({
-        url: "/users/logout",
-        method: "GET",
-      }),
-    }),
 
     updateUser: builder.mutation({
       query: (user) => ({
         url: "/users/update",
         method: "PUT",
         body: user,
+        headers: {
+          "x-api-key": localStorage["tok"],
+          "content-type": "application/json",
+        },
       }),
     }),
 
@@ -56,12 +53,20 @@ const appApi = createApi({
       query: () => ({
         url: "/favs/",
         method: "GET",
+        headers: {
+          "x-api-key": localStorage["tok"],
+          "content-type": "application/json",
+        },
       }),
     }),
     addRemoveFavs: builder.mutation({
       query: (short_id) => ({
         url: "/favs/add_remove/" + short_id,
         method: "PATCH",
+        headers: {
+          "x-api-key": localStorage["tok"],
+          "content-type": "application/json",
+        },
       }),
     }),
   }),
@@ -70,7 +75,6 @@ const appApi = createApi({
 export const {
   useSignupUserMutation,
   useLoginUserMutation,
-  useLogoutUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
   useFetchFavsMutation,

@@ -61,28 +61,6 @@ exports.authStoreAdmin = async (req, res, next) => {
   }
 };
 
-exports.authOwnership = async (req, res, next) => {
-  let token = req.header("x-api-key");
-  if (!token) {
-    return res.status(401).json({ err: "please log in first" });
-  }
-  let decodeToken = jwt.verify(token, process.env.JWT_SECRET);
-  req.tokenData = decodeToken;
-  let store_id = req.header("id-Store");
-  if (req.tokenData.role === ROLES.ADMIN) {
-    next();
-  } else {
-    let hisStore = await StoreModel.findOne({
-      short_id: store_id,
-      admin_short_id: req.tokenData.short_id,
-    });
-    if (!hisStore) {
-      return res.status(403).json({ message: "access denied" });
-    }
-  }
-  next();
-};
-
 exports.authCourier = (req, res, next) => {
   let token = req.header("x-api-key");
   if (!token) {

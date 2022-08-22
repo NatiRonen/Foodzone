@@ -30,8 +30,8 @@ router.get("/", async (req, res) => {
 // get user stores
 router.get("/userStores", auth, async (req, res) => {
   try {
-    let user_short_id = req.session.user.short_id;
-    let data = await StoreModel.find({ admin_short_id: user_short_id }).sort({
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    let data = await StoreModel.find({ admin_short_id: user.short_id }).sort({
       date_created: -1,
     });
     res.json(data);
@@ -99,8 +99,8 @@ router.get("/amount", async (req, res) => {
 router.post("/", auth, async (req, res) => {
   try {
     let store = new StoreModel(req.body);
-    // short_id , admin_id ,
-    store.admin_short_id = req.session.user.short_id;
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    store.admin_short_id = user.short_id;
     store.short_id = await genShortId(StoreModel);
     await store.save();
     res.status(201).json(store);
@@ -114,10 +114,10 @@ router.post("/", auth, async (req, res) => {
 });
 
 //Edit  Store
-router.put("/:idStore", authOwnership, async (req, res) => {
+router.put("/:idStore", authStoreAdmin, async (req, res) => {
   try {
     let idEdit = req.params.idStore;
-    let data = await StoreModel.updateOne({ _id: idEdit }, req.body);
+    let data = await StoreModel.update({ _id: idEdit }, { ...req.body });
     res.status(200).json(data);
   } catch (err) {
     console.log(err);
@@ -165,7 +165,7 @@ router.patch("/updateStatus/:idStore", authAdmin, async (req, res) => {
 });
 
 //Delete  Store
-router.delete("/:idStore", authOwnership, async (req, res) => {
+router.delete("/:idStore", authStoreAdmin, async (req, res) => {
   try {
     let idDel = req.params.idStore;
     let data = await StoreModel.deleteOne({ _id: idDel });

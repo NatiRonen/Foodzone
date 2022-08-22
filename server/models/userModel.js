@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
+const jwt = require("jsonwebtoken");
 
 UserSchema = new mongoose.Schema(
   {
