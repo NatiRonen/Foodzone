@@ -26,6 +26,7 @@ app.use(
     optionSuccessStatus: 200,
   })
 );
+
 routesInit(app);
 corsAccessControl(app);
 
