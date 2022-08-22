@@ -61,7 +61,7 @@ app.use(
   session({
     name: process.env.SESSION_NAME,
     secret: process.env.SESSION_SECRET, //sigh the cookie
-    resave: false,
+    resave: "none",
     saveUninitialized: false, //store session only if initialized
     cookie: {
       maxAge: 1000 * 60 * 15 * 1000, // 15 minutes
