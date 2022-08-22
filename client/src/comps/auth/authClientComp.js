@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 
 function AuthClientComp(props) {
   let nav = useNavigate();
-  let session = Cookies.get("FOODSHIP_MARKET_SESSION");
   const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
+  let session = Cookies.get("SHIP_MARKET_SESSION");
 
   useEffect(() => {
     if (!session) {

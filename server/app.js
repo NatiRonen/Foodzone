@@ -57,7 +57,6 @@ app.use(
     optionSuccessStatus: 200,
   })
 );
-app.set("trust proxy", 1);
 app.use(
   session({
     name: process.env.SESSION_NAME,
@@ -66,10 +65,9 @@ app.use(
     saveUninitialized: false, //store session only if initialized
     cookie: {
       maxAge: 1000 * 60 * 15 * 1000, // 15 minutes
-      sameSite: "none",
-      secure: true,
-      domain: process.env.SERVER_URL,
-      path: "/",
+      sameSite: false,
+      secure: false,
+      httpOnly: process.env.DEV_MODE ? false : true,
     },
     store: store,
   })
