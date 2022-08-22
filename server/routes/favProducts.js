@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
   try {
-    let user = await UserModel.findOne({ _id: req.session.user._id });
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
     res.json(user.favs_ar);
   } catch (error) {
     res.status(500).json({ msg: error });
@@ -15,7 +15,7 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/productsInfo", auth, async (req, res) => {
   try {
-    let user = await UserModel.findOne({ _id: req.session.user._id });
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
     let favs_ar = user.favs_ar;
     let data = await ProductModel.find({ short_id: { $in: favs_ar } });
     res.json(data);
@@ -28,8 +28,8 @@ router.patch("/add_remove/:prodId", auth, async (req, res) => {
   try {
     let prodId = req.params.prodId;
     //get current favs_ar from user
-    // let user = await UserModel.findOne({ _id: req.session.user._id });
-    let favs_ar = req.session.user.favs_ar;
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    let favs_ar = user.favs_ar;
 
     if (favs_ar.includes(prodId)) {
       //remove the product form favorites list
@@ -40,9 +40,8 @@ router.patch("/add_remove/:prodId", auth, async (req, res) => {
       //limit to 40 items
       favs_ar.splice(40, favs_ar.length);
     }
-    await UserModel.updateOne({ _id: req.session.user._id }, { favs_ar: favs_ar });
+    await UserModel.updateOne({ _id: req.tokenData._id }, { favs_ar: favs_ar });
     console.log(favs_ar);
-    req.session.user.favs_ar = favs_ar;
     res.status(200).json(favs_ar);
   } catch (error) {
     res.status(500).json({ msg: error });
