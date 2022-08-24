@@ -18,7 +18,7 @@ function ProductsStoreAdmin(props) {
 
   useEffect(() => {
     // get the store info from the link state by location
-    setStore(location.state.item);
+    // setStore(location.state.item);
     doApi();
   }, []);
 
@@ -56,7 +56,7 @@ function ProductsStoreAdmin(props) {
 
   return (
     <div className="container">
-      <h1>{store.name} Products</h1>
+      <h1 className="display-4">Products</h1>
       <button
         onClick={() => {
           nav("../");
@@ -124,7 +124,11 @@ function ProductsStoreAdmin(props) {
           })}
         </tbody>
       </Table>
-      {products.length === 0 ? <h2 className="text-center display-2">No Products</h2> : ""}
+      {!loading && products.length === 0 ? (
+        <h2 className="text-center display-2">No products found</h2>
+      ) : (
+        ""
+      )}
       {loading ? <LottieAnimation /> : ""}
     </div>
   );

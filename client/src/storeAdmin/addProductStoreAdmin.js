@@ -12,7 +12,6 @@ import ProductForm from "../comps/forms/ProductForm";
 
 function AddProductStoreAdmin(props) {
   const location = useLocation();
-  const storeInfo = location.state.storeInfo;
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
 
@@ -21,7 +20,7 @@ function AddProductStoreAdmin(props) {
   const doFormApi = async (formData) => {
     let url = API_URL + "/products/" + params.id;
     try {
-      let resp = await doApiMethod(url, "POST", formData, storeInfo._id);
+      let resp = await doApiMethod(url, "POST", formData, params.id);
       if (resp.data._id) {
         toast.success("Product Created");
         nav(-1);
