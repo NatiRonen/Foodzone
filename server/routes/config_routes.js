@@ -1,6 +1,7 @@
 const indexR = require("./index");
 const usersR = require("./users");
 const productsR = require("./products");
+const categoriesR = require("./categories");
 const storeR = require("./stores");
 const favR = require("./favProducts");
 const ordersR = require("./orders");
@@ -10,24 +11,18 @@ exports.routesInit = (app) => {
   app.use("/users", usersR);
   app.use("/stores", storeR);
   app.use("/products", productsR);
+  app.use("/categories", categoriesR);
   app.use("/orders", ordersR);
   app.use("/favs", favR);
 };
 
 exports.corsAccessControl = (app) => {
-  app.all(process.env.CLIENT_URL, function (req, res, next) {
+  app.all("*", function (req, res, next) {
     if (!req.get("Origin")) return next();
 
-    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-    res.header("Access-Control-Allow-credentials", true);
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, auth-token, Accept, Authorization"
-    );
-    if (req.method === "OPTIONS") {
-      res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
-      return res.status(200).json({});
-    }
+    res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+    res.set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,auth-token");
     next();
   });
 };

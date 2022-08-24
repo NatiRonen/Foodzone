@@ -30,7 +30,7 @@ function Navigation() {
           <LinkContainer to="/">
             <Navbar.Brand>
               <img
-                src={`${process.env.REACT_APP_CLIENT_URL}/images/foodzone_icon.png`}
+                src={`${process.env.REACT_APP_CLIENT_URL}/images/shipMarket_icon.png`}
                 style={{ width: 70, height: 60 }}
               />
             </Navbar.Brand>
@@ -42,7 +42,7 @@ function Navigation() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>Foodzone</Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>

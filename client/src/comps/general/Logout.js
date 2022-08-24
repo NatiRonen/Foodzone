@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useLogoutUserMutation } from "../../redux/appApi";
+import { logout } from "../../redux/userSlice";
+import { deleteToken } from "../../services/localService";
 
 function Logout() {
-  const [logoutUser, { isLoading, error }] = useLogoutUserMutation();
+  const dispatch = useDispatch();
   let nav = useNavigate();
   useEffect(() => {
-    logoutUser();
+    dispatch(logout());
+    deleteToken();
     toast.info("You logged out");
     nav("/");
   }, []);

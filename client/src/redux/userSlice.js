@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { saveTokenLocal } from "../services/localService";
 import appApi from "./appApi";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    resetUser: (state, { payload }) => null,
+    logout: (state, { payload }) => null,
     addNotifications: (state, { payload }) => {
       //actions recive roomId ad payload
       if (state.newMessages[payload]) {
@@ -27,14 +28,10 @@ export const userSlice = createSlice({
       (state, { payload }) => payload.user
     );
     //save user after login
-    builder.addMatcher(
-      appApi.endpoints.loginUser.matchFulfilled,
-      (state, { payload }) => payload.user
-    );
-    //logout destroy user session after the request ended successfully
-    builder.addMatcher(appApi.endpoints.logoutUser.matchFulfilled, () => null);
-    builder.addMatcher(appApi.endpoints.logoutUser.matchRejected, () => null);
-
+    builder.addMatcher(appApi.endpoints.loginUser.matchFulfilled, (state, { payload }) => {
+      saveTokenLocal(payload.token);
+      return payload.user;
+    });
     builder.addMatcher(
       appApi.endpoints.updateUser.matchFulfilled,
       (state, { payload }) => payload.user
@@ -48,5 +45,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { addNotifications, resetNotifications } = userSlice.actions;
+export const { addNotifications, resetNotifications, logout } = userSlice.actions;
 export default userSlice.reducer;
