@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner, Button } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
-import { AppContext } from "../../context/appContext";
+import { useLocation, useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import ImagesSearch from "../misc/imagesSearch";
 
@@ -19,7 +18,8 @@ function ProductForm(props) {
 
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
-  const { store } = useContext(AppContext);
+
+  const params = useParams();
 
   useEffect(() => {
     setName(item?.name);
@@ -27,12 +27,12 @@ function ProductForm(props) {
     setInfo(item?.info);
     setPrice(item?.price);
     setCategory(item?.category);
+    getCategories();
   }, [item]);
 
-  const getCategories = () => {
-    let url = API_URL + "/stores/categories/" + store._id;
-    let resp = doApiGet(url);
-    console.log(resp.date);
+  const getCategories = async () => {
+    let url = API_URL + "/categories/" + params.id;
+    let resp = await doApiGet(url);
     setCategories(resp.data);
   };
   const handleSubmit = (e) => {
@@ -72,6 +72,20 @@ function ProductForm(props) {
             minLength={10}
             required
           />
+        </Form.Group>
+
+        <Form.Group className="mb-3 ">
+          <Form.Label>Category</Form.Label>
+          <Form.Select value={category} onChange={(e) => setCategory(e.target.value)} required>
+            <option>Select category</option>
+            {categories.map((category, idx) => {
+              return (
+                <option key={idx} value={category}>
+                  {category}
+                </option>
+              );
+            })}
+          </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3 ">

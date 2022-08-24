@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "react-bootstrap";
-import { AppContext } from "../../context/appContext";
 
 function MyStoreItem(props) {
-  const { setStore } = useContext(AppContext);
-
   let nav = useNavigate();
   let item = props.item;
   let statusColor = {
@@ -18,7 +15,6 @@ function MyStoreItem(props) {
   const onClickStore = () => {
     if (item.status === "active") {
       nav("/storeAdmin/" + item.short_id);
-      setStore(item);
     }
   };
 
