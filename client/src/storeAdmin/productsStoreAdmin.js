@@ -10,7 +10,7 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 
 function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
-  const [storeInfo, setStoreInfo] = useState([]);
+  const [store, setStore] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   let params = useParams();
@@ -18,7 +18,7 @@ function ProductsStoreAdmin(props) {
 
   useEffect(() => {
     // get the store info from the link state by location
-    // setStoreInfo(location.state.item);
+    // setStore(location.state.item);
     doApi();
   }, []);
 
@@ -56,7 +56,7 @@ function ProductsStoreAdmin(props) {
 
   return (
     <div className="container">
-      <h1>{storeInfo.name} Products</h1>
+      <h1 className="display-4">Products</h1>
       <button
         onClick={() => {
           nav("../");
@@ -65,7 +65,7 @@ function ProductsStoreAdmin(props) {
       >
         Back <IoMdArrowRoundBack />
       </button>
-      <Link className="btn btn-outline-success my-3" to="./addProduct" state={{ storeInfo }}>
+      <Link className="btn btn-outline-success my-3" to="./addProduct" state={{ store }}>
         Add Product <MdAddShoppingCart />
       </Link>
 
@@ -76,6 +76,7 @@ function ProductsStoreAdmin(props) {
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Category</th>
             <th>Date Created</th>
             <th>Short_id</th>
             <th>Del/Edit</th>
@@ -96,6 +97,7 @@ function ProductsStoreAdmin(props) {
                 </td>
                 <td>{item.name}</td>
                 <td>{item.price}</td>
+                <td>{item?.category}</td>
                 <td>{item.date_created}</td>
                 <td>{item.short_id}</td>
                 <td>
@@ -110,7 +112,7 @@ function ProductsStoreAdmin(props) {
                   </button>
                   <Link
                     to={"./edit/" + item._id}
-                    state={{ storeInfo }}
+                    state={{ store }}
                     className="btn btn-outline-secondary mx-2"
                     title="Edit"
                   >
@@ -122,7 +124,11 @@ function ProductsStoreAdmin(props) {
           })}
         </tbody>
       </Table>
-      {products.length === 0 ? <h2 className="text-center display-2">No Products</h2> : ""}
+      {!loading && products.length === 0 ? (
+        <h2 className="text-center display-2">No products found</h2>
+      ) : (
+        ""
+      )}
       {loading ? <LottieAnimation /> : ""}
     </div>
   );

@@ -11,17 +11,20 @@
     border-radius: 20px;
 }
 
-.shop_name {
+.store_name {
     font-size: 5em;
     font-weight: bold;
     color: #eee;
 }
 
+.store_info {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #eee;
+}
+
 .store__info {
-    margin-top: -55px;
-    padding: 20px;
     background: white;
-    border-radius: 20px;
 }
 
 .store__info .logo {

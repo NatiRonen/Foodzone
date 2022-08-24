@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner, Button } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { API_URL, doApiGet } from "../../services/apiService";
 import ImagesSearch from "../misc/imagesSearch";
 
 function ProductForm(props) {
@@ -17,7 +18,8 @@ function ProductForm(props) {
 
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
-  const location = useLocation();
+
+  const params = useParams();
 
   useEffect(() => {
     setName(item?.name);
@@ -25,11 +27,17 @@ function ProductForm(props) {
     setInfo(item?.info);
     setPrice(item?.price);
     setCategory(item?.category);
+    getCategories();
   }, [item]);
 
+  const getCategories = async () => {
+    let url = API_URL + "/categories/" + params.id;
+    let resp = await doApiGet(url);
+    setCategories(resp.data);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    let data = { name, info, price, imgUrl };
+    let data = { name, info, price, imgUrl, category };
     doApi(data);
   };
 
@@ -67,6 +75,20 @@ function ProductForm(props) {
         </Form.Group>
 
         <Form.Group className="mb-3 ">
+          <Form.Label>Category</Form.Label>
+          <Form.Select value={category} onChange={(e) => setCategory(e.target.value)} required>
+            <option>Select category</option>
+            {categories.map((category, idx) => {
+              return (
+                <option key={idx} value={category}>
+                  {category}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className="mb-3 ">
           <Form.Label>Image</Form.Label>
           <Form.Control
             type="text"
@@ -88,17 +110,6 @@ function ProductForm(props) {
             value={price}
             required
           ></Form.Control>
-        </Form.Group>
-
-        <Form.Group className="mb-3 ">
-          <Form.Label>Category</Form.Label>
-          <Form.Select
-            type="string"
-            placeholder="Ptoduct price"
-            onChange={(e) => setPrice(e.target.value)}
-            value={price}
-            required
-          ></Form.Select>
         </Form.Group>
 
         <Button variant="primary" type="submit">

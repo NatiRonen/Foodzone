@@ -122,7 +122,11 @@ function OrdersListStore() {
             })}
           </tbody>
         </Table>
-        {orders.length === 0 ? <h2 className="text-center display-2">No Products</h2> : ""}
+        {!loading && orders.length === 0 ? (
+          <h2 className="text-center display-2">No Products</h2>
+        ) : (
+          ""
+        )}
         {loading ? <LottieAnimation /> : ""}
       </div>
     </>
