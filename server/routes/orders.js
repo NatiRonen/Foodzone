@@ -34,10 +34,10 @@ router.get("/sotreOrders/:store_id", authStoreAdmin, async (req, res) => {
   }
 });
 
-router.get("/userOrder", async (req, res) => {
+router.get("/userOrder", auth, async (req, res) => {
   try {
     let data = await OrderModel.find({
-      user_id: req.session.user._id,
+      user_id: req.tokenData._id,
     })
       .limit(20)
       .sort({
@@ -134,7 +134,8 @@ router.get("/productsInfo/:idOrder", auth, async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   try {
-    const { name, address, phone, short_id: client_short_id } = req.session.user;
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    const { name, address, phone, short_id: client_short_id } = user;
     req.body = { ...req.body, name, address, phone, client_short_id };
     let order = await OrderModel.findOne({
       status: "pending",
@@ -176,7 +177,7 @@ router.patch("/orderPaid", auth, async (req, res) => {
     // get the ids of the penging order
     let currentOrder = await OrderModel.findOne({
       status: "pending",
-      user_id: req.session.user._id,
+      user_id: req.tokenData._id,
     });
     let shorProds_ids = currentOrder.products_ar.map((item) => {
       return item.s_id;
@@ -202,7 +203,7 @@ router.patch("/orderPaid", auth, async (req, res) => {
     let data = await OrderModel.updateOne(
       {
         status: "pending",
-        user_id: req.session.user._id,
+        user_id: req.tokenData._id,
       },
       {
         status,

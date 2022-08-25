@@ -34,6 +34,8 @@ import OldOrders from "./pages/oldOrders";
 import OrdersListStore from "./storeAdmin/ordersListStore";
 import Chat from "./chat/chat";
 import ChatAdmin from "./admin/chat/chatAdmin";
+import CategoriesStoreAdmin from "./storeAdmin/categoriesStoreAdmin";
+
 
 function AppRouts() {
   return (
@@ -62,6 +64,7 @@ function AppRouts() {
         <Route path="/storeAdmin/:id" element={<LayoutStore />}>
           <Route index element={<HomeStore />} />
           <Route path="editStore" element={<EditStoreAdmin />} />
+          <Route path="categories" element={<CategoriesStoreAdmin />} />
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
           <Route

@@ -55,7 +55,7 @@ function OldOrders(props) {
           <div className="container">
             <div className="content">
               <div className="row">
-                <div className="col-md-12 col-lg-8">
+                <div className="col-lg-8">
                   <div className="items">
                     {/* start product */}
                     {ar.length == 0 ? (
@@ -67,9 +67,6 @@ function OldOrders(props) {
                       ""
                     )}
                     {ar.map((item, i) => {
-                      // let date = item.date_created.replace("T", " ");
-                      // date = date.substring(0, date.indexOf(":") + 3);
-
                       return (
                         <OldOrderItem
                           key={item._id}
@@ -84,9 +81,9 @@ function OldOrders(props) {
                   </div>
                 </div>
                 {/* start Orders Info */}
-                <div className="col-md-12 col-lg-4">
+                <div className="col-lg-4">
                   <div className="summary">
-                    <h3>All My Orders</h3>
+                    <h3>All orders</h3>
                     <div className="summary-item">
                       <span className="text">Orders</span>
                       <span className="price">{ar.length}</span>

@@ -14,10 +14,6 @@ function EditProductAdminStore(props) {
   let params = useParams();
   let nav = useNavigate();
 
-  // to get store id
-  const location = useLocation();
-  const storeInfo = location.state.storeInfo;
-
   useEffect(() => {
     doApi();
   }, []);
@@ -34,7 +30,7 @@ function EditProductAdminStore(props) {
     let url = API_URL + "/products/" + product._id;
 
     try {
-      let resp = await doApiMethod(url, "PUT", formData, storeInfo._id);
+      let resp = await doApiMethod(url, "PUT", formData, params.id);
       if (resp.data.modifiedCount) {
         toast.success("Product Updated");
         nav(-1);

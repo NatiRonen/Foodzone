@@ -28,6 +28,10 @@ let storeSchema = new mongoose.Schema(
       type: "String",
       required: [true, "can't be blank"],
     },
+    categories: {
+      type: Array,
+      default: [],
+    },
 
     info: {
       type: "String",

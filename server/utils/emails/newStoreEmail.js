@@ -9,7 +9,7 @@ exports.NewStoreEmailPending = (_bodyData) => {
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foodzone</title>
+    <title>ShipMarket</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
       rel="stylesheet"
@@ -365,7 +365,7 @@ exports.NewStoreEmailPending = (_bodyData) => {
                             color: black;
                           "
                         >
-                          Foodzone
+                          ShipMarket
                         </h2></a
                       >
                     </td>
@@ -555,7 +555,7 @@ exports.NewStoreEmailPending = (_bodyData) => {
                                 Hii ${_bodyData.name} We're sad to tell you That your store now is PENDING, you cannot sell
                                 products to your clients, Any problem or question you have you
                                 can contact us. Have a nice day FROM
-                                Foodzone
+                                ShipMarket
                               </p>
                             </td>
                           </tr>
@@ -927,7 +927,7 @@ exports.NewStoreEmailActive = (_bodyData) => {
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foodzone</title>
+    <title>ShipMarket</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
       rel="stylesheet"
@@ -1283,7 +1283,7 @@ exports.NewStoreEmailActive = (_bodyData) => {
                             color: black;
                           "
                         >
-                          Foodzone
+                          ShipMarket
                         </h2></a
                       >
                     </td>
@@ -1475,7 +1475,7 @@ exports.NewStoreEmailActive = (_bodyData) => {
                                 delete & more. We're just asking to follow our
                                 rules. And any problem or question you have you
                                 can contact us. Have a nice day FROM
-                                Foodzone
+                                ShipMarket
                               </p>
                             </td>
                           </tr>

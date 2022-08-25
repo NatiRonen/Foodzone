@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner, Button } from "react-bootstrap";
+import GetAddress from "../misc/GetAddress";
 import ImagesSearch from "../misc/imagesSearch";
 
 function StoreForm(props) {
@@ -65,14 +66,7 @@ function StoreForm(props) {
       </Form.Group>
 
       <Form.Group className="mb-3 ">
-        <Form.Label>Address</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Address"
-          onChange={(e) => setAddress(e.target.value)}
-          value={address}
-          required
-        />
+        {item ? <GetAddress setAddress={setAddress} currentAddress={address} /> : ""}
       </Form.Group>
 
       <Form.Group className="mb-3 ">

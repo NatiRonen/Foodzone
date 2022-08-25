@@ -1,6 +1,6 @@
 {
-    "short_name": "foodzone",
-    "name": "foodzone",
+    "short_name": "shipMarket",
+    "name": "shipMarket",
     "icons": [{
             "src": "/images/maskable.png",
             "sizes": "196x196",

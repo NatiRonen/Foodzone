@@ -21,6 +21,10 @@ let productScheam = new mongoose.Schema(
       type: "String",
       required: [true, "can't be blank"],
     },
+    category: {
+      type: "String",
+      required: [true, "can't be blank"],
+    },
     date_created: {
       type: String,
       default: getFromattedDate(),

@@ -1,6 +1,5 @@
 import React from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { BsFillInfoCircleFill, BsColumns } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "react-bootstrap";
@@ -11,6 +10,12 @@ function MyStoreItem(props) {
   let statusColor = {
     color: "white",
     background: "#F1948A",
+  };
+
+  const onClickStore = () => {
+    if (item.status === "active") {
+      nav("/storeAdmin/" + item.short_id);
+    }
   };
 
   return (
@@ -24,11 +29,7 @@ function MyStoreItem(props) {
       <div
         className="payment-card rounded-lg shadow bg-white text-center h-100 cursor-pointer"
         disabled={true}
-        onClick={() => {
-          if (item.status === "active") {
-            nav("/storeAdmin/" + item.short_id);
-          }
-        }}
+        onClick={onClickStore}
       >
         <div className="payment-card__type px-4 py-5 d-flex justify-content-center align-items-center">
           <div

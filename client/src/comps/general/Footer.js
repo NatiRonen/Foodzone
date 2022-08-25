@@ -31,7 +31,7 @@ function Footer(props) {
           </>
         )}
       </Nav>
-      <p className="text-center py-3">Foodzone © {dt.getFullYear()}</p>
+      <p className="text-center py-3">ShipMarket © {dt.getFullYear()}</p>
     </div>
   );
 }

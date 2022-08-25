@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../services/apiService";
-import { MdOutlineLocationCity, MdOutlineShoppingCart } from "react-icons/md";
+import { MdOutlineLocationCity, MdOutlinestorepingCart } from "react-icons/md";
 import { BsInfoCircleFill, BsChevronRight } from "react-icons/bs";
 import { HiTemplate } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 import "./css/storeHome.css";
 import Product from "../comps/store/product";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import { resetCart, toggleCart } from "../redux/cartSlice";
+import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 function StoreHome(props) {
-  const [shop, setShop] = useState({});
-  const [storeProducts, setStoreProducts] = useState([]);
+  const [store, setstore] = useState({});
+  const [products, setProducts] = useState([]);
+  const [productsByCategory, setProductsByCategory] = useState([]);
+  const [category, setCategory] = useState("");
   let params = useParams();
-  let nav = useNavigate();
   const dispatch = useDispatch();
 
   const [itemsInCart, setItemsInCart] = useState(0);
@@ -35,92 +38,119 @@ function StoreHome(props) {
     let url = API_URL + "/stores/single/" + params.id;
     let resp = await doApiGet(url);
     console.log(resp.data);
-    setShop(resp.data);
+    setstore(resp.data);
     console.table(resp.data);
 
     let urlProducts = API_URL + "/products/storeProducts/" + params.id;
     let resp2 = await doApiGet(urlProducts);
-    setStoreProducts(resp2.data);
+    setProducts(resp2.data);
+    setProductsByCategory(resp2.data);
+  };
+
+  const sortCat = (_catName = null) => {
+    if (!_catName) {
+      setProductsByCategory(products);
+      return;
+    }
+    let temp = products.filter((prod) => prod.category === _catName);
+    if (temp.length === 0) toast.warning(`No ${_catName} found`);
+    else setProductsByCategory(temp);
   };
   return (
     <React.Fragment>
-      {!shop ? (
+      {!store ? (
         <LottieAnimation />
       ) : (
         <React.Fragment>
           <div
             style={{
-              backgroundImage: `url(${shop.imgUrl || "/images/no_image.png"})`,
+              backgroundImage: `url(${store.imgUrl || "/images/no_image.png"})`,
             }}
             className="strip container-fluid d-flex align-items-center"
           >
             <div className="container stripText_bg text-center">
-              <h2 className="shop_name">{shop.name}</h2>
+              <h2 className="store_name mb-0">{store.name}</h2>
+              <p className="store_info">{store.info}</p>
             </div>
           </div>
-          <div className="container store__info text-center">
-            {user && (
-              <button
-                className="cartIcon rounded border btn position-absolute top-0 start-0 m-5"
-                onClick={() => dispatch(toggleCart())}
-              >
-                {cart_ar.length === 0 ? (
-                  ""
-                ) : (
-                  <p className="position-absolute top-100 start-100 translate-middle itemCart">
-                    {itemsInCart}
+          {/* strip end*/}
+          <Container className="mt-4">
+            <Row>
+              <Col lg={2}>
+                <p className="animaLink">
+                  Categories <HiTemplate className="mx-2" />
+                </p>
+                <br />
+                <ListGroup variant="flush">
+                  <ListGroup.Item
+                    active={category === ""}
+                    onClick={() => {
+                      setCategory("");
+                      sortCat();
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    All Products
+                  </ListGroup.Item>
+                  {store.categories?.map((item, idx) => {
+                    return (
+                      <ListGroup.Item
+                        key={idx}
+                        active={category === item}
+                        onClick={() => {
+                          setCategory(item);
+                          sortCat(item);
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {item}
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
+              </Col>
+
+              <Col lg={8}>
+                <div className="text-center">
+                  <p className="animaLink">
+                    Products <HiTemplate className="mx-2" />
                   </p>
-                )}
-                <MdOutlineShoppingCart />
-              </button>
-            )}
-            <button
-              style={{ background: "none" }}
-              className="position-absolute top-0 end-0 m-5 animaLinkSM"
-              onClick={() => {
-                nav(-1);
-              }}
-            >
-              Back <BsChevronRight className="mx-2" />
-            </button>
-            <img
-              src={shop.imgUrl || "/images/no_image.png"}
-              alt={shop.name}
-              width="100"
-              height="90"
-              className="logo"
-            />
-            <h1 className="mt-2">{shop.name}</h1>
-            <div className="row">
-              <div className="col-6">
+                  {productsByCategory == 0 ? (
+                    <div>
+                      <small>No products found</small>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <motion.div layout className="mb-5">
+                  <AnimatePresence>
+                    {productsByCategory.map((item) => {
+                      return <Product key={item._id} item={item} />;
+                    })}
+                  </AnimatePresence>
+                </motion.div>
+              </Col>
+              <Col lg={2}>
                 <p className="animaLink">
-                  Info <BsInfoCircleFill className="mx-2" />
+                  Details
+                  <BsInfoCircleFill className="mx-2" />
                 </p>
-                <p className="text_info">{shop.info}</p>
-              </div>
-              <div className="col-6">
-                <p className="animaLink">
-                  Address <MdOutlineLocationCity className="mx-2" />
+                <p>
+                  <span className="fw-bold">Address: </span>
+                  {store.address}
                 </p>
-                <p className="text_info">{shop.address}</p>
-              </div>
-            </div>
-          </div>
-          <div className="container text-center">
-            <p className="animaLink">
-              Products <HiTemplate className="mx-2" />
-            </p>
-            {storeProducts == 0 ? (
-              <div>
-                <small>No Products</small>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          {storeProducts.map((item) => {
-            return <Product key={item._id} item={item} />;
-          })}
+                <p>
+                  <span className="fw-bold">Mail: </span>
+                  {store.email}
+                </p>
+                <p>
+                  <span className="fw-bold">Phone: </span>
+                  {store.phone}
+                </p>
+              </Col>
+            </Row>
+          </Container>
         </React.Fragment>
       )}
     </React.Fragment>
