@@ -34,6 +34,9 @@ import OldOrders from "./pages/oldOrders";
 import OrdersListStore from "./storeAdmin/ordersListStore";
 import Chat from "./chat/Chat";
 import ChatAdmin from "./admin/chat/ChatAdmin";
+// .... new chat
+import ChatAdmin2 from "./admin/chat/ChatAdmin2";
+import Chat2 from "./chat/chat2";
 
 function AppRouts() {
   return (
@@ -56,6 +59,7 @@ function AppRouts() {
           <Route path="createStore" element={<CreateStore />} />
           <Route path="myStores" element={<MyStores />} />
           <Route path="forums" element={<Chat />} />
+          <Route path="forums2" element={<Chat2 />} />
           {/* <Route path="/searchStore/:searchQ" element={<SearchStore />} /> */}
         </Route>
         {/*store admin*/}
@@ -64,8 +68,14 @@ function AppRouts() {
           <Route path="editStore" element={<EditStoreAdmin />} />
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
-          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
-          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
+          <Route
+            path="products/edit/:prodId"
+            element={<EditProductAdminStore />}
+          />
+          <Route
+            path="products/addProduct"
+            element={<AddProductStoreAdmin />}
+          />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
@@ -77,6 +87,7 @@ function AppRouts() {
           <Route path="orders" element={<OrdersAdmin />} />
           <Route path="orders/:id" element={<OrderInfoAdmin />} />
           <Route path="chat" element={<ChatAdmin />} />
+          <Route path="chat2" element={<ChatAdmin2 />} />
         </Route>
         <Route path="/*" element={<Page404 />} />
       </Routes>

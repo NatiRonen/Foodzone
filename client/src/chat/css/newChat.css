@@ -179,11 +179,18 @@
   color: rgb(133, 204, 133);
 }
 .del_chat_Room_Btn {
-  font-size: 1.9em;
+  font-size: 1.5em;
   color: grey;
   cursor: pointer;
   margin: 20px;
 }
 .del_chat_Room_Btn:hover {
   color: rgb(255, 92, 92);
+}
+.add_Room_Btn{
+  font-size: 1.5em;
+  color: rgb(133, 204, 133);
+  cursor: pointer;
+  /* margin: 20px; */
+
 }

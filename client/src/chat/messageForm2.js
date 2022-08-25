@@ -17,7 +17,7 @@ import "./css/message.css";
 function MessageForm2() {
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.user);
-  const { socket, currentRoom, setMessages, messages, serviceMsg } =
+  const { socket, currentRoom, setMessages, messages, clients } =
     useContext(AppContext);
   const messageEndRef = useRef(null);
 
@@ -85,7 +85,7 @@ function MessageForm2() {
               alt=""
             />
             <div className="">
-              <h6>
+              <h6 className="mb-0 mt-3">
                 {!currentRoom
                   ? ""
                   : currentRoom === "62fa0c0f3210f2bf635c5ea8"
@@ -107,7 +107,7 @@ function MessageForm2() {
               <div key={idx}>
                 <div className="chat_box touchscroll chat_box_colors_a">
                   <div className="d-flex justify-content-center">
-                    <p className="text-center col-2 chat_date_indicator">
+                    <p className="text-center col-md-2 col-sm-4 chat_date_indicator">
                       {date}
                     </p>
                   </div>
