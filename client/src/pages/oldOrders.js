@@ -53,9 +53,9 @@ function OldOrders(props) {
         <AuthClientComp />
         <section className="shopping-cart">
           <div className="container">
-            <div className="">
+            <div className="content">
               <div className="row">
-                <div className="col-md-12 col-lg-8">
+                <div className="col-lg-8">
                   <div className="items">
                     {/* start product */}
                     {ar.length == 0 ? (
@@ -84,7 +84,7 @@ function OldOrders(props) {
                   </div>
                 </div>
                 {/* start Orders Info */}
-                <div className="col-md-12 col-lg-4">
+                <div className="col-lg-4">
                   <div className="summary">
                     <h3>All orders</h3>
                     <div className="summary-item">

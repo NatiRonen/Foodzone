@@ -72,7 +72,7 @@ function OrderInfoAdmin(props) {
               <div className="container">
                 <div className="content">
                   <div className="row">
-                    <div className="col-md-12 col-lg-8">
+                    <div className=" col-lg-8">
                       <div className="items">
                         {/* start product */}
                         {order.products_ar.map((item, i) => {
@@ -82,7 +82,7 @@ function OrderInfoAdmin(props) {
                       </div>
                     </div>
                     {/* start Orders Info */}
-                    <div className="col-md-12 col-lg-4">
+                    <div className=" col-lg-4">
                       <div className="summary">
                         <React.Fragment>
                           <h3>
