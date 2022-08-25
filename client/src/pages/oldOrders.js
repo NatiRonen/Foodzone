@@ -67,9 +67,6 @@ function OldOrders(props) {
                       ""
                     )}
                     {ar.map((item, i) => {
-                      // let date = item.date_created.replace("T", " ");
-                      // date = date.substring(0, date.indexOf(":") + 3);
-
                       return (
                         <OldOrderItem
                           key={item._id}
