@@ -1,15 +1,29 @@
 import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-import { Form, Row, Col, FormGroup, FormControl, Button } from "react-bootstrap";
+import {
+  Form,
+  Row,
+  Col,
+  FormGroup,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
-import "./css/MessageForm.css";
+import { IoSend } from "react-icons/io5";
+import InputEmoji from "react-input-emoji";
+import "./css/message.css";
 
 function MessageForm() {
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.user);
-  const { socket, currentRoom, setMessages, messages, serviceMsg } = useContext(AppContext);
+  const { socket, currentRoom, setMessages, messages, serviceMsg } =
+    useContext(AppContext);
   const messageEndRef = useRef(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -53,67 +67,102 @@ function MessageForm() {
 
   return (
     <>
-      <div className="messages-output">
-        {!user && <div className="alert alert-danger">Please login</div>}
-        {user &&
-          messages.map(({ _id: date, messagesByDate }, idx) => (
-            <div key={idx}>
-              <p className="alert alert-info text-center message-date-indicator">{date}</p>
-              {messagesByDate.map(({ content, time, from: sender }, idx) => (
-                <div className={sender._id === user._id ? "message" : "incoming-message"} key={idx}>
-                  <div className="message-inner">
-                    {!serviceMsg && (
-                      <div className="d-flex align-items-center">
-                        <img
-                          src={sender.picture}
-                          style={{
-                            width: 35,
-                            heigth: 35,
-                            objectFit: "cover",
-                            borderRadius: "50%",
-                            marginRight: 10,
-                          }}
-                          alt=""
-                        />
-                        <p className="message-sender">
-                          {sender._id === user._id ? "You" : sender.name}
-                        </p>
-                      </div>
-                    )}
-                    <p className="message-content">{content}</p>
-                    <p className="message-timetamp-left">{time}</p>
-                  </div>
-                </div>
-              ))}
+      <div
+        style={{
+          backgroundImage: `url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")`,
+          height: "100%",
+        }}
+      >
+        <div className="settings-tray">
+          <div className="friend-drawer no-gutters friend-drawer--grey">
+            <img
+              className="profile-image"
+              src={
+                currentRoom === "62fa0c0f3210f2bf635c5ea8"
+                  ? "/images/support.png"
+                  : `https://avatars.dicebear.com/api/bottts/${currentRoom}.svg`
+              }
+              alt=""
+            />
+            <div className="">
+              <h6>
+                {!currentRoom
+                  ? ""
+                  : currentRoom === "62fa0c0f3210f2bf635c5ea8"
+                  ? "Contact Us"
+                  : currentRoom}
+              </h6>
+              <p className="text-muted">
+                {currentRoom === "62fa0c0f3210f2bf635c5ea8"
+                  ? "We are here for everything you need ❤"
+                  : "Leave the conversation proper and enjoyable 😃"}
+              </p>
             </div>
-          ))}
-        <div ref={messageEndRef} />
+          </div>
+        </div>
+        {!user && <div className="alert alert-danger">Please login</div>}
+        <div className="chat_panel mt-4">
+          {user &&
+            messages.map(({ _id: date, messagesByDate }, idx) => (
+              <div key={idx}>
+                <div className="chat_box touchscroll chat_box_colors_a">
+                  <div className="d-flex justify-content-center">
+                    <p className="text-center col-2 chat_date_indicator">
+                      {date}
+                    </p>
+                  </div>
+
+                  {messagesByDate.map(
+                    ({ content, time, from: sender }, idx) => (
+                      <div
+                        key={idx}
+                        className={
+                          sender._id === user._id
+                            ? "chat_message_wrapper"
+                            : "chat_message_wrapper chat_message_right"
+                        }
+                      >
+                        <div className="chat_user_avatar">
+                          <img
+                            alt="profile pic"
+                            src={sender.picture}
+                            className="md-user-image"
+                          />
+                        </div>
+                        <ul className="chat_message">
+                          <li>
+                            <p>{content}</p>
+                            <span className="chat_message_time">{time}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            ))}
+          <div ref={messageEndRef} />
+        </div>
+        <Form onSubmit={handelSubmit}>
+          <Row className="">
+            <div className="col-12">
+              <div className="chat-box-tray">
+                <InputEmoji
+                  value={message}
+                  onChange={setMessage}
+                  cleanOnEnter
+                  borderColor="#93CAED"
+                  disabled={!user}
+                  placeholder="Type your message here..."
+                />
+                <button type="submit" disabled={!user}>
+                  <IoSend size="2em" className="send_icon" />
+                </button>
+              </div>
+            </div>
+          </Row>
+        </Form>
       </div>
-      <Form onSubmit={handelSubmit}>
-        <Row>
-          <Col md={11}>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="your message"
-                disabled={!user}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col md={1}>
-            <Button
-              varient="primary"
-              type="submit"
-              style={{ width: "100%", background: "orange" }}
-              disabled={!user}
-            >
-              <i className="fa fa-paper-plane"></i>
-            </Button>
-          </Col>
-        </Row>
-      </Form>
     </>
   );
 }

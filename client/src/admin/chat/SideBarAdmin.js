@@ -4,8 +4,11 @@ import { addNotifications, resetNotifications } from "../../redux/userSlice";
 import { AppContext } from "../../context/appContext";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import axios from "axios";
-import { Button, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, ListGroup, Row, Modal } from "react-bootstrap";
 import { BsEraser } from "react-icons/bs";
+import { BiAddToQueue } from "react-icons/bi";
+import { MdOutlineAddBox } from "react-icons/md";
+import { FiSearch } from "react-icons/fi";
 import Collapse from "react-bootstrap/Collapse";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -29,6 +32,7 @@ function SideBarAdmin() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(clients);
     getRooms();
     getClients();
     socket.emit("join-room", rooms[0]?.name);
@@ -89,102 +93,117 @@ function SideBarAdmin() {
   }
   return (
     <>
-      <div className="mb-3">
-        <Button
-          onClick={() => setOpen(!open)}
-          aria-controls="example-collapse-text"
-          aria-expanded={open}
-          variant="outline-success"
-          className="mb-2"
-        >
-          Add Forum
-        </Button>
-        <Collapse in={open}>
-          <Row id="example-collapse-text d-flex align-items-center ">
-            <Col xs={8}>
-              <FloatingLabel controlId="floatingPassword" label="Forum name">
-                <Form.Control
-                  type="text"
-                  placeholder="Forum name"
-                  value={newForum}
-                  onChange={(e) => setNewForum(e.target.value)}
-                />
-              </FloatingLabel>
-            </Col>
-            <Col xs={2}>
-              <Button
-                variant="success"
-                onClick={() => {
-                  setOpen(false);
-                  handelAddRmoveRoom(newForum);
-                  setNewForum("");
-                }}
-              >
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Collapse>
+      <div className="settings-tray">
+        <img className="profile-image" src={user.picture} alt="Profile img" />
+        <span className="text-capitalize fw-semibold fst-italic">
+          Hello {user.name}
+        </span>
+        <span className="float-end">
+          <BiAddToQueue
+            title="Add Forum"
+            className="add_chat_Room_Btn"
+            onClick={() => setOpen(!open)}
+          />
+        </span>
       </div>
-      <h2 className="display-4">Forums</h2>
-      <ListGroup>
+      <Collapse in={open}>
+        <div className="search-box">
+          <div className="input-wrapper p-2">
+            <MdOutlineAddBox
+              className="add_Room_Btn float-end"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpen(false);
+                handelAddRmoveRoom(newForum);
+                setNewForum("");
+              }}
+            />
+            <input
+              value={newForum}
+              onChange={(e) => setNewForum(e.target.value)}
+              placeholder="Forum name"
+              type="text"
+              className="ps-3"
+            />
+          </div>
+        </div>
+      </Collapse>
+      <div className="search-box">
+        <div className="input-wrapper p-2">
+          {/* <FiSearch style={{ cursor: "pointer" }} onClick={searchRoom} /> */}
+          <FiSearch style={{ cursor: "pointer" }} />
+          <input
+            // ref={searchRoomRef}
+            // onKeyPress={handleKeyPress}
+            placeholder="Search here"
+            type="text"
+            className="ps-3"
+          />
+        </div>
+      </div>
+      <small className="chat_titel ps-3">Forums</small>
+      <ListGroup className="scroll_div_admin">
         {rooms.map((room, idx) => (
-          <Row>
-            <Col xs={8}>
-              <ListGroup.Item
-                key={idx}
-                onClick={() => joinRoom(room.name)}
-                active={room?.name === currentRoom}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                {room.name}
-                {currentRoom !== room.name && (
-                  <span className="badge rounded-pill bg-primary">
-                    {user.newMessages[room.name]}
-                  </span>
-                )}
-              </ListGroup.Item>
-            </Col>
-            <Col xs={2}>
-              <button
-                onClick={() => handelAddRmoveRoom(room.name)}
-                className="btn btn-outline-danger mx-2"
-                title="Delete"
-              >
-                <BsEraser />
-              </button>
-            </Col>
-          </Row>
+          <div
+            key={idx}
+            onClick={() => joinRoom(room.name)}
+            active={room.name === currentRoom}
+            className="friend-drawer friend-drawer--onhover"
+          >
+            {/* <div className="float-end">
+              <BsEraser
+              className="del_chat_Room_Btn"
+              onClick={() => handelAddRmoveRoom(room.name)}
+              title="Delete"
+              />
+            </div> */}
+            <img
+              className="profile-image"
+              src={`https://avatars.dicebear.com/api/bottts/${room.name}.svg`}
+              alt=""
+            />
+            <div className="mt-2 col-8">
+              <h6>{room.name}</h6>
+              {/* <p className="text-muted">Hey, you're arrested!</p> */}
+              {currentRoom !== room.name && (
+                <span className="badge rounded-pill bg-success">
+                  {user.newMessages[room.name]}
+                </span>
+              )}
+            </div>
+            <BsEraser
+              className="del_chat_Room_Btn mx-0"
+              onClick={() => handelAddRmoveRoom(room.name)}
+              title="Delete"
+            />
+          </div>
         ))}
       </ListGroup>
-      <h2 className="display-6 mt-4">Customers Service</h2>
-      <ListGroup>
+      <small className="chat_titel ps-3">Customers Service</small>
+      <ListGroup className="scroll_div_Customers">
         {clients.map((client, idx) => (
-          <Row>
-            <Col xs={8}>
-              <ListGroup.Item
-                key={idx}
-                onClick={() => handleServiceMgs(client)}
-                active={client._id === currentRoom}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                {client.name}
-                {currentRoom !== client._id && (
-                  <span className="badge rounded-pill bg-primary">
-                    {user.newMessages[client._id]}
-                  </span>
-                )}
-              </ListGroup.Item>
-            </Col>
-          </Row>
+          <div
+            key={idx}
+            onClick={() => handleServiceMgs(client)}
+            active={client._id === currentRoom}
+            className="friend-drawer friend-drawer--onhover"
+          >
+            <img
+              className="profile-image"
+              // src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+              src={client.picture}
+              alt=""
+            />
+            <div className="mt-2">
+              <h6>{client.name}</h6>
+              {/* <p className="text-muted">Hey, you're arrested!</p> */}
+              {currentRoom !== client._id && (
+                <span className="badge rounded-pill bg-primary">
+                  {user.newMessages[client._id]}
+                </span>
+              )}
+            </div>
+          </div>
         ))}
       </ListGroup>
     </>
