@@ -48,7 +48,7 @@ function OrderInfo(props) {
             <div className="container">
               <div className="content">
                 <div className="row">
-                  <div className="col-md-12 col-lg-8">
+                  <div className=" col-lg-8">
                     <div className="items">
                       {/* start product */}
                       {productsAr.map((item, i) => {
@@ -58,15 +58,20 @@ function OrderInfo(props) {
                     </div>
                   </div>
                   {/* start Orders Info */}
-                  <div className="col-md-12 col-lg-4">
+                  <div className=" col-lg-4">
                     <div className="summary">
                       <React.Fragment>
                         <h3>
-                          Order Info <ImInfo className="mx-2" />
+                          Order details <ImInfo className="mx-2" />
                         </h3>
                         <div className="summary-item">
                           <span className="text">Order Number</span>
                           <span className="price">{orderInfo?.short_id}</span>
+                        </div>
+                        <div className="summary-item">
+                          <span className="text">Destination</span>
+                          <br />
+                          {orderInfo?.destination}
                         </div>
                         <div className="summary-item">
                           <span className="text">Status</span>

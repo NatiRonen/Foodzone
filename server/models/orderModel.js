@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema({
     type: "String",
     required: [true, "can't be blank"],
   },
+  destination: {
+    type: "String",
+    required: [true, "can't be blank"],
+  },
 });
 
 exports.OrderModel = mongoose.model("orders", orderSchema);

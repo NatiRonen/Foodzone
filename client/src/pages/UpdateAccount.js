@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import DeleteAccount from "../comps/general/DeleteAccount";
 import { motion } from "framer-motion";
 import { encrypt } from "../utils/encryption";
+import GetAddress from "../comps/misc/GetAddress";
 
 function UpdateAccount() {
   const user = useSelector((state) => state.user);
@@ -44,6 +45,7 @@ function UpdateAccount() {
     const picUrl = image ? await uploadImage(image) : imagePreview;
     let encryptCurrentPass = encrypt(currentPassword);
     let encryptNewPass = newPassword ? encrypt(newPassword) : null;
+    console.log(address);
     let resp = await updateUser({
       name,
       email,
@@ -167,16 +169,7 @@ function UpdateAccount() {
                     value={newPassword}
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Address"
-                    onChange={(e) => setAddress(e.target.value)}
-                    value={address}
-                    required
-                  />
-                </Form.Group>
+                <GetAddress setAddress={setAddress} currentAddress={address} />
                 <Form.Group className="mb-5" controlId="formBasicEmail">
                   <Form.Label>Phone</Form.Label>
                   <Form.Control

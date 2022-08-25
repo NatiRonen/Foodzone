@@ -14,59 +14,38 @@ function CheckoutItem(props) {
   };
 
   return (
-    <div className="product order">
-      <div className="row">
-        <div className="col-md-3">
-          <img className="img-fluid mx-auto d-block image" src={item.imgUrl} />
+    <div className="border d-flex justify-content-between">
+      <div className="col-5 col-lg-6 p-3">
+        <p className="fw-bold mb-1">{item.name}</p>
+        <p>₪ {item.price}</p>
+        <div>
+          <button
+            className="btn btn-outline-success  px-2 py-0"
+            onClick={() => dispatch(addCart(item))}
+          >
+            +
+          </button>
+          <span className="px-2">x {item.qty}</span>
+          {/* reduce button */}
+          <button
+            className="btn btn-outline-danger px-2 py-0"
+            onClick={() => dispatch(reduceOneCart(item._id))}
+          >
+            -
+          </button>
+
+          <button
+            onClick={() => {
+              dellItem(item.name);
+            }}
+            className="btn btn-outline-danger ms-3 px-2 py-1"
+          >
+            <BsEraser />
+          </button>
         </div>
-        <div className="col-md-8">
-          <div className="info">
-            <div className="row">
-              <div className="col-md-5 product-name">
-                <div className="product-name">
-                  <div className="mt-2">{item.name}</div>
-                  <div className="product-info">
-                    <div>
-                      Info :<span className="value"> {item.info}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 mt-4">
-                {/* add button */}
-                <button
-                  className="btn btn-outline-success btn-item"
-                  onClick={() => dispatch(addCart(item))}
-                >
-                  +
-                </button>
-                <span className="p-1 mx-2" style={{ fontSize: "1.3em" }}>
-                  {item.qty}
-                </span>
-                {/* reduce button */}
-                <button
-                  className="btn btn-outline-danger btn-item"
-                  onClick={() => dispatch(reduceOneCart(item._id))}
-                >
-                  -
-                </button>
-              </div>
-              <div className="col-md-2 price">
-                <span>₪ {item.price}</span>
-              </div>
-              <div className="col-md-1 mt-4">
-                <button
-                  onClick={() => {
-                    dellItem(item.name);
-                  }}
-                  className="btn btn-outline-danger"
-                >
-                  <BsEraser />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div className="col-7 col-md-6 ">
+        <img className="img-fluid mx-auto d-block image" src={item.imgUrl} />
       </div>
     </div>
   );
