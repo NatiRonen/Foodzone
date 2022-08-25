@@ -1,18 +1,18 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import MessageForm from "./MessageForm";
-import Sidebar from "./Sidebar";
-import "./css/chat.css";
+import Sidebar from "./sidebar";
+import MessageForm from "./messageForm";
+import "./css/newChat.css";
 
 function Chat() {
   return (
-    <div className="container-fluid chat__bg p-4">
-      <Container>
-        <Row>
-          <Col md={4}>
+    <div className="container-fluid p-4">
+      <Container className="my-5 shadow_chat">
+        <Row className="p-0">
+          <Col md={4} className="border-end p-0">
             <Sidebar />
           </Col>
-          <Col md={8}>
+          <Col md={8} className="p-0">
             <MessageForm />
           </Col>
         </Row>

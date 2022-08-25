@@ -32,11 +32,8 @@ import FavsProducts from "./pages/favsProducts";
 import Checkout from "./pages/checkout";
 import OldOrders from "./pages/oldOrders";
 import OrdersListStore from "./storeAdmin/ordersListStore";
-import Chat from "./chat/Chat";
-import ChatAdmin from "./admin/chat/ChatAdmin";
-// .... new chat
-import ChatAdmin2 from "./admin/chat/ChatAdmin2";
-import Chat2 from "./chat/chat2";
+import Chat from "./chat/chat";
+import ChatAdmin from "./admin/chat/chatAdmin";
 
 function AppRouts() {
   return (
@@ -59,7 +56,6 @@ function AppRouts() {
           <Route path="createStore" element={<CreateStore />} />
           <Route path="myStores" element={<MyStores />} />
           <Route path="forums" element={<Chat />} />
-          <Route path="forums2" element={<Chat2 />} />
           {/* <Route path="/searchStore/:searchQ" element={<SearchStore />} /> */}
         </Route>
         {/*store admin*/}
@@ -87,7 +83,6 @@ function AppRouts() {
           <Route path="orders" element={<OrdersAdmin />} />
           <Route path="orders/:id" element={<OrderInfoAdmin />} />
           <Route path="chat" element={<ChatAdmin />} />
-          <Route path="chat2" element={<ChatAdmin2 />} />
         </Route>
         <Route path="/*" element={<Page404 />} />
       </Routes>
