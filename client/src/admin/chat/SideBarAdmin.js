@@ -7,6 +7,7 @@ import axios from "axios";
 import { Button, Col, ListGroup, Row, Modal } from "react-bootstrap";
 import { BsEraser } from "react-icons/bs";
 import { BiAddToQueue } from "react-icons/bi";
+import { MdOutlineAddBox } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import Collapse from "react-bootstrap/Collapse";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
@@ -31,6 +32,7 @@ function SideBarAdmin() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(clients);
     getRooms();
     getClients();
     socket.emit("join-room", rooms[0]?.name);
@@ -104,6 +106,28 @@ function SideBarAdmin() {
           />
         </span>
       </div>
+      <Collapse in={open}>
+        <div className="search-box">
+          <div className="input-wrapper p-2">
+            <MdOutlineAddBox
+              className="add_Room_Btn float-end"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpen(false);
+                handelAddRmoveRoom(newForum);
+                setNewForum("");
+              }}
+            />
+            <input
+              value={newForum}
+              onChange={(e) => setNewForum(e.target.value)}
+              placeholder="Forum name"
+              type="text"
+              className="ps-3"
+            />
+          </div>
+        </div>
+      </Collapse>
       <div className="search-box">
         <div className="input-wrapper p-2">
           {/* <FiSearch style={{ cursor: "pointer" }} onClick={searchRoom} /> */}
@@ -117,69 +141,6 @@ function SideBarAdmin() {
           />
         </div>
       </div>
-      <Collapse in={open}>
-        <Row id="example-collapse-text d-flex align-items-center ">
-          <Col xs={8}>
-            <FloatingLabel controlId="floatingPassword" label="Forum name">
-              <Form.Control
-                type="text"
-                placeholder="Forum name"
-                value={newForum}
-                onChange={(e) => setNewForum(e.target.value)}
-              />
-            </FloatingLabel>
-          </Col>
-          <Col xs={2}>
-            <Button
-              variant="success"
-              onClick={() => {
-                setOpen(false);
-                handelAddRmoveRoom(newForum);
-                setNewForum("");
-              }}
-            >
-              Add
-            </Button>
-          </Col>
-        </Row>
-      </Collapse>
-      {/* <div className="mb-3">
-        <Button
-          onClick={() => setOpen(!open)}
-          aria-controls="example-collapse-text"
-          aria-expanded={open}
-          variant="outline-success"
-          className="mb-2"
-        >
-          Add Forum
-        </Button>
-        <Collapse in={open}>
-          <Row id="example-collapse-text d-flex align-items-center ">
-            <Col xs={8}>
-              <FloatingLabel controlId="floatingPassword" label="Forum name">
-                <Form.Control
-                  type="text"
-                  placeholder="Forum name"
-                  value={newForum}
-                  onChange={(e) => setNewForum(e.target.value)}
-                />
-              </FloatingLabel>
-            </Col>
-            <Col xs={2}>
-              <Button
-                variant="success"
-                onClick={() => {
-                  setOpen(false);
-                  handelAddRmoveRoom(newForum);
-                  setNewForum("");
-                }}
-              >
-                Add
-              </Button>
-            </Col>
-          </Row>
-        </Collapse>
-      </div> */}
       <small className="chat_titel ps-3">Forums</small>
       <ListGroup className="scroll_div_admin">
         {rooms.map((room, idx) => (
@@ -189,19 +150,19 @@ function SideBarAdmin() {
             active={room.name === currentRoom}
             className="friend-drawer friend-drawer--onhover"
           >
-            <div className="float-end">
+            {/* <div className="float-end">
               <BsEraser
-                className="del_chat_Room_Btn"
-                onClick={() => handelAddRmoveRoom(room.name)}
-                title="Delete"
+              className="del_chat_Room_Btn"
+              onClick={() => handelAddRmoveRoom(room.name)}
+              title="Delete"
               />
-            </div>
+            </div> */}
             <img
               className="profile-image"
               src={`https://avatars.dicebear.com/api/bottts/${room.name}.svg`}
               alt=""
             />
-            <div className="mt-2">
+            <div className="mt-2 col-8">
               <h6>{room.name}</h6>
               {/* <p className="text-muted">Hey, you're arrested!</p> */}
               {currentRoom !== room.name && (
@@ -210,6 +171,11 @@ function SideBarAdmin() {
                 </span>
               )}
             </div>
+            <BsEraser
+              className="del_chat_Room_Btn mx-0"
+              onClick={() => handelAddRmoveRoom(room.name)}
+              title="Delete"
+            />
           </div>
         ))}
       </ListGroup>
