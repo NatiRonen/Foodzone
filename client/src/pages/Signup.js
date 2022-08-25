@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 import "./css/Signup.css";
 import { encrypt } from "../utils/encryption";
 import GetAddress from "../comps/misc/GetAddress";
-import GoogleMap from "../comps/misc/GoogleMap";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -24,12 +23,9 @@ function Signup() {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const [show, setShow] = useState(true);
   const defaultImage =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
   const nav = useNavigate();
-
-  const handleToggle = () => setShow(!show);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -140,17 +136,7 @@ function Signup() {
                   required
                 />
               </Form.Group>
-              <Form.Group className="mb-3 " controlId="formBasicEmail">
-                <GetAddress show={show} handleToggle={handleToggle} />
-                {/* <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Address"
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address}
-                  required
-                /> */}
-              </Form.Group>
+              <GetAddress setAddress={setAddress} currentAddress={address} />
               <Form.Group controlId="formBasicPhone" className="mb-3 ">
                 <Form.Label>Phone</Form.Label>
                 <Form.Control

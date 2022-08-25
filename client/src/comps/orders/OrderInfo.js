@@ -62,11 +62,16 @@ function OrderInfo(props) {
                     <div className="summary">
                       <React.Fragment>
                         <h3>
-                          Order Info <ImInfo className="mx-2" />
+                          Order details <ImInfo className="mx-2" />
                         </h3>
                         <div className="summary-item">
                           <span className="text">Order Number</span>
                           <span className="price">{orderInfo?.short_id}</span>
+                        </div>
+                        <div className="summary-item">
+                          <span className="text">Destination</span>
+                          <br />
+                          {orderInfo?.destination}
                         </div>
                         <div className="summary-item">
                           <span className="text">Status</span>
