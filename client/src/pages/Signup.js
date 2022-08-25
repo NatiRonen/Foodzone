@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 
 import "./css/Signup.css";
 import { encrypt } from "../utils/encryption";
+import GetAddress from "../comps/misc/GetAddress";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -72,6 +73,8 @@ function Signup() {
   };
   return (
     <Container>
+      {/* <GoogleMap /> */}
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -133,16 +136,7 @@ function Signup() {
                   required
                 />
               </Form.Group>
-              <Form.Group className="mb-3 " controlId="formBasicEmail">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Address"
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address}
-                  required
-                />
-              </Form.Group>
+              <GetAddress setAddress={setAddress} currentAddress={address} />
               <Form.Group controlId="formBasicPhone" className="mb-3 ">
                 <Form.Label>Phone</Form.Label>
                 <Form.Control

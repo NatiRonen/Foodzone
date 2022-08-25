@@ -12,14 +12,14 @@ function Developers(props) {
       className="col-lg-6 mb-4"
     >
       <div className="row">
-        <div className="col-md-12">
+        <div className="">
           <img
             src={devInfo.img}
             alt="wrapkit"
             className="img-fluid rounded-circle mx-auto d-block"
           />
         </div>
-        <div className="col-md-12 text-center">
+        <div className=" text-center">
           <div className="pt-2">
             <h5 className="mt-4 font-weight-medium mb-0">{devInfo.name}</h5>
             <h6 className="subtitle mb-3">{devInfo.job}</h6>
