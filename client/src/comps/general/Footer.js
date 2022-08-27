@@ -24,11 +24,11 @@ function Footer(props) {
                 Forums & Customers service
               </Nav.Link>
             </Nav.Item>
-            {/* {user.role === CLIENT_ROLE && ( */}
-            <Nav.Link className="text-secondary" href="/ApplyForCourier">
-              Jouin to our couriers program
-            </Nav.Link>
-            {/* )} */}
+            {user.role === CLIENT_ROLE && (
+              <Nav.Link className="text-secondary" href="/ApplyForCourier">
+                Jouin to our couriers program
+              </Nav.Link>
+            )}
             {user.role === COURIER_ROLE && (
               <Nav.Link className="text-secondary" href="/courier">
                 Couriers section

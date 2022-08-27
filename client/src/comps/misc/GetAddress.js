@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 
 function GetAddress(props) {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyC8zU9_yw3KHYx1p4ZEqsVPQWF8jKEoK00",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
     libraries: ["places"],
   });
   const setAddress = props.setAddress;
