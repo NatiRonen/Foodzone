@@ -30,8 +30,8 @@ function Navigation() {
           <LinkContainer to="/">
             <Navbar.Brand>
               <img
-                // src={`${process.env.REACT_APP_CLIENT_URL}/images/shipMarket_icon.png`}
-                src={`/images/logo.png`}
+                // src={`${process.env.REACT_APP_CLIENT_URL}/images/logo_origin.png`}
+                src={`/images/logo_origin.png`}
                 style={{ width: 70, height: 60 }}
               />
             </Navbar.Brand>
