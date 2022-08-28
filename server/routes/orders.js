@@ -50,18 +50,24 @@ router.get("/userOrder", auth, async (req, res) => {
   }
 });
 
-router.get("/allOrders", authAdmin, async (req, res) => {
+router.get("/allOrders", auth, async (req, res) => {
   let perPage = req.query.perPage || 10;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "_id";
   let reverse = req.query.reverse == "yes" ? -1 : 1;
   let user_id = req.query.user_id;
   let status = req.query.status;
+  let courier = req.query.courier;
 
   try {
     let filter = user_id ? { user_id } : {};
     filter = status
       ? { ...filter, status }
+      : {
+          ...filter,
+        };
+    filter = courier
+      ? { ...filter, courier }
       : {
           ...filter,
         };
@@ -236,15 +242,18 @@ router.patch("/orderPaid", auth, async (req, res) => {
 // ?status =
 router.patch("/:orderId", auth, async (req, res) => {
   let status = req.query.status || "pending";
+  let updateObj = { status };
   let orderId = req.params.orderId;
+  if ((status = "on_the_way")) {
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    updateObj = { ...updateObj, courier_short_id: user.short_id };
+  }
   try {
     let data = await OrderModel.updateOne(
       {
         _id: orderId,
       },
-      {
-        status,
-      }
+      updateObj
     ); //shortcut becouse is same name
     // modifiedCount
     res.json(data);
@@ -255,7 +264,6 @@ router.patch("/:orderId", auth, async (req, res) => {
 });
 
 router.delete("/:delId", authAdmin, async (req, res) => {
-  let orderId = req.params.delId;
   try {
     let data = await OrderModel.deleteOne({
       _id: orderId,

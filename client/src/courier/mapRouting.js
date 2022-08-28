@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import RoutingCard from "./routingCard";
@@ -19,6 +19,9 @@ import {
 import { calculateRoute, getCurrentAddress, MAPS_KEY } from "../services/mapServices";
 import { Button, Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import OrderInfo from "../comps/orders/OrderInfo";
+import { DELIVERED_ORDER_STATUS } from "../services/consts";
+import { AppContext } from "../context/appContext";
+import { checkOpenShipmentLocal, remonveOpenShipment } from "../services/localService";
 
 function MapRouting(props) {
   const params = useParams();
@@ -31,8 +34,10 @@ function MapRouting(props) {
 
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
-  const location = useLocation();
-  let currentPosition = location.state.currentPosition;
+
+  let openShipment = checkOpenShipmentLocal();
+  let orderId = openShipment.orderId;
+  let currentPosition = openShipment.currentPosition;
 
   console.log(currentPosition);
   const { isLoaded } = useJsApiLoader({
@@ -41,11 +46,13 @@ function MapRouting(props) {
   });
 
   useEffect(() => {
-    doApi();
+    if (openShipment) {
+      doApi();
+    }
   }, []);
 
   const doApi = async () => {
-    let url = API_URL + "/orders/deliveryInfo/" + params.id;
+    let url = API_URL + "/orders/deliveryInfo/" + orderId;
     try {
       let resp = await doApiGet(url);
       console.log(resp.data);
@@ -66,6 +73,16 @@ function MapRouting(props) {
     console.log(results);
     setRouteDetails(routeDetails);
     setDirectionResponse(results);
+  };
+
+  const orderDelivered = async () => {
+    let url = API_URL + "/orders/" + orderData.order._id + "?status=" + DELIVERED_ORDER_STATUS;
+    let resp = await doApiMethod(url, "PATCH", {});
+    if (resp.data.modifiedCount === 1) {
+      remonveOpenShipment();
+      toast.success("order completed successfully");
+      nav("../ordersHistory");
+    }
   };
 
   if (!isLoaded || !orderData) return <LottieAnimation />;
@@ -114,6 +131,11 @@ function MapRouting(props) {
               Order details
             </button>
           </div>
+          <div className="text-center w-100 d-flex align-center mt-3">
+            <button onClick={orderDelivered} className="btn btn-outline-success float-end m-auto">
+              Order delivered successfully
+            </button>
+          </div>
         </Col>
         <Col md={9}>
           <div className="container map-container">
@@ -123,7 +145,6 @@ function MapRouting(props) {
               mapContainerStyle={{ width: "100%", height: "80vh" }}
               onLoad={(map) => setMap(map)}
             >
-              <Marker position={currentPosition} />
               {directionResponse && <DirectionsRenderer directions={directionResponse} />}
             </GoogleMap>
           </div>

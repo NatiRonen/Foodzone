@@ -41,7 +41,7 @@ import LayoutCourier from "./courier/layoutCourier";
 import HomeCourier from "./courier/homeCourier";
 import OpenOrdersMap from "./courier/openOrdersMap";
 import MapRouting from "./courier/mapRouting";
-// import MyOrders from "./courier/myOrders";
+import MyOrders from "./courier/myOrders";
 // import DeliveryInfo from "./courier/deliveryInfo";
 
 function AppRouts() {
@@ -93,9 +93,9 @@ function AppRouts() {
         <Route path="/courier" element={<LayoutCourier />}>
           <Route index element={<HomeCourier />} />
           <Route path="mapOrders" element={<OpenOrdersMap />} />
-          <Route path="takeDelivery/:id" element={<MapRouting />} />
-          {/* <Route path="/courier/myOrders" element={<MyOrders />} />
-          <Route path="/courier/deliveryInfo/:id" element={<DeliveryInfo />} /> */}
+          <Route path="takeDelivery" element={<MapRouting />} />
+          <Route path="/courier/ordersHistory" element={<MyOrders />} />
+          {/* <Route path="/courier/deliveryInfo/:id" element={<DeliveryInfo />} /> */}
         </Route>
         <Route path="/*" element={<Page404 />} />
       </Routes>

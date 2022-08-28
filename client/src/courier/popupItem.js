@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Modal, Row, ListGroup } from "react-bootstrap";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
 import { ON_THE_WAY_ORDER_STATUS } from "../services/consts";
+import { saveOpenShipmentLocal } from "../services/localService";
 import { calculateRoute, getCurrentAddress, handleRouteDetails } from "../services/mapServices";
 
 function PopupItem(props) {
@@ -14,7 +16,6 @@ function PopupItem(props) {
   // let currentPosition = { lat: 31.9461538, lng: 34.881139 };
   const nav = useNavigate();
   const [routeDetails, setRouteDetails] = useState({});
-  const [directionResponse, setDirectionResponse] = useState(null);
 
   useEffect(() => {
     setRoute();
@@ -27,11 +28,12 @@ function PopupItem(props) {
   };
 
   const takeOrder = async () => {
-    // let url = API_URL + "/orders/" + order._id + "?status=" + ON_THE_WAY_ORDER_STATUS;
-    // let resp = await doApiMethod(url, "PATCH", {});
-    // if (resp.data.modifiedCount === 1) {
-    // }
-    nav("../takeDelivery/" + order._id, { state: { currentPosition } });
+    let url = API_URL + "/orders/" + order._id + "?status=" + ON_THE_WAY_ORDER_STATUS;
+    let resp = await doApiMethod(url, "PATCH", {});
+    if (resp.data.modifiedCount === 1) {
+      saveOpenShipmentLocal({ currentPosition, orderId: order._id });
+      nav("../takeDelivery/");
+    }
   };
 
   return (

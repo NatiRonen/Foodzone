@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import OldOrderInfoItem from '../comps/orders_comps/oldOrderInfoItem';
-import { ImInfo } from 'react-icons/im';
+import React, { useEffect } from "react";
+import OldOrderInfoItem from "../comps/orders_comps/oldOrderInfoItem";
+import { ImInfo } from "react-icons/im";
 
 function OrderItemsInfo(props) {
   const item = props.orderInfo;
@@ -40,7 +40,7 @@ function OrderItemsInfo(props) {
                   <div className="summary-item">
                     <span className="text">Date</span>
                     <span className="price">
-                      {item.order.date_created.replace(/T/, ' ').substr(0, 16)}
+                      {item.order.date_created.replace(/T/, " ").substr(0, 16)}
                     </span>
                   </div>
                   <div className="summary-item">
@@ -53,7 +53,7 @@ function OrderItemsInfo(props) {
                   </div>
                   <div className="summary-item">
                     <span className="text">Address</span>
-                    <span className="price"> {item.order.destination.label}</span>
+                    <span className="price"> {item.order.destination}</span>
                   </div>
                 </React.Fragment>
               </div>

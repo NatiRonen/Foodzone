@@ -4,6 +4,7 @@ import PopupMap from "./popupMap";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { getCurrentLocation, getGeoCodings, MAPS_KEY } from "../services/mapServices";
 import "./css_courier/courier.css";
+import LottieAnimation from "../comps/misc/lottieAnimation";
 
 const STORE_ICON =
   "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parcel_package_box_delivery-64.png";
@@ -45,7 +46,7 @@ function OpenOrdersMap(props) {
     }
   };
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <LottieAnimation />;
   return (
     <div style={{ width: "100%", height: "100vh" }} className="container map-container">
       {show && (

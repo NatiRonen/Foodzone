@@ -21,6 +21,7 @@ const orderSchema = new mongoose.Schema({
     type: "String",
     required: [true, "can't be blank"],
   },
+  courier_short_id: String,
   destination: {
     type: "String",
     required: [true, "can't be blank"],

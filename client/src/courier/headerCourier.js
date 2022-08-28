@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { checkTokenLocal } from "../services/localService";
+import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
 // react icons
 import { BiHomeAlt } from "react-icons/bi";
 import { GoListUnordered } from "react-icons/go";
@@ -9,6 +9,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { AppContext } from "../context/appContext";
 
 function HeaderCourier(props) {
   const nav = useNavigate();
@@ -54,7 +55,15 @@ function HeaderCourier(props) {
               >
                 Take new order
               </Nav.Link>
-
+              {checkOpenShipmentLocal() && (
+                <Nav.Link
+                  onClick={() => {
+                    nav("./takeDelivery");
+                  }}
+                >
+                  Opne shipment
+                </Nav.Link>
+              )}
               <Nav.Link
                 onClick={() => {
                   nav("./OrdersHistory");
