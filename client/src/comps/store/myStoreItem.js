@@ -27,7 +27,9 @@ function MyStoreItem(props) {
       className="col-md-4 col-sm-6 mb-4"
     >
       <div
-        className="payment-card rounded-lg shadow bg-white text-center h-100 cursor-pointer"
+        className={`payment-card rounded-lg shadow bg-white text-center h-100 ${
+          item.status == "pending" ? "cursor_no" : "cursor_pointer"
+        }`}
         disabled={true}
         onClick={onClickStore}
       >
@@ -38,7 +40,10 @@ function MyStoreItem(props) {
           >
             {item.status}
           </div>
-          <img src={item.imgUrl || "/images/no_image.png"} alt={item.name + " image"} />
+          <img
+            src={item.imgUrl || "/images/no_image.png"}
+            alt={item.name + " image"}
+          />
         </div>
         <div className="payment-card__info p-4">
           <h4>{item.name}</h4>
