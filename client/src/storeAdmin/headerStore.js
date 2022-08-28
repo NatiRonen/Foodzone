@@ -35,9 +35,7 @@ function HeaderStore(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              ShipMarket
-            </Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
@@ -54,7 +52,7 @@ function HeaderStore(props) {
                   nav("./openOrders");
                 }}
               >
-                Open Orders
+                Opened Orders
               </Nav.Link>
               <Nav.Link
                 onClick={() => {
