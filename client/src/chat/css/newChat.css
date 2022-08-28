@@ -7,15 +7,15 @@
 }
 .scroll_div {
   overflow-y: auto;
-  max-height: 497px;
+  max-height: 492px !important;
 }
 .scroll_div_admin {
   overflow-y: auto;
-  max-height: 285px;
+  max-height: 252px !important;
 }
 .scroll_div_Customers {
   overflow-y: auto;
-  max-height: 286px;
+  max-height: 250px !important;
 }
 .chat_panel {
   overflow-y: auto;
