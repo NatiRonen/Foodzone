@@ -29,18 +29,7 @@ function Ticket(props) {
   };
 
   return (
-    <div className="order_card col-md-6 mb-4">
-      <span
-        className={
-          item.status === "on_the_way"
-            ? "badge bg-info"
-            : item.status === "paid"
-            ? "badge bg-warning"
-            : "badge bg-success"
-        }
-      >
-        {item.status === "on_the_way" ? "Courier in the way" : item.status}
-      </span>
+    <div className="order_card col-lg-6 mb-4">
       <section className="order_number p-3">
         <div className="container mt-4">
           <span>x {i + 1}</span>
@@ -74,6 +63,18 @@ function Ticket(props) {
         )}
       </section>
       <section className="card-cont px-2">
+        <span
+          className={
+            item.status === "on_the_way"
+              ? "badge bg-info float-end"
+              : item.status === "paid"
+              ? "badge bg-warning float-end"
+              : "badge bg-success float-end"
+          }
+          style={{ fontSize: "0.8em" }}
+        >
+          {item.status === "on_the_way" ? "Courier in the way" : item.status}
+        </span>
         <small>Total</small>
         <h3>₪ {item.total_price}</h3>
         <div className="even-date">
@@ -87,9 +88,7 @@ function Ticket(props) {
           {item.products_ar.map((prod) => {
             return (
               <div key={prod._id} className="d-flex flex-row">
-                {prod.img_url && (
-                  <img src={prod.img_url} className="prod_img me-2" />
-                )}
+                {prod.img_url && <img src={prod.img_url} className="prod_img me-2" />}
                 <p>
                   {prod.name} <span className="h6">x{prod.qty}</span>
                 </p>

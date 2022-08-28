@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { API_URL, doApiMethod } from "../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
 import CheckoutItem from "../comps/orders/checkoutItem";
@@ -12,6 +12,7 @@ import { resetCart } from "../redux/cartSlice";
 import AuthClientComp from "../comps/auth/authClientComp";
 import GetAddress from "../comps/misc/GetAddress";
 import { Row, Col } from "react-bootstrap";
+import { AppContext } from "../context/appContext";
 
 function Checkout(props) {
   const { cart_ar, totalPrice, store_short_id } = useSelector((state) => state.cart);
@@ -19,6 +20,8 @@ function Checkout(props) {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const [destination, setDestination] = useState("");
+
+  const { socket } = useContext(AppContext);
 
   const disabledBtn = () => {
     //  disable paypal btns
@@ -67,10 +70,16 @@ function Checkout(props) {
     };
     let resp = await doApiMethod(url, "PATCH", paypalObject);
     if (resp.data.modifiedCount == 1) {
+      socket.emit("join-room-orders", store_short_id);
+      socket.emit("new-order", store_short_id);
       toast.success("Your order completed successfully");
       dispatch(resetCart());
       nav("/oldOrders");
     }
+  };
+  const devOrder = () => {
+    socket.emit("join-room-orders", store_short_id);
+    socket.emit("new-order", store_short_id);
   };
 
   return (
@@ -94,14 +103,7 @@ function Checkout(props) {
       <section className="shopping-cart">
         <div className="container">
           <div className="row g-2">
-            <div className="col-lg-3">
-              <div className="shadow pb-5  p-3">
-                <h4 className="mb-3"> Destination </h4>
-                <GetAddress currentAddress={user.address} setAddress={setDestination} />
-              </div>
-            </div>
-
-            <div className="col-lg-5">
+            <div className="col-lg-8">
               <div className="items">
                 {/* start product */}
                 {cart_ar.length == 0 ? (
@@ -120,6 +122,9 @@ function Checkout(props) {
             {/* start Checkout */}
             <div className="col-lg-4">
               <div className="summary shadow">
+                <h3> Destination </h3>
+                <GetAddress currentAddress={user.address} setAddress={setDestination} />
+
                 <h3> Payment </h3>
                 <div className="summary-item">
                   <span className="text"> Tip </span>
@@ -166,6 +171,7 @@ function Checkout(props) {
             {/* end Checkout */}
           </div>
         </div>
+        <button onClick={devOrder}>socket</button>
       </section>
     </motion.div>
   );
