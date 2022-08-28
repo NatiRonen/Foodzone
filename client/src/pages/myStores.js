@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-
 import { useNavigate } from "react-router-dom";
-import "./css/myStores.css";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import AuthClientComp from "../comps/auth/authClientComp";
 import MyStoreItem from "../comps/store/myStoreItem";
+import "./css/myStores.css";
 
 function MyStores(props) {
   const [ar, setAr] = useState([]);
@@ -69,7 +68,11 @@ function MyStores(props) {
       <div className="container">
         <h1 className="text-uppercase display-4 text-center mb-4">My Stores</h1>
         <div className="mb-5 col-md-3">
-          <select ref={selectRef} onChange={onSelectOption} className="form-select">
+          <select
+            ref={selectRef}
+            onChange={onSelectOption}
+            className="form-select"
+          >
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="pending">Pending</option>
@@ -78,7 +81,9 @@ function MyStores(props) {
         <motion.div layout className="row">
           <AnimatePresence>
             {arSort.map((item) => {
-              return <MyStoreItem key={item._id} item={item} delStore={delStore} />;
+              return (
+                <MyStoreItem key={item._id} item={item} delStore={delStore} />
+              );
             })}
           </AnimatePresence>
 
