@@ -1,5 +1,13 @@
 import React from "react";
-import { BsFacebook, BsTwitter, BsSnapchat, BsInstagram } from "react-icons/bs";
+import {
+  BsFacebook,
+  BsTwitter,
+  BsSnapchat,
+  BsInstagram,
+  BsGithub,
+  BsLinkedin,
+  BsFillFileEarmarkPdfFill,
+} from "react-icons/bs";
 import { motion } from "framer-motion";
 
 function Developers(props) {
@@ -29,7 +37,10 @@ function Developers(props) {
                 " "
               ) : (
                 <li className="list-inline-item">
-                  <a href="#" className="text-decoration-none d-block px-1">
+                  <a
+                    href={devInfo.Facebook}
+                    className="text-decoration-none d-block px-1"
+                  >
                     <BsFacebook />
                   </a>
                 </li>
@@ -38,7 +49,11 @@ function Developers(props) {
                 ""
               ) : (
                 <li className="list-inline-item">
-                  <a href="#" className="text-decoration-none d-block px-1">
+                  <a
+                    target="_blank"
+                    href={devInfo.Twitter}
+                    className="text-decoration-none d-block px-1"
+                  >
                     <BsTwitter />
                   </a>
                 </li>
@@ -47,7 +62,11 @@ function Developers(props) {
                 ""
               ) : (
                 <li className="list-inline-item">
-                  <a href="#" className="text-decoration-none d-block px-1">
+                  <a
+                    target="_blank"
+                    href={devInfo.Instagram}
+                    className="text-decoration-none d-block px-1"
+                  >
                     <BsInstagram />
                   </a>
                 </li>
@@ -56,8 +75,51 @@ function Developers(props) {
                 ""
               ) : (
                 <li className="list-inline-item">
-                  <a href="#" className="text-decoration-none d-block px-1">
+                  <a
+                    target="_blank"
+                    href={devInfo.Snapchat}
+                    className="text-decoration-none d-block px-1"
+                  >
                     <BsSnapchat />
+                  </a>
+                </li>
+              )}
+              {devInfo.Github === "" ? (
+                ""
+              ) : (
+                <li className="list-inline-item">
+                  <a
+                    target="_blank"
+                    href={devInfo.Github}
+                    className="text-decoration-none d-block px-1"
+                  >
+                    <BsGithub />
+                  </a>
+                </li>
+              )}
+              {devInfo.Linkedin === "" ? (
+                ""
+              ) : (
+                <li className="list-inline-item">
+                  <a
+                    target="_blank"
+                    href={devInfo.Linkedin}
+                    className="text-decoration-none d-block px-1"
+                  >
+                    <BsLinkedin />
+                  </a>
+                </li>
+              )}
+              {devInfo.PdfFill === "" ? (
+                ""
+              ) : (
+                <li className="list-inline-item">
+                  <a
+                    href={devInfo.PdfFill}
+                    target="_blank"
+                    className="text-decoration-none d-block px-1"
+                  >
+                    <BsFillFileEarmarkPdfFill />
                   </a>
                 </li>
               )}
