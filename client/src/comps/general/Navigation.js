@@ -30,7 +30,8 @@ function Navigation() {
           <LinkContainer to="/">
             <Navbar.Brand>
               <img
-                src={`${process.env.REACT_APP_CLIENT_URL}/images/shipMarket_icon.png`}
+                // src={`${process.env.REACT_APP_CLIENT_URL}/images/shipMarket_icon.png`}
+                src={`/images/logo.png`}
                 style={{ width: 70, height: 60 }}
               />
             </Navbar.Brand>
@@ -42,7 +43,9 @@ function Navigation() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+                ShipMarket
+              </Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
@@ -97,13 +100,23 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-                    <NavDropdown.Item href="/favorites">Favorites</NavDropdown.Item>
-                    <NavDropdown.Item href="/oldOrders">Orders</NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>Cart</NavDropdown.Item>
+                    <NavDropdown.Item href="/favorites">
+                      Favorites
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/oldOrders">
+                      Orders
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
+                      Cart
+                    </NavDropdown.Item>
                     {cart_ar.length > 0 && (
-                      <NavDropdown.Item href="/checkout">Checkout</NavDropdown.Item>
+                      <NavDropdown.Item href="/checkout">
+                        Checkout
+                      </NavDropdown.Item>
                     )}
-                    <NavDropdown.Item href="/uptateAccount">Account</NavDropdown.Item>
+                    <NavDropdown.Item href="/uptateAccount">
+                      Account
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
 
                     <NavDropdown.Item>

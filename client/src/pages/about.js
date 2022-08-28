@@ -6,25 +6,31 @@ import Developers from "../comps/general/developers";
 
 function About(props) {
   let dev1Info = {
-    name: "Michael Doe",
-    job: "Property Specialist",
-    info: "You can relay on our amazing features list and also our customer services will be great experience.",
-    img: "https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg",
+    name: "Ariel Levi",
+    job: "FullStack Developer",
+    info: "Full Stack developer, gradutated practical course at Ort Singalovski. Autodidact and passionate about web development.",
+    img: "https://media-exp1.licdn.com/dms/image/D4D35AQG7L6RPHp9gTA/profile-framedphoto-shrink_200_200/0/1658870066712?e=1662300000&v=beta&t=3OT9q_O0SzAlg2c_hbhiS9DWHc00tgqlyru57EZ9TI0",
     Facebook: "",
     Twitter: "",
     Instagram: "",
     Snapchat: "",
+    Github: "https://github.com/Ariel-levi",
+    Linkedin: "https://www.linkedin.com/in/ariel-levi1998",
+    PdfFill: "/files/Ariel_Levi_cv.pdf",
   };
 
   let dev2Info = {
-    name: "Michael Doe 2",
-    job: "Property Specialist 2",
-    info: "You can relay on our amazing features list and also our customer services will be great experience.",
-    img: "https://www.wrappixel.com/demos/ui-kit/wrapkit/assets/images/team/t2.jpg",
-    Facebook: "1",
-    Twitter: "c",
-    Instagram: "c",
-    Snapchat: "c",
+    name: "Nati Ronen",
+    job: "FullStack Developer",
+    info: "Full Stack developer, gradutated practical course at Ort Singalovski. Autodidact and passionate about web development.",
+    img: "https://media-exp1.licdn.com/dms/image/D4D35AQFWJwQStA0bZA/profile-framedphoto-shrink_200_200/0/1655922199384?e=1662300000&v=beta&t=TPiNFjVgejlml_yyBqAghFxRBI1J5QuQyt76IIhBfVE",
+    Facebook: "",
+    Twitter: "",
+    Instagram: "",
+    Snapchat: "",
+    Github: "https://github.com/NatiRonen",
+    Linkedin: "https://www.linkedin.com/in/nati-ronen",
+    PdfFill: "/files/Nati_Ronen_cv.pdf",
   };
 
   return (
@@ -40,8 +46,12 @@ function About(props) {
             >
               <h3 className="mb-3">Experienced & Professional Team</h3>
               <h6 className="subtitle">
-                You can relay on our amazing features list and also our customer services will be
-                great experience for you without doubt and in no-time
+                A food delivery platform for creating stores, ordering food and
+                managing deliveries. The client side consist of 4 panels:
+                customers, store owners, couriers and admin, and authentications
+                for each panel. System sets orders and route to the client
+                address through the store. Technologies: client side: react |
+                redux server side: node.js |express | jwt | soket.io DB: MongoDB
               </h6>
             </motion.div>
           </div>
