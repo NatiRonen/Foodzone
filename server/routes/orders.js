@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth, payPalAuth, authAdmin, authStoreAdmin } = require("../middlewares/auth");
+const { auth, payPalAuth, authAdmin, authStoreAdmin, authCourier } = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { OrderModel } = require("../models/orderModel");
 const { ProductModel } = require("../models/productModel");
@@ -119,7 +119,22 @@ router.get("/allOrdersCount", auth, async (req, res) => {
   }
 });
 
-// ?????? check
+// get order details store info and user name and email
+router.get("/deliveryInfo/:idOrder", authCourier, async (req, res) => {
+  try {
+    let order = await OrderModel.findOne({
+      _id: req.params.idOrder,
+    });
+    let store = await StoreModel.findOne({
+      short_id: order.store_short_id,
+    });
+    let user = await UserModel.findOne({ short_id: order.client_short_id }, { name: 1, phone: 1 });
+    res.status(200).json({ order, store, user });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.get("/productsInfo/:idOrder", auth, async (req, res) => {
   try {
     let order = await OrderModel.findOne({
@@ -219,7 +234,7 @@ router.patch("/orderPaid", auth, async (req, res) => {
 
 // route update order status
 // ?status =
-router.patch("/:orderId", authAdmin, async (req, res) => {
+router.patch("/:orderId", auth, async (req, res) => {
   let status = req.query.status || "pending";
   let orderId = req.params.orderId;
   try {

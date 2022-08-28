@@ -3,7 +3,7 @@ import { BsFacebook, BsTwitter, BsSnapchat, BsInstagram } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Nav } from "react-bootstrap";
-import { ADMIN_ROLE, CLIENT_ROLE, COURIER_ROLE } from "../../services/roles";
+import { ADMIN_ROLE, CLIENT_ROLE, COURIER_ROLE } from "../../services/consts";
 
 function Footer(props) {
   const dt = new Date();

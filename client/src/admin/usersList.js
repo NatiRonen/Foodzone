@@ -14,7 +14,7 @@ import {
   CLIENT_ROLE,
   COURIER_ROLE,
   STOER_ADMIN_ROLE,
-} from "../services/roles";
+} from "../services/consts";
 
 function UsersList(props) {
   const [ar, setAr] = useState([]);

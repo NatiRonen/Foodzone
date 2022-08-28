@@ -1,126 +1,188 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
-import RoutingMachine from './routingMachine';
-import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
-import { useNavigate, useParams } from 'react-router-dom';
-import RoutingCard from './routingCard';
-import LottieAnimation from '../comps/general_comps/lottieAnimation';
-import { toast } from 'react-toastify';
-import { MdOutlineDeliveryDining } from 'react-icons/md';
-import { BsChevronRight } from 'react-icons/bs';
-import io from 'socket.io-client';
-import './css_courier/courier.css';
+import React, { useEffect, useState } from "react";
+import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+// import RoutingCard from "./routingCard";
+import { toast } from "react-toastify";
+import { MdOutlineDeliveryDining } from "react-icons/md";
+import { BsChevronRight } from "react-icons/bs";
+import io from "socket.io-client";
+import "./css_courier/courier.css";
+import LottieAnimation from "../comps/misc/lottieAnimation";
+
+import {
+  useJsApiLoader,
+  GoogleMap,
+  Marker,
+  Autocomplete,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import { calculateRoute, getCurrentAddress, MAPS_KEY } from "../services/mapServices";
+import { Button, Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
+import OrderInfo from "../comps/orders/OrderInfo";
 
 function MapRouting(props) {
-  const [myLocation, setMyLocation] = useState([0, 0]);
-  const [storeStop, setStoreStop] = useState([0, 0]);
-  const [clientEnd, setClientEnd] = useState([0, 0]);
-  const [orderInfo, setOrderInfo] = useState([]);
-  const [routingTime, setRoutingTime] = useState('');
-  const [loading, setLoading] = useState(true);
   const params = useParams();
   const nav = useNavigate();
 
-  // const socket = io.connect(API_URL);
+  const [map, setMap] = useState(/**@type google.maps.map*/ (null));
+  const [orderData, setOrderData] = useState(null);
+  const [routeDetails, setRouteDetails] = useState({});
+  const [directionResponse, setDirectionResponse] = useState(null);
+
+  const [show, setShow] = useState(false);
+  const handleToggle = () => setShow(!show);
+  const location = useLocation();
+  let currentPosition = location.state.currentPosition;
+
+  console.log(currentPosition);
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: MAPS_KEY,
+    libraries: ["places"],
+  });
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        let locate = [pos.coords.latitude, pos.coords.longitude];
-        setMyLocation(locate);
-      },
-      (err) => {
-        console.log(err);
-        if (err.code === 1) {
-          toast.error('User denied Geolocation');
-        }
-        console.log('Something went wrong');
-      }
-    );
     doApi();
   }, []);
 
   const doApi = async () => {
-    let url = API_URL + '/orders/deliveryInfo/' + params.id;
+    let url = API_URL + "/orders/deliveryInfo/" + params.id;
     try {
       let resp = await doApiGet(url);
       console.log(resp.data);
-      setOrderInfo(resp.data);
-      setStoreStop([resp.data.store.address.y, resp.data.store.address.x]);
-      setClientEnd([resp.data.order.destination.y, resp.data.order.destination.x]);
-      setLoading(false);
+      setOrderData(resp.data);
+      setRoutes(resp.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const takeDelivery = async (_orderId, _orderShortId) => {
-    console.log(_orderId);
-    let url = API_URL + '/orders/shipping/takingOrder';
-    try {
-      let resp = await doApiMethod(url, 'PATCH', { orderId: _orderId });
-      // console.log(resp.data);
-      if (resp.data.modifiedCount === 1) {
-        const socket = io.connect(API_URL);
-        socket.emit('taking_order', _orderShortId);
-        toast.info('You took the shipment');
-        nav('/courier/myOrders');
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const setRoutes = async (_data) => {
+    let currentAddress = await getCurrentAddress(currentPosition);
+    const { results, routeDetails } = await calculateRoute(
+      currentAddress,
+      _data.store.address,
+      _data.order.destination
+    );
+    console.log(results);
+    setRouteDetails(routeDetails);
+    setDirectionResponse(results);
   };
 
+  if (!isLoaded || !orderData) return <LottieAnimation />;
   return (
-    <div className="container my-5">
-      <div className="text-center">
-        <h2 className="display-4 mb-4 animaLinkSM"> Order Details </h2>
-        <button
-          style={{ background: 'none' }}
-          className="position-absolute top-0 end-0 animaLinkSM "
-          onClick={() => {
-            nav(-1);
-          }}>
-          Back <BsChevronRight className="mx-2" />
-        </button>
-      </div>
-      {loading && <LottieAnimation />}
-      {!loading && orderInfo.order.status === 'shipped' && (
-        <h2 className="text-center display-4 text-danger">
-          The shipment has already been taken... <MdOutlineDeliveryDining className="me-2" />
-        </h2>
-      )}
-      {!loading && orderInfo.order.status === 'paid' && (
-        <RoutingCard orderInfo={orderInfo} routingTime={routingTime} />
-      )}
-      {!loading && orderInfo.order.status === 'paid' && (
-        <React.Fragment>
-          <MapContainer className="map" center={myLocation} zoom={10} scrollWheelZoom={true}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution="ShipMarket"
-            />
-            {/* comp for Routing */}
-            <RoutingMachine
-              start={myLocation}
-              stop={storeStop}
-              end={clientEnd}
-              setRoutingTime={setRoutingTime}
-            />
-          </MapContainer>
-          <div className="container text-center">
-            <button
-              onClick={() => {
-                takeDelivery(orderInfo.order._id, orderInfo.order.short_id);
-              }}
-              className="btn btn-outline-primary rounded-pill col-6 my-4">
-              Take the delivery <MdOutlineDeliveryDining size="1.5em" className="me-2" />
+    <>
+      <Row className="p-4 g-3">
+        <Col md={3}>
+          <Card style={{ width: "100%" }}>
+            <Card.Header>Route</Card.Header>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <span className="text-secondary">Store address: </span>
+                <span className="text-primary"> {orderData.store.address} </span>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <span className="text-secondary">Destination: </span>
+                <span className="text-primary"> {orderData.order.destination} </span>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <span className="text-secondary">Distance: </span>
+                <span className="text-primary"> {routeDetails.distance}</span>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {" "}
+                <span className="text-secondary">Estimate tiem: </span>
+                <span className="text-primary"> {routeDetails.duration}</span>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+
+          <Card className="mt-3" style={{ width: "100%" }}>
+            <Card.Header>Client details</Card.Header>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <span className="text-secondary">name: </span>
+                <span className="text-primary"> {orderData.user.name} </span>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <span className="text-secondary">phone: </span>
+                <span className="text-primary"> {orderData.user.phone} </span>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+          <div className="text-center w-100 d-flex align-center mt-3">
+            <button onClick={handleToggle} className="btn btn-outline-primary float-end m-auto">
+              Order details
             </button>
           </div>
-        </React.Fragment>
-      )}
-    </div>
+        </Col>
+        <Col md={9}>
+          <div className="container map-container">
+            <GoogleMap
+              center={currentPosition}
+              zoom={18}
+              mapContainerStyle={{ width: "100%", height: "80vh" }}
+              onLoad={(map) => setMap(map)}
+            >
+              <Marker position={currentPosition} />
+              {directionResponse && <DirectionsRenderer directions={directionResponse} />}
+            </GoogleMap>
+          </div>
+        </Col>
+      </Row>
+
+      <OrderInfo item={orderData.order} show={show} handleToggle={handleToggle} />
+    </>
   );
 }
+// const takeDelivery = async (_orderId, _orderShortId) => {
+//   console.log(_orderId);
+//   let url = API_URL + "/orders/shipping/takingOrder";
+//   try {
+//     let resp = await doApiMethod(url, "PATCH", { orderId: _orderId });
+//     // console.log(resp.data);
+//     if (resp.data.modifiedCount === 1) {
+//       const socket = io.connect(API_URL);
+//       socket.emit("taking_order", _orderShortId);
+//       toast.info("You took the shipment");
+//       nav("/courier/myOrders");
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// <div className="container my-5">
+//   <div className="text-center">
+//     <h2 className="display-4 mb-4 animaLinkSM"> Order Details </h2>
+//     <button
+//       style={{ background: "none" }}
+//       className="position-absolute top-0 end-0 animaLinkSM "
+//       onClick={() => {
+//         nav(-1);
+//       }}
+//     >
+//       Back <BsChevronRight className="mx-2" />
+//     </button>
+//   </div>
+//   {loading && <LottieAnimation />}
+//   {!loading && orderInfo.order.status === "shipped" && (
+//     <h2 className="text-center display-4 text-danger">
+//       The shipment has already been taken... <MdOutlineDeliveryDining className="me-2" />
+//     </h2>
+//   )}
+//   {!loading (
+//     <React.Fragment>
+//       <div className="container text-center">
+//         <button
+//           onClick={() => {
+//             takeDelivery(orderInfo.order._id, orderInfo.order.short_id);
+//           }}
+//           className="btn btn-outline-primary rounded-pill col-6 my-4"
+//         >
+//           Take the delivery <MdOutlineDeliveryDining size="1.5em" className="me-2" />
+//         </button>
+//       </div>
+//     </React.Fragment>
+//   )}
+// </div>
 
 export default MapRouting;

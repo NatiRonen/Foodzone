@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer } from 'react-leaflet';
-import RoutingMachine from './routingMachine';
-import { API_URL, doApiGet, doApiMethod } from '../services/apiService';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import RoutingCard from './routingCard';
-import LottieAnimation from '../comps/general_comps/lottieAnimation';
-import { toast } from 'react-toastify';
-import { MdOutlineDeliveryDining } from 'react-icons/md';
-import { BsChevronRight } from 'react-icons/bs';
-import { BiLike } from 'react-icons/bi';
-import io from 'socket.io-client';
-import './css_courier/courier.css';
-import OrderItemsInfo from './orderItemsInfo';
+import React, { useEffect, useState } from "react";
+import RoutingMachine from "./routingMachine";
+import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import RoutingCard from "./routingCard";
+import LottieAnimation from "../comps/general_comps/lottieAnimation";
+import { toast } from "react-toastify";
+import { MdOutlineDeliveryDining } from "react-icons/md";
+import { BsChevronRight } from "react-icons/bs";
+import { BiLike } from "react-icons/bi";
+import io from "socket.io-client";
+import "./css_courier/courier.css";
+import OrderItemsInfo from "./orderItemsInfo";
 
 function DeliveryInfo(props) {
   const [myLocation, setMyLocation] = useState([0, 0]);
   const [storeStop, setStoreStop] = useState([0, 0]);
   const [clientEnd, setClientEnd] = useState([0, 0]);
   const [orderInfo, setOrderInfo] = useState([]);
-  const [routingTime, setRoutingTime] = useState('');
+  const [routingTime, setRoutingTime] = useState("");
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const nav = useNavigate();
@@ -33,17 +32,17 @@ function DeliveryInfo(props) {
       (err) => {
         console.log(err);
         if (err.code === 1) {
-          toast.error('User denied Geolocation');
+          toast.error("User denied Geolocation");
         }
-        console.log('Something went wrong');
+        console.log("Something went wrong");
       }
     );
     doApi();
-    console.log('Deliver id: ', location.state ? location.state : 'No Id');
+    console.log("Deliver id: ", location.state ? location.state : "No Id");
   }, []);
 
   const doApi = async () => {
-    let url = API_URL + '/orders/deliveryInfo/' + params.id;
+    let url = API_URL + "/orders/deliveryInfo/" + params.id;
     try {
       let resp = await doApiGet(url);
       console.log(resp.data);
@@ -64,16 +63,16 @@ function DeliveryInfo(props) {
   };
 
   const orderComplete = async (_orderId, _orderShortId) => {
-    toast.success('Order completed');
+    toast.success("Order completed");
     console.log(_orderId);
-    let url = API_URL + '/orders/shipping/orderStatus';
+    let url = API_URL + "/orders/shipping/orderStatus";
     try {
-      let resp = await doApiMethod(url, 'PATCH', { orderId: _orderId, status: 'complete' });
+      let resp = await doApiMethod(url, "PATCH", { orderId: _orderId, status: "complete" });
       console.log(resp.data);
       if (resp.data.modifiedCount === 1) {
         const socket = io.connect(API_URL);
-        socket.emit('order_completed', _orderShortId);
-        nav('/courier/myOrders');
+        socket.emit("order_completed", _orderShortId);
+        nav("/courier/myOrders");
       }
     } catch (err) {
       console.log(err);
@@ -85,23 +84,24 @@ function DeliveryInfo(props) {
       <div className="text-center">
         <h2 className="display-4 mb-4 animaLinkSM"> Order Details </h2>
         <button
-          style={{ background: 'none' }}
+          style={{ background: "none" }}
           className="position-absolute top-0 end-0 animaLinkSM "
           onClick={() => {
             nav(-1);
-          }}>
+          }}
+        >
           Back <BsChevronRight className="mx-2" />
         </button>
       </div>
       {loading && <LottieAnimation />}
       {!loading &&
-        orderInfo.order.status === 'shipped' &&
+        orderInfo.order.status === "shipped" &&
         !checkDelivery(orderInfo.order.driver_id) && (
           <h2 className="text-center display-4 text-danger">
             The shipment has already been taken... <MdOutlineDeliveryDining className="me-2" />
           </h2>
         )}
-      {!loading && orderInfo.order.status === 'complete' && (
+      {!loading && orderInfo.order.status === "complete" && (
         <h2 className="text-center display-4 text-success">
           The shipment is Complete ... <MdOutlineDeliveryDining className="me-2" />
         </h2>
@@ -124,13 +124,14 @@ function DeliveryInfo(props) {
           </MapContainer>
           {/* show orders item + info */}
           <OrderItemsInfo orderInfo={orderInfo} />
-          {orderInfo.order.status !== 'complete' && (
+          {orderInfo.order.status !== "complete" && (
             <div className="container text-center">
               <button
                 onClick={() => {
                   orderComplete(orderInfo.order._id, orderInfo.order.short_id);
                 }}
-                className="btn btn-outline-success rounded-pill col-6 my-4">
+                className="btn btn-outline-success rounded-pill col-6 my-4"
+              >
                 Order Complete <BiLike size="1.5em" className="me-2" />
               </button>
             </div>

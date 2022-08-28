@@ -40,7 +40,7 @@ import CategoriesStoreAdmin from "./storeAdmin/categoriesStoreAdmin";
 import LayoutCourier from "./courier/layoutCourier";
 import HomeCourier from "./courier/homeCourier";
 import OpenOrdersMap from "./courier/openOrdersMap";
-// import MapRouting from "./courier/mapRouting";
+import MapRouting from "./courier/mapRouting";
 // import MyOrders from "./courier/myOrders";
 // import DeliveryInfo from "./courier/deliveryInfo";
 
@@ -93,7 +93,7 @@ function AppRouts() {
         <Route path="/courier" element={<LayoutCourier />}>
           <Route index element={<HomeCourier />} />
           <Route path="mapOrders" element={<OpenOrdersMap />} />
-          {/* <Route path="/courier/takeDelivery/:id" element={<MapRouting />} /> */}
+          <Route path="takeDelivery/:id" element={<MapRouting />} />
           {/* <Route path="/courier/myOrders" element={<MyOrders />} />
           <Route path="/courier/deliveryInfo/:id" element={<DeliveryInfo />} /> */}
         </Route>

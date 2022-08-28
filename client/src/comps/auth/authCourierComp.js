@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { checkTokenLocal } from "../../services/localService";
-import { ADMIN_ROLE, COURIER_ROLE } from "../../services/roles";
+import { ADMIN_ROLE, COURIER_ROLE } from "../../services/consts";
 
 function AuthCourierComp(props) {
   let nav = useNavigate();
