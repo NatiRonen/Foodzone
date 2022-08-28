@@ -8,6 +8,13 @@ import { useLocation } from "react-router-dom";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import PageLinks from "../comps/misc/pageLinks";
 import AuthAdminComp from "../comps/auth/authAdminComp";
+import {
+  ADMIN_ROLE,
+  APPLY_FOR_COURIER_ROLE,
+  CLIENT_ROLE,
+  COURIER_ROLE,
+  STOER_ADMIN_ROLE,
+} from "../services/consts";
 
 function UsersList(props) {
   const [ar, setAr] = useState([]);
@@ -80,6 +87,28 @@ function UsersList(props) {
     let role = selectRef.current.value;
     setRole(role);
   };
+  // const getRoleSimbole = () => {
+  //   switch (role) {
+  //     case ADMIN_ROLE:
+  //       return <MdAdminPanelSettings />;
+  //       break;
+  //     case STOER_ADMIN_ROLE:
+  //       return <BsShop />;
+  //       break;
+  //     case COURIER_ROLE:
+  //       return <MdOutlineDeliveryDining />;
+  //       break;
+  //     case APPLY_FOR_COURIER_ROLE:
+  //       return <MdOutlineDeliveryDining />;
+  //       break;
+  //     case CLIENT_ROLE:
+  //       return <FaUserAlt />;
+  //       break;
+  //     default:
+  //       return "";
+  //       break;
+  //   }
+  // };
 
   return (
     <div className="container">
@@ -89,9 +118,11 @@ function UsersList(props) {
       <div className="my-5 col-md-3 position-absolute top-0 end-0">
         <select ref={selectRef} onChange={onSelectOption} className="form-select">
           <option value="">All users</option>
-          <option value="admin">Admin</option>
-          <option value="storeAdmin">Store admins</option>
-          <option value="user">Clients</option>
+          <option value={ADMIN_ROLE}>Admin</option>
+          <option value={STOER_ADMIN_ROLE}>Store admins</option>
+          <option value={CLIENT_ROLE}>Client</option>
+          <option value={COURIER_ROLE}>Courier</option>
+          <option value={APPLY_FOR_COURIER_ROLE}>Apply for Courier</option>
         </select>
       </div>
       {ar.length > 0 ? (
@@ -112,9 +143,12 @@ function UsersList(props) {
                 <tr key={item._id}>
                   <td>{i + 1 + 10 * (numPage - 1)}</td>
                   <td>
-                    {item.role === "admin" ? <MdAdminPanelSettings /> : ""}
-                    {item.role === "storeAdmin" ? <BsShop /> : ""}
-                    {item.role === "user" ? <FaUserAlt /> : ""}
+                    {/* {item.role === ADMIN_ROLE ? <MdAdminPanelSettings /> : ""}
+                    {item.role === STOER_ADMIN_ROLE ? <BsShop /> : ""}
+                    {item.role === CLIENT_ROLE ? <FaUserAlt /> : ""}
+                    {item.role === COURIER_ROLE ? <MdOutlineDeliveryDining /> : ""}
+                    {item.role === APPLY_FOR_COURIER_ROLE ? <FiGitPullRequest /> : ""}
+                    {getRoleSimbole()} */}
                     {" " + item.name}
                   </td>
                   <td>{item.email}</td>
@@ -127,10 +161,11 @@ function UsersList(props) {
                       }}
                       className="form-select"
                     >
-                      <option value="admin">Admin</option>
-                      <option value="storeAdmin">StoreAdmin</option>
-
-                      <option value="user">User</option>
+                      <option value={ADMIN_ROLE}>Admin</option>
+                      <option value={STOER_ADMIN_ROLE}>StoreAdmin</option>
+                      <option value={CLIENT_ROLE}>User</option>
+                      <option value={COURIER_ROLE}>Courier</option>
+                      <option value={APPLY_FOR_COURIER_ROLE}>Apply for Courier</option>
                     </select>
                   </td>
                   <td>

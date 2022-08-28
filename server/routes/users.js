@@ -206,6 +206,35 @@ router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
   }
 });
 
+// can change the role of user to admin user or courier, must be admin in this endpoint
+router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
+  let userId = req.params.userId;
+  let role = req.params.role;
+  try {
+    // prevent from user to changch himself or the first admin
+    if (userId != req.tokenData._id && userId != "61ee907a96a80382f70b873e") {
+      let data = await UserModel.updateOne({ _id: userId }, { role: role });
+      res.json(data);
+    } else {
+      res.status(401).json({ err: "You cant change your self" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
+//applying for a courier position
+router.patch("/applyingForCourier", auth, async (req, res) => {
+  try {
+    let data = await UserModel.updateOne({ _id: req.tokenData._id }, { role: "apply_for_courier" });
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 router.delete("/", auth, async (req, res) => {
   let password = req.header("x-api-key");
   let user = await UserModel.find({ _id: req.tokenData._id });

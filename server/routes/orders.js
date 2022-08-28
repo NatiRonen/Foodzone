@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth, payPalAuth, authAdmin, authStoreAdmin } = require("../middlewares/auth");
+const { auth, payPalAuth, authAdmin, authStoreAdmin, authCourier } = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { OrderModel } = require("../models/orderModel");
 const { ProductModel } = require("../models/productModel");
@@ -50,18 +50,24 @@ router.get("/userOrder", auth, async (req, res) => {
   }
 });
 
-router.get("/allOrders", authAdmin, async (req, res) => {
+router.get("/allOrders", auth, async (req, res) => {
   let perPage = req.query.perPage || 10;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "_id";
   let reverse = req.query.reverse == "yes" ? -1 : 1;
   let user_id = req.query.user_id;
   let status = req.query.status;
+  let courier = req.query.courier;
 
   try {
     let filter = user_id ? { user_id } : {};
     filter = status
       ? { ...filter, status }
+      : {
+          ...filter,
+        };
+    filter = courier
+      ? { ...filter, courier }
       : {
           ...filter,
         };
@@ -119,7 +125,22 @@ router.get("/allOrdersCount", auth, async (req, res) => {
   }
 });
 
-// ?????? check
+// get order details store info and user name and email
+router.get("/deliveryInfo/:idOrder", authCourier, async (req, res) => {
+  try {
+    let order = await OrderModel.findOne({
+      _id: req.params.idOrder,
+    });
+    let store = await StoreModel.findOne({
+      short_id: order.store_short_id,
+    });
+    let user = await UserModel.findOne({ short_id: order.client_short_id }, { name: 1, phone: 1 });
+    res.status(200).json({ order, store, user });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.get("/productsInfo/:idOrder", auth, async (req, res) => {
   try {
     let order = await OrderModel.findOne({
@@ -219,17 +240,20 @@ router.patch("/orderPaid", auth, async (req, res) => {
 
 // route update order status
 // ?status =
-router.patch("/:orderId", authAdmin, async (req, res) => {
+router.patch("/:orderId", auth, async (req, res) => {
   let status = req.query.status || "pending";
+  let updateObj = { status };
   let orderId = req.params.orderId;
+  if ((status = "on_the_way")) {
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
+    updateObj = { ...updateObj, courier_short_id: user.short_id };
+  }
   try {
     let data = await OrderModel.updateOne(
       {
         _id: orderId,
       },
-      {
-        status,
-      }
+      updateObj
     ); //shortcut becouse is same name
     // modifiedCount
     res.json(data);
@@ -240,7 +264,6 @@ router.patch("/:orderId", authAdmin, async (req, res) => {
 });
 
 router.delete("/:delId", authAdmin, async (req, res) => {
-  let orderId = req.params.delId;
   try {
     let data = await OrderModel.deleteOne({
       _id: orderId,
