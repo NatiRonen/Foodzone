@@ -48,13 +48,15 @@ function HeaderCourier(props) {
               >
                 Home
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./mapOrders");
-                }}
-              >
-                Take new order
-              </Nav.Link>
+              {!checkOpenShipmentLocal() && (
+                <Nav.Link
+                  onClick={() => {
+                    nav("./mapOrders");
+                  }}
+                >
+                  Take new order
+                </Nav.Link>
+              )}
               {checkOpenShipmentLocal() && (
                 <Nav.Link
                   onClick={() => {

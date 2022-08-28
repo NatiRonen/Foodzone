@@ -77,14 +77,8 @@ function AppRouts() {
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
           <Route path="openOrders" element={<OpenOrders />} />
-          <Route
-            path="products/edit/:prodId"
-            element={<EditProductAdminStore />}
-          />
-          <Route
-            path="products/addProduct"
-            element={<AddProductStoreAdmin />}
-          />
+          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
+          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
@@ -103,7 +97,6 @@ function AppRouts() {
           <Route path="mapOrders" element={<OpenOrdersMap />} />
           <Route path="takeDelivery" element={<MapRouting />} />
           <Route path="/courier/ordersHistory" element={<MyOrders />} />
-          {/* <Route path="/courier/deliveryInfo/:id" element={<DeliveryInfo />} /> */}
         </Route>
         <Route path="/*" element={<Page404 />} />
       </Routes>

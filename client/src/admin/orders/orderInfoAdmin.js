@@ -94,7 +94,7 @@ function OrderInfoAdmin(props) {
                           </div>
                           <div className="summary-item">
                             <span className="text">Status</span>
-                            <span className="price">{order.status}</span>
+                            <span className="price">{order.status?.replaceAll("_", " ")}</span>
                           </div>
                           <div className="summary-item">
                             <span className="text">Date</span>

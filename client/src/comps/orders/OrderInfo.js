@@ -5,6 +5,7 @@ import { ImInfo } from "react-icons/im";
 import { Button, Modal } from "react-bootstrap";
 import OrderInfoItem from "./OrderInfoItem";
 import LottieAnimation from "../misc/lottieAnimation";
+import { Row, Col } from "react-bootstrap";
 
 function OrderInfo(props) {
   let show = props.show;
@@ -69,13 +70,18 @@ function OrderInfo(props) {
                           <span className="price">{orderInfo?.short_id}</span>
                         </div>
                         <div className="summary-item">
-                          <span className="text">Destination</span>
-                          <br />
-                          {orderInfo?.destination}
+                          <Row className="justify-content-between">
+                            <Col xs={3}>
+                              <span className="text">Destination</span>
+                            </Col>
+                            <Col className="text-end" xs={9}>
+                              {orderInfo?.destination}
+                            </Col>
+                          </Row>
                         </div>
                         <div className="summary-item">
                           <span className="text">Status</span>
-                          <span className="price">{orderInfo.status}</span>
+                          <span className="price">{orderInfo.status?.replaceAll("_", " ")}</span>
                         </div>
                         <div className="summary-item">
                           <span className="text">Date</span>

@@ -1,28 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
 
 function Ticket(props) {
   const item = props.item;
   const i = props.i;
+  let params = useParams();
 
-  // useEffect(() => {
-  //   doApi();
-  // }, []);
+  const { socket } = useContext(AppContext);
+
+  useEffect(() => {
+    socket.emit("join-room-orders", item.short_id);
+  }, []);
+
+  socket.off("status-changed").on("status-changed", () => {
+    props.doApi();
+  });
 
   const changeStatus = async (_status) => {
     console.log(item._id);
     console.log("_status", _status);
     let url = API_URL + `/orders/` + item._id + `?status=` + _status;
     try {
-      let data = await doApiMethod(url, "PATCH", {});
-      console.log(data.data);
-      props.doApi();
-      // let filterPending = respOrders.data.filter(
-      //   (order) => order.status === "paid" || order.status === "on_the_way"
-      // );
-      // console.log(filterPending);
-      // setOrders(filterPending);
-      // setLoading(false);
+      let resp = await doApiMethod(url, "PATCH", {});
+      console.log(resp.data);
+      if (resp.data.modifiedCount === 1) {
+        socket.emit("status-changed", item.short_id, _status);
+        socket.emit("status-changed", params.id, _status);
+        props.doApi();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -48,7 +56,7 @@ function Ticket(props) {
             }}
             className="btn btn-outline-success mt-4"
           >
-            Ready for Shipment
+            Ready for shipment
           </button>
         )}
         {item.status === "on_the_way" && (
@@ -58,7 +66,7 @@ function Ticket(props) {
             }}
             className="btn btn-outline-success mt-4"
           >
-            Order Takend
+            Shipped
           </button>
         )}
       </section>
@@ -73,7 +81,7 @@ function Ticket(props) {
           }
           style={{ fontSize: "0.8em" }}
         >
-          {item.status === "on_the_way" ? "Courier in the way" : item.status}
+          {item.status === "on_the_way" ? "Courier on his way" : item?.status?.replaceAll("_", " ")}
         </span>
         <small>Total</small>
         <h3>₪ {item.total_price}</h3>

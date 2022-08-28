@@ -20,6 +20,7 @@ function Checkout(props) {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const [destination, setDestination] = useState("");
+  const [orderShortId, setOrderShortId] = useState("");
 
   const { socket } = useContext(AppContext);
 
@@ -57,6 +58,7 @@ function Checkout(props) {
     console.log(body);
     let resp = await doApiMethod(url, "POST", body);
     console.log(resp.data);
+    setOrderShortId(resp.data.short_id);
   };
 
   // paypal pay
@@ -71,6 +73,7 @@ function Checkout(props) {
     let resp = await doApiMethod(url, "PATCH", paypalObject);
     if (resp.data.modifiedCount == 1) {
       socket.emit("join-room-orders", store_short_id);
+      socket.emit("join-room-orders", orderShortId);
       socket.emit("new-order", store_short_id);
       toast.success("Your order completed successfully");
       dispatch(resetCart());

@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: process.env.DEV_MODE ? "*" : process.env.CLIENT_URL,
     methods: ["GET", "POST"],
   },
 });
@@ -20,15 +20,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: process.env.DEV_MODE ? "*" : process.env.CLIENT_URL,
     method: ["GET", "POST", "DELETE", "PATCH", "PUT"],
-    credentials: true,
     optionSuccessStatus: 200,
   })
 );
 
 routesInit(app);
-corsAccessControl(app);
+// corsAccessControl(app);
 
 let port = process.env.PORT || "3002";
 server.listen(port, () => {

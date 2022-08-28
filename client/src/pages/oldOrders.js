@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { API_URL, doApiGet } from "../services/apiService";
 import { GrDeliver } from "react-icons/gr";
@@ -6,12 +6,15 @@ import "./css/checkout.css";
 import OldOrderItem from "../comps/orders/oldOrderItem";
 import AuthClientComp from "../comps/auth/authClientComp";
 import OrderInfo from "../comps/orders/OrderInfo";
+import { AppContext } from "../context/appContext";
 
 function OldOrders(props) {
   const [ar, setAr] = useState([]);
   const [allTotal, setAllTotal] = useState(0);
   const [show, setShow] = useState(false);
   const [orderInfo, setOrderInfo] = useState(null);
+
+  const { socket } = useContext(AppContext);
 
   const handleToggle = () => setShow(!show);
 
@@ -20,7 +23,7 @@ function OldOrders(props) {
   }, []);
 
   useEffect(() => {
-    totalAllOrders();
+    sumOrdersPrice();
   }, [ar]);
 
   const doApi = async () => {
@@ -32,13 +35,17 @@ function OldOrders(props) {
     setAr(temp_ar);
   };
 
-  const totalAllOrders = () => {
+  const sumOrdersPrice = () => {
     let num = 0;
     if (ar.length > 0) {
       ar.forEach((item) => (num += item.total_price));
       setAllTotal(num);
     }
   };
+
+  socket.off("status-changed").on("status-changed", () => {
+    doApi();
+  });
 
   return (
     <>

@@ -56,7 +56,7 @@ function MyOrders(props) {
                     <span
                       className={item.status === "shipped" ? "badge bg-info" : "badge bg-success"}
                     >
-                      {item.status}
+                      {item?.status?.replaceAll("_", " ")}
                     </span>
                   </td>
                   <td>{item.short_id}</td>

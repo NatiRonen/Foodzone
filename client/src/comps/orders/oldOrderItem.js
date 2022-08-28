@@ -15,7 +15,7 @@ function oldOrderItem(props) {
         </div>
         <div className="col-6 ">
           <div>
-            <span className="fw-bold">Status:</span> {item.status}
+            <span className="fw-bold">Status:</span> {item?.status?.replaceAll("_", " ")}
           </div>
           <div>
             <span className="fw-bold">Total Price:</span> ₪ {item.total_price}

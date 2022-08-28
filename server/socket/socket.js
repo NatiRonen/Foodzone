@@ -90,4 +90,8 @@ io.on("connection", (socket) => {
   socket.on("new-order", (room) => {
     io.to(room).emit("new-order");
   });
+  socket.on("status-changed", (room, newStatus) => {
+    console.log("status-changed", room, newStatus);
+    io.to(room).emit("status-changed", newStatus);
+  });
 });

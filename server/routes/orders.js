@@ -87,7 +87,7 @@ router.get("/allOrders", auth, async (req, res) => {
 router.get("/storesWithOrders", async (req, res) => {
   try {
     // get all orders
-    let allOrders = await OrderModel.find({ status: "paid" });
+    let allOrders = await OrderModel.find({ status: "ready_for_shipment" });
     // get all stores
     let allStores = await StoreModel.find({});
     let data = [];

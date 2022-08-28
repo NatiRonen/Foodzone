@@ -68,11 +68,7 @@ function MyStores(props) {
       <div className="container">
         <h1 className="text-uppercase display-4 text-center mb-4">My Stores</h1>
         <div className="mb-5 col-md-3">
-          <select
-            ref={selectRef}
-            onChange={onSelectOption}
-            className="form-select"
-          >
+          <select ref={selectRef} onChange={onSelectOption} className="form-select">
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="pending">Pending</option>
@@ -81,9 +77,7 @@ function MyStores(props) {
         <motion.div layout className="row">
           <AnimatePresence>
             {arSort.map((item) => {
-              return (
-                <MyStoreItem key={item._id} item={item} delStore={delStore} />
-              );
+              return <MyStoreItem key={item._id} item={item} delStore={delStore} />;
             })}
           </AnimatePresence>
 

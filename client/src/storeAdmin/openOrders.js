@@ -42,9 +42,9 @@ function OpenOrders(props) {
   };
 
   return (
-    <div className="container-fluid bg_color">
+    <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
       <section className="container p-4">
-        <h1 className="orders_titel">Orders To Make</h1>
+        <h1 className="orders_titel">Opened orders</h1>
         {orders.length === 0 && (
           <div style={{ height: "100vh" }} className="container">
             <h2 className="display-3 text-center mt-5">No Orders</h2>
