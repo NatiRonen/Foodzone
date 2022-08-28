@@ -14,6 +14,7 @@ function App() {
   const [serviceMsg, setServiceMsg] = useState(false);
 
   const [store, setStore] = useState({});
+
   return (
     <AppContext.Provider
       value={{

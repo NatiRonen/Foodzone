@@ -1,16 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
+// react icons
+import { BiHomeAlt } from "react-icons/bi";
+import { GoListUnordered } from "react-icons/go";
+import { MdOutlineDeliveryDining } from "react-icons/md";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { AppContext } from "../context/appContext";
 
-function HeaderStore(props) {
+function HeaderCourier(props) {
   const nav = useNavigate();
   const user = useSelector((state) => state.user);
   const handleLogout = (e) => {
@@ -35,9 +36,7 @@ function HeaderStore(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              ShipMarket
-            </Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
@@ -51,40 +50,27 @@ function HeaderStore(props) {
               </Nav.Link>
               <Nav.Link
                 onClick={() => {
-                  nav("./openOrders");
+                  nav("./mapOrders");
                 }}
               >
-                Open Orders
+                Take new order
               </Nav.Link>
+              {checkOpenShipmentLocal() && (
+                <Nav.Link
+                  onClick={() => {
+                    nav("./takeDelivery");
+                  }}
+                >
+                  Opne shipment
+                </Nav.Link>
+              )}
               <Nav.Link
                 onClick={() => {
-                  nav("./categories");
+                  nav("./OrdersHistory");
                 }}
               >
-                Categories
+                Orders history
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./products");
-                }}
-              >
-                Products
-              </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./orders");
-                }}
-              >
-                Orders
-              </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./editStore");
-                }}
-              >
-                Edit Store details
-              </Nav.Link>
-              {/* <Nav.Link href={baseUrl + "/products"}>Delete store</Nav.Link> */}
             </Nav>
             <Nav>
               {!user && (
@@ -129,4 +115,4 @@ function HeaderStore(props) {
   );
 }
 
-export default HeaderStore;
+export default HeaderCourier;

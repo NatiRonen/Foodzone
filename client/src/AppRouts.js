@@ -13,12 +13,14 @@ import AllStores from "./pages/Stores";
 import About from "./pages/about";
 import StoreHome from "./pages/StoreHome";
 import MyStores from "./pages/myStores";
+import ApplyForCourier from "./pages/applyForCourier";
 // store Admin imports
 import LayoutStore from "./storeAdmin/layoutStore";
 import EditStoreAdmin from "./storeAdmin/editStoreAdmin";
 import ProductsStoreAdmin from "./storeAdmin/productsStoreAdmin";
 import EditProductAdminStore from "./storeAdmin/editProductAdminStore";
 import AddProductStoreAdmin from "./storeAdmin/addProductStoreAdmin";
+import OpenOrders from "./storeAdmin/openOrders";
 // admin imports
 import LayoutAdmin from "./admin/layoutAdmin";
 import HomeAdmin from "./admin/HomeAdmin";
@@ -35,6 +37,13 @@ import OrdersListStore from "./storeAdmin/ordersListStore";
 import Chat from "./chat/Chat";
 import ChatAdmin from "./admin/chat/ChatAdmin";
 import CategoriesStoreAdmin from "./storeAdmin/categoriesStoreAdmin";
+//courier import
+import LayoutCourier from "./courier/layoutCourier";
+import HomeCourier from "./courier/homeCourier";
+import OpenOrdersMap from "./courier/openOrdersMap";
+import MapRouting from "./courier/mapRouting";
+import MyOrders from "./courier/myOrders";
+// import DeliveryInfo from "./courier/deliveryInfo";
 
 function AppRouts() {
   return (
@@ -57,6 +66,7 @@ function AppRouts() {
           <Route path="createStore" element={<CreateStore />} />
           <Route path="myStores" element={<MyStores />} />
           <Route path="forums" element={<Chat />} />
+          <Route path="ApplyForCourier" element={<ApplyForCourier />} />
           {/* <Route path="/searchStore/:searchQ" element={<SearchStore />} /> */}
         </Route>
         {/*store admin*/}
@@ -66,8 +76,15 @@ function AppRouts() {
           <Route path="categories" element={<CategoriesStoreAdmin />} />
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
-          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
-          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
+          <Route path="openOrders" element={<OpenOrders />} />
+          <Route
+            path="products/edit/:prodId"
+            element={<EditProductAdminStore />}
+          />
+          <Route
+            path="products/addProduct"
+            element={<AddProductStoreAdmin />}
+          />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
@@ -79,6 +96,14 @@ function AppRouts() {
           <Route path="orders" element={<OrdersAdmin />} />
           <Route path="orders/:id" element={<OrderInfoAdmin />} />
           <Route path="chat" element={<ChatAdmin />} />
+        </Route>
+        {/* Courier routes */}
+        <Route path="/courier" element={<LayoutCourier />}>
+          <Route index element={<HomeCourier />} />
+          <Route path="mapOrders" element={<OpenOrdersMap />} />
+          <Route path="takeDelivery" element={<MapRouting />} />
+          <Route path="/courier/ordersHistory" element={<MyOrders />} />
+          {/* <Route path="/courier/deliveryInfo/:id" element={<DeliveryInfo />} /> */}
         </Route>
         <Route path="/*" element={<Page404 />} />
       </Routes>
