@@ -1,8 +1,39 @@
-.home__bg {
+/* .home__bg {
     background-image: url(https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGZyaWVuZHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60);
     height: 92vh;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     overflow-x: hidden;
-}
+} */
+
+
+.strip_home {
+    height: 89vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(203, 225, 173);
+    font-family: 'Lobster', cursive;
+  }
+  
+  .h1 {
+    font-size: 6vw;
+    font-weight: bold;
+  }
+  
+  .h4 {
+    font-size: 4vw;
+    color: #eee;
+  }
+  
+  .text_bg {
+    background: rgba(0, 0, 0, 0.267);
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  @media (max-width: 970px) {
+    .strip_home {
+      height: 50vh;
+    }
+  }
