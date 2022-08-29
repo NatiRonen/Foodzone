@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BsPen, BsEraser, BsInfoCircle } from "react-icons/bs";
-import { MdAddShoppingCart } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import { BsEraser } from "react-icons/bs";
 
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
@@ -13,7 +12,6 @@ import AuthAdminComp from "../comps/auth/authAdminComp";
 function ProductsAdmin(props) {
   let [ar, setAr] = useState([]);
   let [numPage, setPageNum] = useState(1);
-  let nav = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -42,11 +40,9 @@ function ProductsAdmin(props) {
       try {
         let url = API_URL + "/products/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {});
-        // console.log(resp.data);
         if (resp.data.deletedCount) {
           toast.info("Product deleted");
         }
-        // to show the new list without the product that we deleted
         doApi();
       } catch (err) {
         console.log(err.response);

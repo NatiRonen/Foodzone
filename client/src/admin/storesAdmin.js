@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { BsPen, BsEraser } from "react-icons/bs";
-import { MdAddBusiness } from "react-icons/md";
+import { BsEraser } from "react-icons/bs";
+
 import { toast } from "react-toastify";
 
 import LottieAnimation from "../comps/misc/lottieAnimation";
@@ -52,7 +52,6 @@ function StoresAdmin(props) {
         return { _id: item._id, name: item.name, email: item.email };
       });
       setOwnerAr(temp_ar);
-      // console.log(temp_ar);
     } catch (err) {
       alert("there problem come back later");
       if (err.response) {
@@ -66,7 +65,6 @@ function StoresAdmin(props) {
       try {
         let url = API_URL + "/stores/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {});
-        // console.log(resp.data);
         if (resp.data.deletedCount) {
           toast.info("Stores deleted !");
         }
@@ -128,12 +126,7 @@ function StoresAdmin(props) {
               <tr key={item._id}>
                 <td>{i + 1 + 5 * (numPage - 1)}</td>
                 <td>{item.name}</td>
-                <td>
-                  {item.admin_short_id}
-                  {/* {ownerAr.map((owner) => {
-                    return owner.short_id == item.admin_short_id ? owner.name : "";
-                  })} */}
-                </td>
+                <td>{item.admin_short_id}</td>
                 <td>
                   <img
                     src={item.imgUrl || "/images/no_image.png"}

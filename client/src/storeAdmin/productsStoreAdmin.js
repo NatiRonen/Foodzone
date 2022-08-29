@@ -55,7 +55,7 @@ function ProductsStoreAdmin(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container overflow-scroll">
       <h1 className="display-4">Products</h1>
       <button
         onClick={() => {
@@ -79,7 +79,8 @@ function ProductsStoreAdmin(props) {
             <th>Category</th>
             <th>Date Created</th>
             <th>Short_id</th>
-            <th>Del/Edit</th>
+            <th>Edit</th>
+            <th>Del</th>
           </tr>
         </thead>
         <tbody>
@@ -101,15 +102,6 @@ function ProductsStoreAdmin(props) {
                 <td>{item.date_created}</td>
                 <td>{item.short_id}</td>
                 <td>
-                  <button
-                    onClick={() => {
-                      delProduct(item._id);
-                    }}
-                    className="btn btn-outline-danger"
-                    title="Delete"
-                  >
-                    <BsEraser />
-                  </button>
                   <Link
                     to={"./edit/" + item._id}
                     state={{ store }}
@@ -119,17 +111,28 @@ function ProductsStoreAdmin(props) {
                     <BsPen />
                   </Link>
                 </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      delProduct(item._id);
+                    }}
+                    className="btn btn-outline-danger"
+                    title="Delete"
+                  >
+                    <BsEraser />
+                  </button>
+                </td>
               </tr>
             );
           })}
         </tbody>
       </Table>
+      {loading ? <LottieAnimation /> : ""}
       {!loading && products.length === 0 ? (
-        <h2 className="text-center display-2">No products found</h2>
+        <h2 className="display-4 text-center mt-5 text-danger">No products found</h2>
       ) : (
         ""
       )}
-      {loading ? <LottieAnimation /> : ""}
     </div>
   );
 }

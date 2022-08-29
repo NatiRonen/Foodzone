@@ -40,8 +40,11 @@ function OpenOrders(props) {
       console.log(err);
     }
   };
+  if (!loading && orders.length === 0)
+    return <h2 className="display-4 text-center mt-5 text-danger">No orders found</h2>;
 
   return (
+
     <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
       <section className="container p-4">
         <h1 className="orders_titel">Opened orders</h1>
@@ -50,6 +53,7 @@ function OpenOrders(props) {
             <h2 className="display-3 text-center mt-5">No Orders</h2>
           </div>
         )}
+
         <div className="container row justify-content-between">
           {/* start Ticket */}
           {orders.map((item, i) => {
