@@ -131,7 +131,7 @@ function Checkout(props) {
                 <h3> Payment </h3>
                 <div className="summary-item">
                   <span className="text"> Tip </span>
-                  <span className="price"> It 's up to you.</span>
+                  <span className="price"> Up to you</span>
                 </div>
                 <div className="summary-item">
                   <span className="text"> Delivery </span>
@@ -174,7 +174,7 @@ function Checkout(props) {
             {/* end Checkout */}
           </div>
         </div>
-        <button onClick={devOrder}>socket</button>
+        {/* <button onClick={devOrder}>socket</button> */}
       </section>
     </motion.div>
   );
