@@ -81,7 +81,7 @@ function StoreHome(props) {
                   Categories <HiTemplate className="mx-2" />
                 </p>
                 <br />
-                <ListGroup variant="flush">
+                <ListGroup variant="flush" className="overflow-visible">
                   <ListGroup.Item
                     active={category === ""}
                     onClick={() => {

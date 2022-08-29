@@ -105,7 +105,7 @@ function Checkout(props) {
       <AuthClientComp />
       <section className="shopping-cart">
         <div className="container">
-          <div className="row g-2">
+          <div className="row g-2" data-masonry='{"percentPosition": true }'>
             <div className="col-lg-8">
               <div className="items">
                 {/* start product */}
@@ -123,52 +123,49 @@ function Checkout(props) {
               </div>
             </div>
             {/* start Checkout */}
-            <div className="col-lg-4">
-              <div className="summary shadow">
-                <h3> Destination </h3>
-                <GetAddress currentAddress={user.address} setAddress={setDestination} />
+            <div className="col-lg-4 summary shadow card">
+              <h3> Destination </h3>
+              <GetAddress currentAddress={user.address} setAddress={setDestination} />
 
-                <h3> Payment </h3>
-                <div className="summary-item">
-                  <span className="text"> Tip </span>
-                  <span className="price"> Up to you</span>
-                </div>
-                <div className="summary-item">
-                  <span className="text"> Delivery </span>
-                  <span className="price"> ₪{cart_ar.length == 0 ? 0 : 20} </span>
-                </div>
-                <div className="summary-item">
-                  <span className="text"> Total </span>
-                  <span className="price"> ₪{totalPrice} </span>
-                </div>
-                {cart_ar.length > 0 ? (
-                  <button onClick={dellAll} className="btn btn-outline-danger col-12 my-5">
-                    Delete all Products
-                  </button>
-                ) : (
-                  ""
-                )}
-                <div style={disabledBtn()}>
-                  <PayPalButton
-                    amount={totalPrice}
-                    options={{
-                      clientId:
-                        "ATRPIUvU2B6lrdeCovo7c4NzauAsSjlElL4xi_BaxHyCrrcmAO_fjdCddURxRhRPcq9W9hBQpnxjBzMD",
-                      currency: "ILS",
-                    }}
-                    onSuccess={(details, data) => {
-                      // data - have info of pay token to check in nodejs
-                      // details have info about the buyer
-                      // if payment success ,
-                      if (data.orderID) {
-                        onCommit(data);
-                      }
-                    }}
-                    onCancel={(err) => {
-                      toast.error("Process end before payment. Please try again");
-                    }}
-                  />
-                </div>
+              <h3> Payment </h3>
+              <div className="summary-item">
+                <span className="text"> Tip </span>
+                <span className="price"> Up to you</span>
+              </div>
+              <div className="summary-item">
+                <span className="text"> Delivery </span>
+                <span className="price"> ₪{cart_ar.length == 0 ? 0 : 20} </span>
+              </div>
+              <div className="summary-item">
+                <span className="text"> Total </span>
+                <span className="price"> ₪{totalPrice} </span>
+              </div>
+              {cart_ar.length > 0 ? (
+                <button onClick={dellAll} className="btn btn-outline-danger col-12 my-5">
+                  Delete all Products
+                </button>
+              ) : (
+                ""
+              )}
+              <div style={disabledBtn()}>
+                <PayPalButton
+                  amount={totalPrice}
+                  options={{
+                    clientId: process.env.REACT_APP_PAYPAL_API_KEY,
+                    currency: "ILS",
+                  }}
+                  onSuccess={(details, data) => {
+                    // data - have info of pay token to check in nodejs
+                    // details have info about the buyer
+                    // if payment success ,
+                    if (data.orderID) {
+                      onCommit(data);
+                    }
+                  }}
+                  onCancel={(err) => {
+                    toast.error("Process end before payment. Please try again");
+                  }}
+                />
               </div>
             </div>
             {/* end Checkout */}

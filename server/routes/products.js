@@ -99,7 +99,6 @@ router.post("/:id", authStoreAdmin, async (req, res) => {
   try {
     let product = new ProductModel(req.body);
     product.store_short_id = req.params.id;
-    product.user_id = req.tokenData._id;
     product.short_id = await genShortId(ProductModel);
     await product.save();
     res.status(201).json(product);

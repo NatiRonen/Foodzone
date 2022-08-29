@@ -32,6 +32,7 @@ function Sidebar() {
     let url = API_URL + "/chat/rooms";
     let resp = await axios(url);
     setRooms(resp.data);
+    joinRoom(resp.data[0].name);
     setTempRooms(resp.data);
     console.log(resp.data);
   };
