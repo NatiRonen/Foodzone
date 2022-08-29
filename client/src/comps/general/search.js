@@ -1,20 +1,21 @@
 import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import "../css/search.css";
 
 function Search(props) {
-  let searchRef = useRef();
-  let nav = useNavigate();
+  const shops_ar = props.shops_ar;
+  const searchRef = useRef();
+  const nav = useNavigate();
 
   const search = () => {
     let search = searchRef.current.value;
-    {
-      search
-        ? nav(`/${props.to}/${search}`)
-        : toast.error("Please enter a search term");
-    }
+    let temp = shops_ar.filter(
+      (item) =>
+        item.name.toUpperCase().includes(search.toUpperCase()) ||
+        item.info.toUpperCase().includes(search.toUpperCase())
+    );
+    props.setShops_temp(temp);
   };
 
   const handleKeyPress = (event) => {

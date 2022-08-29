@@ -1,0 +1,14 @@
+.cat_item {
+  background-color: #f4f6f7 !important;
+}
+.cat_list{
+  height: 400px;
+}
+.bootstrap_no_border:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.list-group {
+  max-height: 400px !important;
+}

@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUpdateUserMutation } from "../redux/appApi";
 import { useSelector } from "react-redux";
-import "./css/updateAccount.css";
 import { toast } from "react-toastify";
 import DeleteAccount from "../comps/general/DeleteAccount";
 import { motion } from "framer-motion";
 import { encrypt } from "../utils/encryption";
 import GetAddress from "../comps/misc/GetAddress";
+import { FiSettings } from "react-icons/fi";
+import "./css/updateAccount.css";
 
 function UpdateAccount() {
   const user = useSelector((state) => state.user);
@@ -82,10 +83,13 @@ function UpdateAccount() {
     data.append("upload_preset", "ucq0egki");
     try {
       setUploading(true);
-      let res = await fetch("https://api.cloudinary.com/v1_1/nati5550558/image/upload", {
-        method: "POST",
-        body: data,
-      });
+      let res = await fetch(
+        "https://api.cloudinary.com/v1_1/nati5550558/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
       console.log(data);
       const urlData = await res.json();
       setUploading(false);
@@ -97,39 +101,49 @@ function UpdateAccount() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.7 }}
-    >
+    <section className="py-5">
       <DeleteAccount show={show} handleToggle={handleToggle} />
-      <div className="d-flex align-items-center h-100">
-        <Container>
-          <Row
-            className="justify-content-between align-items-center"
-            style={{ minHeight: "90.7vh" }}
-          >
-            <Col
-              lg={5}
-              className="d-flex shadow flex-direction-column align-items-center justify-content-center"
-            >
-              <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleUpdate}>
-                <p className="text-center display-6 my-4">Account details</p>{" "}
-                <div className="update-profile-pic__container">
-                  <img src={imagePreview} className="update-profile-pic" />
-                  <label htmlFor="image-upload" className="image-upload-label">
-                    <i className="fas fa-plus-circle add-picture-icon"></i>
-                  </label>
-                  <input
-                    type="file"
-                    id="image-upload"
-                    hidden
-                    accept="image/png, image/jpeg"
-                    onChange={validateImg}
-                  />
-                </div>
-                <Form.Group className="mb-3" controlId="formBasicName">
-                  {error && <p className="alert alert-danger">{error.data.err}</p>}
+      <div className="container">
+        <h1 className="mb-5 animaLink">
+          Account Settings <FiSettings className="ms-2" />
+        </h1>
+        <div className="bg-white shadow rounded-lg d-block d-sm-flex">
+          <div className="profile-tab-nav border-end">
+            <div className="p-4">
+              <div className="update-profile-pic__container">
+                <img src={imagePreview} className="update-profile-pic" />
+                <label htmlFor="image-upload" className="image-upload-label">
+                  <i className="fas fa-plus-circle add-picture-icon"></i>
+                </label>
+                <input
+                  type="file"
+                  id="image-upload"
+                  hidden
+                  accept="image/png, image/jpeg"
+                  onChange={validateImg}
+                />
+              </div>
+              <h4 className="mt-2 text-center capitalize_name">hello {name}</h4>
+            </div>
+            <p className="delete_account">
+              <span
+                className="text-primary color-info"
+                style={{ cursor: "pointer" }}
+                onClick={handleToggle}
+              >
+                Delete
+              </span>{" "}
+              my account
+            </p>
+          </div>
+          <div className="tab-content p-4 p-md-5" id="v-pills-tabContent">
+            <Form onSubmit={handleUpdate} className="tab-pane fade show active">
+              <h3 className="mb-4">Account Details</h3>
+              <div className="row">
+                <Form.Group className="mb-3 col-md-6" controlId="formBasicName">
+                  {error && (
+                    <p className="alert alert-danger">{error.data.err}</p>
+                  )}
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -139,7 +153,10 @@ function UpdateAccount() {
                     required
                   />
                 </Form.Group>
-                <Form.Group className="mb-3 " controlId="formBasicEmail">
+                <Form.Group
+                  className="mb-3 col-md-6 "
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
@@ -152,7 +169,10 @@ function UpdateAccount() {
                     We'll never share your email with anyone else.
                   </Form.Text>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group
+                  className="mb-3 col-md-6"
+                  controlId="formBasicPassword"
+                >
                   <Form.Label>Current password</Form.Label>
                   <Form.Control
                     type="password"
@@ -162,7 +182,10 @@ function UpdateAccount() {
                     required
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group
+                  className="mb-3 col-md-6"
+                  controlId="formBasicPassword"
+                >
                   <Form.Label>New password (optional)</Form.Label>
                   <Form.Control
                     type="password"
@@ -171,8 +194,16 @@ function UpdateAccount() {
                     value={newPassword}
                   />
                 </Form.Group>
-                <GetAddress setAddress={setAddress} currentAddress={address} />
-                <Form.Group className="mb-5" controlId="formBasicEmail">
+                <Form.Group className="mb-3 col-md-6">
+                  <GetAddress
+                    setAddress={setAddress}
+                    currentAddress={address}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3 col-md-6"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
                     type="text"
@@ -182,28 +213,21 @@ function UpdateAccount() {
                     required
                   />
                 </Form.Group>
+              </div>
+              <div>
                 <Button variant="primary" type="submit">
-                  {uploading || isLoading ? <Spinner animation="grow" /> : "Update"}
+                  {uploading || isLoading ? (
+                    <Spinner animation="grow" />
+                  ) : (
+                    "Update"
+                  )}
                 </Button>
-                <div className="my-4">
-                  <p className="text-center">
-                    <span
-                      className="text-primary color-info"
-                      style={{ cursor: "pointer" }}
-                      onClick={handleToggle}
-                    >
-                      Delete
-                    </span>{" "}
-                    my account
-                  </p>
-                </div>
-              </Form>
-            </Col>
-            <Col lg={6} className="update__bg d-none d-lg-block"></Col>
-          </Row>
-        </Container>
+              </div>
+            </Form>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
 

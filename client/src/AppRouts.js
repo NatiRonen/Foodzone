@@ -10,7 +10,6 @@ import Signup from "./pages/Signup";
 import UpdateAccount from "./pages/UpdateAccount";
 import Page404 from "./pages/page404";
 import AllStores from "./pages/Stores";
-import SearchStore from "./comps/store/searchStore";
 import About from "./pages/about";
 import StoreHome from "./pages/StoreHome";
 import MyStores from "./pages/myStores";
@@ -60,7 +59,6 @@ function AppRouts() {
           <Route path="about" element={<About />} />
           <Route path="favorites" element={<FavsProducts />} />
           <Route path="stores" element={<AllStores />} />
-          <Route path="searchStore/:searchQ" element={<SearchStore />} />
           <Route path="store/:id" element={<StoreHome />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="oldOrders" element={<OldOrders />} />
@@ -79,8 +77,14 @@ function AppRouts() {
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
           <Route path="openOrders" element={<OpenOrders />} />
-          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
-          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
+          <Route
+            path="products/edit/:prodId"
+            element={<EditProductAdminStore />}
+          />
+          <Route
+            path="products/addProduct"
+            element={<AddProductStoreAdmin />}
+          />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
