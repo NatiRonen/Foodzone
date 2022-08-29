@@ -17,8 +17,7 @@ function Navigation() {
   let nav = useNavigate();
   const dispatch = useDispatch();
   const { cart_ar } = useSelector((state) => state.cart);
-  const [expanded, setExpanded] = useState(true);
-  const onNavToggle = () => setExpanded(!expanded);
+  const favs = useSelector((state) => state.favs);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -87,17 +86,23 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-                    <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
-                      Favorites
-                    </NavDropdown.Item>
+                    {favs.length > 0 && (
+                      <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
+                        Favorites
+                      </NavDropdown.Item>
+                    )}
                     <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
                       Orders
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>Cart</NavDropdown.Item>
                     {cart_ar.length > 0 && (
-                      <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
-                        Checkout
-                      </NavDropdown.Item>
+                      <>
+                        <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
+                          Cart
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
+                          Checkout
+                        </NavDropdown.Item>
+                      </>
                     )}
                     <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
                       Account
