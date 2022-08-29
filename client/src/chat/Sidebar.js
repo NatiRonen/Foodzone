@@ -127,12 +127,15 @@ function Sidebar() {
           onClick={handleServiceMsg}
         >
           <img className="profile-image" src={`/images/support.png`} alt="" />
-          <div style={{ width: "100%" }} className="mt-2">
-            <span className="badge rounded-pill bg-success float-end  me-4">
+
+          <div className="mt-2 d-flex align-items-center">
+            <div>
+              <h6 className="fs-5">Contact Us</h6>
+              <div className="text-muted fs-6">Always here for you :)</div>
+            </div>
+            <span className="badge rounded-pill bg-success float-end  ms-5">
               {user.newMessages[user._id]}
             </span>
-            <h6>Contact Us</h6>
-            <p className="text-muted">Always here for you :)</p>
           </div>
         </div>
       </div>
