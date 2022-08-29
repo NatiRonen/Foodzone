@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -10,14 +8,16 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
+import { BiHomeAlt } from "react-icons/bi";
+import { BsChatLeftText } from "react-icons/bs";
+import { IoStorefrontOutline } from "react-icons/io5";
+import { FiLogIn, FiLogOut, FiUsers } from "react-icons/fi";
+import { HiTemplate, HiOutlineClipboardList } from "react-icons/hi";
 
 function HeaderAdmin(props) {
   const nav = useNavigate();
   const user = useSelector((state) => state.user);
-  const handleLogout = (e) => {
-    e.preventDefault();
-    nav("/logout");
-  };
+
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
       <Container>
@@ -36,34 +36,45 @@ function HeaderAdmin(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+              ShipMarket
+            </Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
             <Nav className="mx-auto">
               <Nav.Link as={Link} to="./" href="./">
                 Home
+                <BiHomeAlt className="ms-1" />
               </Nav.Link>
               <Nav.Link as={Link} to="./users" href="./users">
                 Users
+                <FiUsers className="ms-1" />
               </Nav.Link>
               <Nav.Link as={Link} to="./stores" href="./sotres">
                 Stores
+                <IoStorefrontOutline className="ms-1" />
               </Nav.Link>
               <Nav.Link as={Link} to="./products" href="./products">
                 Products
+                <HiTemplate className="ms-1" />
               </Nav.Link>
               <Nav.Link as={Link} to="./orders" href="./orders">
                 Orders
+                <HiOutlineClipboardList className="ms-1" />
               </Nav.Link>
               <Nav.Link as={Link} to="./chat" href="./chat">
                 Forums & customers services
+                <BsChatLeftText className="ms-1" />
               </Nav.Link>
             </Nav>
             <Nav>
               {!user && (
                 <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
+                  <Nav.Link>
+                    Login
+                    <FiLogIn className="ms-1" />
+                  </Nav.Link>
                 </LinkContainer>
               )}
               {user && (
@@ -86,12 +97,13 @@ function HeaderAdmin(props) {
                   }
                   id="basic-nav-dropdown"
                 >
-                  {/* <NavDropdown.Item href="#action/3.1">Favorites</NavDropdown.Item> */}
-
                   <NavDropdown.Item>
-                    <Button variant="danger" onClick={handleLogout}>
-                      Logout
-                    </Button>
+                    <LinkContainer to="/logout" className="text-danger">
+                      <Nav.Link>
+                        Logout
+                        <FiLogOut className="ms-1" />
+                      </Nav.Link>
+                    </LinkContainer>
                   </NavDropdown.Item>
                 </NavDropdown>
               )}

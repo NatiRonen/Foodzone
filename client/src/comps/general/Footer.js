@@ -1,9 +1,12 @@
 import React from "react";
-import { BsFacebook, BsTwitter, BsSnapchat, BsInstagram } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Nav } from "react-bootstrap";
 import { ADMIN_ROLE, CLIENT_ROLE, COURIER_ROLE } from "../../services/consts";
+import { FaShippingFast } from "react-icons/fa";
+import { IoStorefrontOutline } from "react-icons/io5";
+import { BsChatLeftText } from "react-icons/bs";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { GoPackage } from "react-icons/go";
 
 function Footer(props) {
   const dt = new Date();
@@ -17,27 +20,32 @@ function Footer(props) {
             <Nav.Item>
               <Nav.Link className="text-secondary" href="/myStores">
                 My stores
+                <IoStorefrontOutline className="ms-1" />
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link className="text-secondary" href="/Forums">
                 Forums & Customers service
+                <BsChatLeftText className="ms-1" />
               </Nav.Link>
             </Nav.Item>
             {user.role === CLIENT_ROLE && (
               <Nav.Link className="text-secondary" href="/ApplyForCourier">
                 Jouin to our couriers program
+                <FaShippingFast className="ms-1" />
               </Nav.Link>
             )}
             {user.role === COURIER_ROLE && (
               <Nav.Link className="text-secondary" href="/courier">
                 Couriers section
+                <GoPackage className="ms-1" />
               </Nav.Link>
             )}
             {user.role === ADMIN_ROLE && (
               <Nav.Item>
                 <Nav.Link className="text-secondary" href="/admin">
                   Admin section
+                  <MdAdminPanelSettings className="ms-1" />
                 </Nav.Link>
               </Nav.Item>
             )}
