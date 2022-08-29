@@ -34,7 +34,7 @@ function About(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container d-flex align-items-center" style={{ height: "90.7vh" }}>
       <div className="py-5 team4">
         <div className="container">
           <div className="row justify-content-center mb-4">
@@ -46,12 +46,11 @@ function About(props) {
             >
               <h3 className="mb-3">Experienced & Professional Team</h3>
               <h6 className="subtitle">
-                A food delivery platform for creating stores, ordering food and
-                managing deliveries. The client side consist of 4 panels:
-                customers, store owners, couriers and admin, and authentications
-                for each panel. System sets orders and route to the client
-                address through the store. Technologies: client side: react |
-                redux server side: node.js |express | jwt | soket.io DB: MongoDB
+                A food delivery platform for creating stores, ordering food and managing deliveries.
+                The client side consist of 4 panels: customers, store owners, couriers and admin,
+                and authentications for each panel. System sets orders and route to the client
+                address through the store. Technologies: client side: react | redux server side:
+                node.js |express | jwt | soket.io DB: MongoDB
               </h6>
             </motion.div>
           </div>

@@ -39,11 +39,11 @@ function Login() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
-      className="register-photo"
+      // className="register-photo"
     >
-      <Container>
+      <Container style={{ height: "90.7vh" }}>
         <ResetPass handleToggle={handleToggle} show={show} />
-        <Row>
+        <Row className="align-items-center" style={{ height: "90.7vh" }}>
           <Col md={5} ms className="login__bg d-none d-md-block"></Col>
           <Col
             md={7}

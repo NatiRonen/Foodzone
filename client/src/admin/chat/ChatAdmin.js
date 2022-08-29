@@ -8,19 +8,15 @@ import "../../chat/css/newChat.css";
 function ChatAdmin() {
   return (
     <>
-      <div className="container-fluid p-4">
-        <AuthAdminComp />
-        <Container className="my-5 shadow_chat">
-          <Row className="p-0">
-            <Col md={4} className="border-end p-0">
-              <SideBarAdmin />
-            </Col>
-            <Col md={8} className="p-0">
-              <MessageForm />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <AuthAdminComp />
+      <Row className=" shadow_chat" style={{ height: "89.7vh" }}>
+        <Col md={4} className="border-end p-0">
+          <SideBarAdmin />
+        </Col>
+        <Col md={8} className="p-0">
+          <MessageForm />
+        </Col>
+      </Row>
     </>
   );
 }

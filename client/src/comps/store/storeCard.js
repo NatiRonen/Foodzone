@@ -22,12 +22,8 @@ function StoreCard(props) {
           />
         </div>
         <div className="p-4 product-details">
-          {item.name}
-          <h4 className="font-weight-bold d-flex justify-content-between">
-            <a href="#!" className="text-dark text-truncate--2">
-              {item.info}
-            </a>
-          </h4>
+          <div className="display-5 fs-1">{item.name}</div>
+          <div className="display-5 fs-5">{item.info}</div>
         </div>
       </div>
     </div>

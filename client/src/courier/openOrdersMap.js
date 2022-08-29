@@ -11,7 +11,7 @@ const STORE_ICON =
 
 function OpenOrdersMap(props) {
   const [map, setMap] = useState(/**@type google.maps.map*/ (null));
-  const [currentPosition, setCurrentPosition] = useState([0, 0]);
+  const [currentPosition, setCurrentPosition] = useState();
   const [storeswithOrders, setStoresWithOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [popupInfo, setPopupInfo] = useState([]);
@@ -46,39 +46,42 @@ function OpenOrdersMap(props) {
     }
   };
 
-  if (!isLoaded) return <LottieAnimation />;
+  if (!isLoaded || !currentPosition) return <LottieAnimation />;
   return (
-    <div style={{ width: "100%", height: " 90.7vh" }} className="container map-container">
-      {show && (
-        <PopupMap
-          popupInfo={popupInfo}
-          show={show}
-          handleToggle={handleToggle}
-          currentPosition={currentPosition}
-        />
-      )}
-      <GoogleMap
-        center={currentPosition}
-        zoom={10}
-        mapContainerStyle={{ width: "100%", height: "100%" }}
-        onLoad={(map) => setMap(map)}
-      >
-        {storeswithOrders.map((item, idx) => {
-          return (
-            <Marker
-              key={idx}
-              position={item.store.coordinates}
-              icon={STORE_ICON}
-              title={item.store.name}
-              onClick={() => {
-                handleToggle();
-                setPopupInfo(item);
-              }}
-            ></Marker>
-          );
-        })}
-        <Marker position={currentPosition} title="You are here" />
-      </GoogleMap>
+    <div>
+      {/* <div className="float-start">Click on the markets to see the opened orders</div> */}
+      <div style={{ width: "100%", height: " 90.7vh" }} className=" map-container">
+        {show && (
+          <PopupMap
+            popupInfo={popupInfo}
+            show={show}
+            handleToggle={handleToggle}
+            currentPosition={currentPosition}
+          />
+        )}
+        <GoogleMap
+          center={currentPosition}
+          zoom={10}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
+          onLoad={(map) => setMap(map)}
+        >
+          {storeswithOrders.map((item, idx) => {
+            return (
+              <Marker
+                key={idx}
+                position={item.store.coordinates}
+                icon={STORE_ICON}
+                title={item.store.name}
+                onClick={() => {
+                  handleToggle();
+                  setPopupInfo(item);
+                }}
+              ></Marker>
+            );
+          })}
+          <Marker position={currentPosition} title="You are here" />
+        </GoogleMap>
+      </div>
     </div>
   );
 }
