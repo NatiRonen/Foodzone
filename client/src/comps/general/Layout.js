@@ -9,7 +9,7 @@ import { API_URL, doApiGet } from "../../services/apiService";
 // import Cart from "./store/cart";
 
 function Layout() {
-  const { socket } = useContext(AppContext);
+  const { socket, displayFooter } = useContext(AppContext);
 
   useEffect(() => {
     listenToOrders();
@@ -32,7 +32,7 @@ function Layout() {
       <Navigation />
       <Cart />
       <Outlet className="content-wrap" />
-      <Footer />
+      {displayFooter && <Footer />}
     </div>
   );
 }

@@ -14,6 +14,7 @@ function App() {
   const [serviceMsg, setServiceMsg] = useState(false);
 
   const [store, setStore] = useState({});
+  const [displayFooter, setDisplayFooter] = useState(true);
 
   return (
     <AppContext.Provider
@@ -33,6 +34,8 @@ function App() {
         setServiceMsg,
         store,
         setStore,
+        displayFooter,
+        setDisplayFooter,
       }}
     >
       <div className="App">

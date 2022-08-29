@@ -56,7 +56,7 @@ function AllStores(props) {
       <PageLinks
         perPage="6"
         apiUrlAmount={API_URL + "/stores/amount?status=active"}
-        urlLinkTo={"/allStore"}
+        urlLinkTo={"/stores"}
         clsCss="btn me-2 mt-4 pageLinks"
       />
     </main>

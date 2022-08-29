@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { MdOutlineDeliveryDining, MdAdminPanelSettings } from "react-icons/md";
-import { FaUserAlt } from "react-icons/fa";
-import { FiGitPullRequest } from "react-icons/fi";
-import { BsShop, BsEraser } from "react-icons/bs";
+import { BsEraser } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import PageLinks from "../comps/misc/pageLinks";
@@ -87,28 +84,6 @@ function UsersList(props) {
     let role = selectRef.current.value;
     setRole(role);
   };
-  // const getRoleSimbole = () => {
-  //   switch (role) {
-  //     case ADMIN_ROLE:
-  //       return <MdAdminPanelSettings />;
-  //       break;
-  //     case STOER_ADMIN_ROLE:
-  //       return <BsShop />;
-  //       break;
-  //     case COURIER_ROLE:
-  //       return <MdOutlineDeliveryDining />;
-  //       break;
-  //     case APPLY_FOR_COURIER_ROLE:
-  //       return <MdOutlineDeliveryDining />;
-  //       break;
-  //     case CLIENT_ROLE:
-  //       return <FaUserAlt />;
-  //       break;
-  //     default:
-  //       return "";
-  //       break;
-  //   }
-  // };
 
   return (
     <div className="container">
@@ -142,15 +117,7 @@ function UsersList(props) {
               return (
                 <tr key={item._id}>
                   <td>{i + 1 + 10 * (numPage - 1)}</td>
-                  <td>
-                    {/* {item.role === ADMIN_ROLE ? <MdAdminPanelSettings /> : ""}
-                    {item.role === STOER_ADMIN_ROLE ? <BsShop /> : ""}
-                    {item.role === CLIENT_ROLE ? <FaUserAlt /> : ""}
-                    {item.role === COURIER_ROLE ? <MdOutlineDeliveryDining /> : ""}
-                    {item.role === APPLY_FOR_COURIER_ROLE ? <FiGitPullRequest /> : ""}
-                    {getRoleSimbole()} */}
-                    {" " + item.name}
-                  </td>
+                  <td>{" " + item.name}</td>
                   <td>{item.email}</td>
                   <td>{item.address}</td>
                   <td className="d-flex justify-content-center">

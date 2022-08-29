@@ -1,13 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-import {
-  Form,
-  Row,
-  Col,
-  FormGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Form, Row, Col, FormGroup, FormControl, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { IoSend } from "react-icons/io5";
@@ -17,12 +10,11 @@ import "./css/message.css";
 function MessageForm() {
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.user);
-  const { socket, currentRoom, setMessages, messages, serviceMsg } =
-    useContext(AppContext);
+  const { socket, currentRoom, setMessages, messages, serviceMsg } = useContext(AppContext);
   const messageEndRef = useRef(null);
 
   useEffect(() => {
-    scrollToBottom();
+    // scrollToBottom();
   }, []);
 
   useEffect(() => {
@@ -103,37 +95,29 @@ function MessageForm() {
               <div key={idx}>
                 <div className="chat_box touchscroll chat_box_colors_a">
                   <div className="d-flex justify-content-center">
-                    <p className="text-center col-3 col-md-2 chat_date_indicator">
-                      {date}
-                    </p>
+                    <p className="text-center col-3 col-md-2 chat_date_indicator">{date}</p>
                   </div>
 
-                  {messagesByDate.map(
-                    ({ content, time, from: sender }, idx) => (
-                      <div
-                        key={idx}
-                        className={
-                          sender._id === user._id
-                            ? "chat_message_wrapper"
-                            : "chat_message_wrapper chat_message_right"
-                        }
-                      >
-                        <div className="chat_user_avatar">
-                          <img
-                            alt="profile pic"
-                            src={sender.picture}
-                            className="md-user-image"
-                          />
-                        </div>
-                        <ul className="chat_message">
-                          <li>
-                            <p>{content}</p>
-                            <span className="chat_message_time">{time}</span>
-                          </li>
-                        </ul>
+                  {messagesByDate.map(({ content, time, from: sender }, idx) => (
+                    <div
+                      key={idx}
+                      className={
+                        sender._id === user._id
+                          ? "chat_message_wrapper"
+                          : "chat_message_wrapper chat_message_right"
+                      }
+                    >
+                      <div className="chat_user_avatar">
+                        <img alt="profile pic" src={sender.picture} className="md-user-image" />
                       </div>
-                    )
-                  )}
+                      <ul className="chat_message">
+                        <li>
+                          <p>{content}</p>
+                          <span className="chat_message_time">{time}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
