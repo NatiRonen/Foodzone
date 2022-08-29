@@ -52,7 +52,9 @@ function HeaderStore(props) {
                   nav("./openOrders");
                 }}
               >
-                Opened Orders
+
+                Opened orders
+
               </Nav.Link>
               <Nav.Link
                 onClick={() => {

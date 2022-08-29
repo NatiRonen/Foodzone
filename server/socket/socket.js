@@ -81,4 +81,17 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("update-forums", forums);
     res.status(200).send();
   });
+
+  //orders
+  socket.on("join-room-orders", (room) => {
+    socket.join(room);
+    console.log(`${socket.id} joined room ${room}`);
+  });
+  socket.on("new-order", (room) => {
+    io.to(room).emit("new-order");
+  });
+  socket.on("status-changed", (room, newStatus) => {
+    console.log("status-changed", room, newStatus);
+    io.to(room).emit("status-changed", newStatus);
+  });
 });

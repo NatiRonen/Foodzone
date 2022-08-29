@@ -5,7 +5,6 @@ const appApi = createApi({
   reducerPath: "appApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_SERVER_URL,
-    credentials: "include",
   }),
   //creating new user
   endpoints: (builder) => ({

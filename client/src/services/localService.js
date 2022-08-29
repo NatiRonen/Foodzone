@@ -32,6 +32,6 @@ export const checkOpenShipmentLocal = () => {
   }
 };
 
-export const remonveOpenShipment = () => {
+export const remoneOpenShipment = () => {
   localStorage.removeItem(OPEN_SHIPMENT);
 };
