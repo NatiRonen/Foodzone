@@ -161,10 +161,7 @@ router.get("/sendResetEmail", async (req, res) => {
 router.get("/checkResetCode", async (req, res) => {
   let code = req.header("x-api-key");
   try {
-    let data = await UserModel.findOneAndUpdate(
-      { reset_code: code },
-      { reset_code: code, password: null }
-    );
+    let data = await UserModel.findOne({ reset_code: code });
     if (!data) {
       return res.status(401).json("wrong code");
     }
@@ -182,7 +179,7 @@ router.get("/resetCode", async (req, res) => {
   let hashPass = await bcrypt.hash(decryptedPass, 10);
   //becrypt
   try {
-    let data = await UserModel.updateOne({ email: email, password: null }, { password: hashPass });
+    let data = await UserModel.updateOne({ email: email }, { password: hashPass });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
@@ -236,15 +233,15 @@ router.patch("/applyingForCourier", auth, async (req, res) => {
 });
 
 router.delete("/", auth, async (req, res) => {
-  let password = req.header("x-api-key");
-  let user = await UserModel.find({ _id: req.tokenData._id });
+  let password = req.header("user-password");
+  let user = await UserModel.findOne({ _id: req.tokenData._id });
   let decryptPass = decrypt(password);
   let validPass = await bcrypt.compare(decryptPass, user.password);
   if (!validPass) {
     return res.status(403).json({ err: "wrong password" });
   }
   try {
-    let data = await UserModel.deleteOne(uesr);
+    let data = await UserModel.deleteOne(user);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json(error); // failed to delete
