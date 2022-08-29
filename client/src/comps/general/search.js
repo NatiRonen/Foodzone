@@ -11,7 +11,9 @@ function Search(props) {
   const search = () => {
     let search = searchRef.current.value;
     {
-      search ? nav(`/${props.to}/${search}`) : toast.error("Please enter a search term");
+      search
+        ? nav(`/${props.to}/${search}`)
+        : toast.error("Please enter a search term");
     }
   };
 
@@ -32,11 +34,14 @@ function Search(props) {
           className="form-control border-0 bg-light"
         />
         <div className="input-group-append">
-          <button onClick={search} className="btn btn-link text-primary searchBtn">
+          <button
+            onClick={search}
+            className="btn btn-link text-primary searchBtn"
+          >
             <BsSearch />
-          </button>{" "}
-        </div>{" "}
-      </div>{" "}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
