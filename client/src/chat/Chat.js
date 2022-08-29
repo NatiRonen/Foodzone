@@ -6,12 +6,15 @@ import "./css/newChat.css";
 
 function Chat() {
   return (
-    <div className="container-fluid">
-      <Row className="mt-2 shadow" style={{ height: "87.7vh" }}>
+    <div
+      style={{ overflowX: "hidden" }}
+      className="container-fluid mb-5 border"
+    >
+      <Row>
         <Col md={4} className="border-end p-0">
           <Sidebar />
         </Col>
-        <Col md={8} className="p-0" style={{ height: "87.7vh" }}>
+        <Col md={8} className="p-0">
           <MessageForm />
         </Col>
       </Row>
