@@ -38,7 +38,7 @@ function OpenOrders(props) {
       <section className="container">
         <h1 className="orders_titel">Orders To Make</h1>
         {orders.length === 0 && (
-          <div style={{ height: "100vh" }} className="container">
+          <div style={{ height: " 90.7vh" }} className="container">
             <h2 className="display-3 text-center mt-5">No Orders</h2>
           </div>
         )}

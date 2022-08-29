@@ -101,14 +101,16 @@ function UpdateAccount() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
-      className="register-photo"
     >
       <DeleteAccount show={show} handleToggle={handleToggle} />
       <div className="d-flex align-items-center h-100">
         <Container>
-          <Row className="justify-content-between align-items-center">
+          <Row
+            className="justify-content-between align-items-center"
+            style={{ minHeight: "90.7vh" }}
+          >
             <Col
-              md={5}
+              lg={5}
               className="d-flex shadow flex-direction-column align-items-center justify-content-center"
             >
               <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleUpdate}>
@@ -197,7 +199,7 @@ function UpdateAccount() {
                 </div>
               </Form>
             </Col>
-            <Col md={6} className="update__bg"></Col>
+            <Col lg={6} className="update__bg d-none d-lg-block"></Col>
           </Row>
         </Container>
       </div>

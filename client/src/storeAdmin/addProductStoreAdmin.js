@@ -36,17 +36,16 @@ function AddProductStoreAdmin(props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
-      className="register-photo"
     >
       <Container>
-        <Row className="justify-content-between">
+        <Row className="justify-content-between align-items-center" style={{ minHeight: "87vh" }}>
           <Col
             md={5}
-            className="d-flex shadow flex-direction-column align-items-center justify-content-center"
+            className="d-flex shadow flex-direction-column align-items-center justify-content-center py-5"
           >
             <ProductForm doApi={doFormApi} isLoading={isLoading} />
           </Col>
-          <Col md={6} className="productForm__bg"></Col>
+          <Col md={6} className="productForm__bg d-none d-md-block"></Col>
         </Row>
       </Container>
     </motion.div>

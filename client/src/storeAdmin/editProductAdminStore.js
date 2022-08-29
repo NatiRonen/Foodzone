@@ -49,19 +49,18 @@ function EditProductAdminStore(props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
-      className="register-photo"
     >
       <Container>
-        <Row className="justify-content-between">
+        <Row className="justify-content-between align-items-center" style={{ height: "87vh" }}>
           <Col
             md={5}
-            className="d-flex shadow flex-direction-column align-items-center justify-content-center"
+            className="d-flex py-5 shadow flex-direction-column align-items-center justify-content-center"
           >
             <ProductForm item={product} doApi={doFormApi} isLoading={isLoading} />
           </Col>
           <Col
             md={6}
-            className="productForm__bg"
+            className="productForm__bg d-none d-md-block"
             style={{ backgroundImage: `url(${product?.imgUrl})` }}
           ></Col>
         </Row>

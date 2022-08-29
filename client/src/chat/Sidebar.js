@@ -12,15 +12,8 @@ import { toast } from "react-toastify";
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const [tempRooms, setTempRooms] = useState([]);
-  const {
-    socket,
-    setCurrentRoom,
-    rooms,
-    setRooms,
-    currentRoom,
-    serviceMsg,
-    setServiceMsg,
-  } = useContext(AppContext);
+  const { socket, setCurrentRoom, rooms, setRooms, currentRoom, serviceMsg, setServiceMsg } =
+    useContext(AppContext);
 
   const dispatch = useDispatch();
   const searchRoomRef = useRef();
@@ -101,12 +94,10 @@ function Sidebar() {
     return <></>;
   }
   return (
-    <>
-      <div className="settings-tray">
+    <div className="px-4">
+      <div className="settings-tra">
         <img className="profile-image" src={user.picture} alt="Profile img" />
-        <span className="text-capitalize fw-semibold fst-italic">
-          Hello {user.name}
-        </span>
+        <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
       </div>
       <div className="search-box">
         <div className="input-wrapper p-2">
@@ -138,9 +129,7 @@ function Sidebar() {
               <h6>{room.name}</h6>
               {/* <p className="text-muted">Hey, you're arrested!</p> */}
               {currentRoom !== room.name && (
-                <span className="badge rounded-pill bg-success">
-                  {user.newMessages[room.name]}
-                </span>
+                <span className="badge rounded-pill bg-success">{user.newMessages[room.name]}</span>
               )}
             </div>
           </div>
@@ -161,7 +150,7 @@ function Sidebar() {
           <p className="text-muted">Always here for you :)</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

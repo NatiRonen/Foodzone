@@ -29,7 +29,7 @@ function AllStores(props) {
   };
 
   return (
-    <main className="container my-5">
+    <main className="container my-5" style={{ minHeight: "90.7vh" }}>
       <div className="d-flex justify-content-center">
         <div className="col-lg-5 col-md-8 col-sm-12">
           <Search text="What store are you searching for?" to="searchStore" />
@@ -37,7 +37,7 @@ function AllStores(props) {
       </div>
       <p className="animaLink mb-3">
         <BiStore className="me-2" />
-        All Stores
+        All stores
       </p>
       <div
         initial={{ opacity: 0 }}
