@@ -12,15 +12,8 @@ import { toast } from "react-toastify";
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const [tempRooms, setTempRooms] = useState([]);
-  const {
-    socket,
-    setCurrentRoom,
-    rooms,
-    setRooms,
-    currentRoom,
-    serviceMsg,
-    setServiceMsg,
-  } = useContext(AppContext);
+  const { socket, setCurrentRoom, rooms, setRooms, currentRoom, serviceMsg, setServiceMsg } =
+    useContext(AppContext);
 
   const dispatch = useDispatch();
   const searchRoomRef = useRef();
@@ -87,9 +80,7 @@ function Sidebar() {
       <div className="forms_panel">
         <div className="settings-tray ps-4">
           <img className="profile-image" src={user.picture} alt="Profile img" />
-          <span className="text-capitalize fw-semibold fst-italic">
-            Hello {user.name}
-          </span>
+          <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
         </div>
         <div className="search-box">
           <div className="input-wrapper p-2">
@@ -117,13 +108,13 @@ function Sidebar() {
                 src={`https://avatars.dicebear.com/api/bottts/${room.name}.svg`}
                 alt=""
               />
-              <div className="mt-2">
+              <div className="mt-2 d-flex align-items-center">
                 <h6>{room.name}</h6>
                 {/* <p className="text-muted">Hey, you're arrested!</p> */}
                 {currentRoom !== room.name && (
-                  <span className="badge rounded-pill bg-success">
+                  <div className="badge rounded-pill bg-success  ms-5">
                     {user.newMessages[room.name]}
-                  </span>
+                  </div>
                 )}
               </div>
             </div>
@@ -137,7 +128,7 @@ function Sidebar() {
         >
           <img className="profile-image" src={`/images/support.png`} alt="" />
           <div style={{ width: "100%" }} className="mt-2">
-            <span className="badge rounded-pill bg-success float-end mt-2">
+            <span className="badge rounded-pill bg-success float-end  me-4">
               {user.newMessages[user._id]}
             </span>
             <h6>Contact Us</h6>

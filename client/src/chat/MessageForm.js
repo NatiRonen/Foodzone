@@ -9,6 +9,7 @@ import "./css/message.css";
 
 function MessageForm() {
   const [message, setMessage] = useState("");
+  const [roomServeiceData, setRoomServiceData] = useState("");
   const user = useSelector((state) => state.user);
   const { socket, currentRoom, setMessages, messages, serviceMsg } = useContext(AppContext);
   const messageEndRef = useRef(null);
@@ -32,13 +33,23 @@ function MessageForm() {
     return date;
   };
 
+  const customersServiseHeader = {
+    image: "/images/support.png",
+    name: "Contact Us",
+  };
+
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const todayDate = getFromattedDate();
 
-  socket.off("room-messages").on("room-messages", (roomMessages) => {
+  socket.off("room-messages").on("room-messages", (roomMessages, _roomData) => {
+    if (_roomData) {
+      setRoomServiceData(_roomData);
+    } else {
+      setRoomServiceData(customersServiseHeader);
+    }
     setMessages(roomMessages);
   });
 
@@ -65,26 +76,22 @@ function MessageForm() {
           height: "100%",
         }}
       >
-        <div className="settings-tray">
+        <div className="settings-tray ">
           <div className="friend-drawer no-gutters friend-drawer--grey">
             <img
               className="profile-image"
               src={
                 serviceMsg
-                  ? "/images/support.png"
+                  ? roomServeiceData.image
                   : `https://avatars.dicebear.com/api/bottts/${currentRoom}.svg`
               }
               alt=""
             />
-            <div className="">
-              <h6 className="m-0 pt-2">
-                {!currentRoom ? "" : serviceMsg ? "Contact Us" : currentRoom}
-              </h6>
-              <p className="text-muted">
-                {serviceMsg
-                  ? "We are here for everything you need ❤"
-                  : "Keep the conversation proper and enjoyable 😃"}
-              </p>
+            <div className="d-flex  align-items-center">
+              <h6>{!currentRoom ? "" : serviceMsg ? roomServeiceData.name : currentRoom}</h6>
+              {/* <p className="text-muted">
+                {serviceMsg ? "" : "Keep the conversation proper and enjoyable 😃"}
+              </p> */}
             </div>
           </div>
         </div>
@@ -112,8 +119,19 @@ function MessageForm() {
                       </div>
                       <ul className="chat_message">
                         <li>
-                          <p>{content}</p>
-                          <span className="chat_message_time">{time}</span>
+                          {!serviceMsg && sender._id !== user._id && (
+                            <p className="text-muted text-end">{sender.name}</p>
+                          )}
+                          <p className="chat_message_content fs-6">{content}</p>
+                          <span
+                            className={
+                              sender._id === user._id
+                                ? "chat_message_time text-muted"
+                                : "chat_message_time text-end"
+                            }
+                          >
+                            {time}
+                          </span>
                         </li>
                       </ul>
                     </div>

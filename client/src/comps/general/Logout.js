@@ -8,6 +8,7 @@ import { deleteToken } from "../../services/localService";
 function Logout() {
   const dispatch = useDispatch();
   let nav = useNavigate();
+
   useEffect(() => {
     dispatch(logout());
     deleteToken();
