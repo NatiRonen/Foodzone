@@ -49,8 +49,8 @@ function ProductForm(props) {
         onSubmit={handleSubmit}
         // className="shadow"
       >
-        <h1 className="display-5">Product Details</h1>
-        <Form.Group className="mb-3">
+        <h1 className=" display-5">Product Details</h1>
+        <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"

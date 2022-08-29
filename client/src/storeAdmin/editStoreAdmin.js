@@ -48,10 +48,9 @@ function EditStoreAdmin(props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
-      className="register-photo"
     >
       <Container>
-        <Row className="justify-content-between">
+        <Row className="justify-content-between" style={{ height: "90.7vh" }}>
           <Col
             md={5}
             className="d-flex shadow flex-direction-column align-items-center justify-content-center"
@@ -60,7 +59,7 @@ function EditStoreAdmin(props) {
           </Col>
           <Col
             md={6}
-            className="createStore__bg"
+            className="createStore__bg d-none d-md-block"
             style={{ backgroundImage: `url(${store?.imgUrl})` }}
           ></Col>
         </Row>

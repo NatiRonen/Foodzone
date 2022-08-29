@@ -1,13 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-import {
-  Form,
-  Row,
-  Col,
-  FormGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Form, Row, Col, FormGroup, FormControl, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { IoSend } from "react-icons/io5";
@@ -17,8 +10,7 @@ import "./css/message.css";
 function MessageForm() {
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.user);
-  const { socket, currentRoom, setMessages, messages, serviceMsg } =
-    useContext(AppContext);
+  const { socket, currentRoom, setMessages, messages, serviceMsg } = useContext(AppContext);
   const messageEndRef = useRef(null);
 
   useEffect(() => {
@@ -66,7 +58,7 @@ function MessageForm() {
   };
 
   return (
-    <>
+    <div>
       <div
         style={{
           backgroundImage: `url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")`,
@@ -78,24 +70,18 @@ function MessageForm() {
             <img
               className="profile-image"
               src={
-                currentRoom === "62fa0c0f3210f2bf635c5ea8"
+                serviceMsg
                   ? "/images/support.png"
                   : `https://avatars.dicebear.com/api/bottts/${currentRoom}.svg`
               }
               alt=""
             />
             <div className="">
-              <h6>
-                {!currentRoom
-                  ? ""
-                  : currentRoom === "62fa0c0f3210f2bf635c5ea8"
-                  ? "Contact Us"
-                  : currentRoom}
-              </h6>
+              <h6>{!currentRoom ? "" : serviceMsg ? "Contact Us" : currentRoom}</h6>
               <p className="text-muted">
-                {currentRoom === "62fa0c0f3210f2bf635c5ea8"
+                {serviceMsg
                   ? "We are here for everything you need ❤"
-                  : "Leave the conversation proper and enjoyable 😃"}
+                  : "Keep the conversation proper and enjoyable 😃"}
               </p>
             </div>
           </div>
@@ -107,37 +93,29 @@ function MessageForm() {
               <div key={idx}>
                 <div className="chat_box touchscroll chat_box_colors_a">
                   <div className="d-flex justify-content-center">
-                    <p className="text-center col-2 chat_date_indicator">
-                      {date}
-                    </p>
+                    <p className="text-center col-2 chat_date_indicator">{date}</p>
                   </div>
 
-                  {messagesByDate.map(
-                    ({ content, time, from: sender }, idx) => (
-                      <div
-                        key={idx}
-                        className={
-                          sender._id === user._id
-                            ? "chat_message_wrapper"
-                            : "chat_message_wrapper chat_message_right"
-                        }
-                      >
-                        <div className="chat_user_avatar">
-                          <img
-                            alt="profile pic"
-                            src={sender.picture}
-                            className="md-user-image"
-                          />
-                        </div>
-                        <ul className="chat_message">
-                          <li>
-                            <p>{content}</p>
-                            <span className="chat_message_time">{time}</span>
-                          </li>
-                        </ul>
+                  {messagesByDate.map(({ content, time, from: sender }, idx) => (
+                    <div
+                      key={idx}
+                      className={
+                        sender._id === user._id
+                          ? "chat_message_wrapper"
+                          : "chat_message_wrapper chat_message_right"
+                      }
+                    >
+                      <div className="chat_user_avatar">
+                        <img alt="profile pic" src={sender.picture} className="md-user-image" />
                       </div>
-                    )
-                  )}
+                      <ul className="chat_message">
+                        <li>
+                          <p>{content}</p>
+                          <span className="chat_message_time">{time}</span>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -163,7 +141,7 @@ function MessageForm() {
           </Row>
         </Form>
       </div>
-    </>
+    </div>
   );
 }
 

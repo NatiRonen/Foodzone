@@ -21,7 +21,7 @@ function FavsProducts(props) {
   const doApiListFav = async () => {
     let url = API_URL + "/favs/productsInfo";
     let resp = await doApiGet(url);
-    // console.log(resp.data);
+    console.log(resp.data);
     setAr(resp.data);
   };
 
@@ -29,7 +29,7 @@ function FavsProducts(props) {
     <div className="container-fluid" style={{ minHeight: "85vh" }}>
       <div className="container">
         <AuthClientComp />
-        {!loading && favs.length === 0 ? (
+        {!loading && ar.length === 0 ? (
           <div className="text-center display-2 mt-5">
             no favorites found <BiConfused />
           </div>
