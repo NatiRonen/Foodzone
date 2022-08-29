@@ -4,14 +4,12 @@ import { addNotifications, resetNotifications } from "../../redux/userSlice";
 import { AppContext } from "../../context/appContext";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import axios from "axios";
-import { Button, Col, ListGroup, Row, Modal } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import { BsEraser } from "react-icons/bs";
 import { BiAddToQueue } from "react-icons/bi";
 import { MdOutlineAddBox } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import Collapse from "react-bootstrap/Collapse";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
 
 function SideBarAdmin() {
   const user = useSelector((state) => state.user);
@@ -23,7 +21,6 @@ function SideBarAdmin() {
     setRooms,
     clients,
     setClients,
-    serviceMsg,
     setServiceMsg,
   } = useContext(AppContext);
   const [open, setOpen] = useState(false);
@@ -128,15 +125,8 @@ function SideBarAdmin() {
       </Collapse>
       <div className="search-box">
         <div className="input-wrapper p-2">
-          {/* <FiSearch style={{ cursor: "pointer" }} onClick={searchRoom} /> */}
           <FiSearch style={{ cursor: "pointer" }} />
-          <input
-            // ref={searchRoomRef}
-            // onKeyPress={handleKeyPress}
-            placeholder="Search here"
-            type="text"
-            className="ps-3"
-          />
+          <input placeholder="Search here" type="text" className="ps-3" />
         </div>
       </div>
       <small className="chat_titel ps-3">Forums</small>
@@ -148,13 +138,6 @@ function SideBarAdmin() {
             active={room.name === currentRoom}
             className="friend-drawer friend-drawer--onhover"
           >
-            {/* <div className="float-end">
-              <BsEraser
-              className="del_chat_Room_Btn"
-              onClick={() => handelAddRmoveRoom(room.name)}
-              title="Delete"
-              />
-            </div> */}
             <img
               className="profile-image"
               src={`https://avatars.dicebear.com/api/bottts/${room.name}.svg`}
@@ -162,7 +145,6 @@ function SideBarAdmin() {
             />
             <div className="mt-2 col-8">
               <h6>{room.name}</h6>
-              {/* <p className="text-muted">Hey, you're arrested!</p> */}
               {currentRoom !== room.name && (
                 <span className="badge rounded-pill bg-success">{user.newMessages[room.name]}</span>
               )}
@@ -184,15 +166,9 @@ function SideBarAdmin() {
             active={client._id === currentRoom}
             className="friend-drawer friend-drawer--onhover"
           >
-            <img
-              className="profile-image"
-              // src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
-              src={client.picture}
-              alt=""
-            />
+            <img className="profile-image" src={client.picture} alt="" />
             <div className="mt-2">
               <h6>{client.name}</h6>
-              {/* <p className="text-muted">Hey, you're arrested!</p> */}
               {currentRoom !== client._id && (
                 <span className="badge rounded-pill bg-primary">
                   {user.newMessages[client._id]}

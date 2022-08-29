@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,15 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { toggleCart } from "../../redux/cartSlice";
+import { Link } from "react-router-dom";
 
 function Navigation() {
   const user = useSelector((state) => state.user);
   let nav = useNavigate();
   const dispatch = useDispatch();
   const { cart_ar } = useSelector((state) => state.cart);
+  const [expanded, setExpanded] = useState(true);
+  const onNavToggle = () => setExpanded(!expanded);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -25,7 +28,7 @@ function Navigation() {
 
   return (
     <>
-      <Navbar key={"lg"} bg="light" expand={"lg"}>
+      <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -35,42 +38,27 @@ function Navigation() {
               />
             </Navbar.Brand>
           </LinkContainer>{" "}
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-lg`}
             aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                ShipMarket
-              </Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
               <Nav className="mx-auto  text-muted">
-                <Nav.Link
-                  onClick={() => {
-                    nav("./");
-                  }}
-                >
+                <Nav.Link as={Link} to="/" href="/">
                   Home
                 </Nav.Link>
-                <Nav.Link
-                  onClick={() => {
-                    nav("./about");
-                  }}
-                >
+                <Nav.Link as={Link} to="/about" href="/about">
                   About
                 </Nav.Link>
-                <Nav.Link
-                  onClick={() => {
-                    nav("./stores");
-                  }}
-                >
+                <Nav.Link as={Link} to="/stores" href="/stores">
                   Stores
                 </Nav.Link>
-                {/* <Nav.Link href="./admin">Admin</Nav.Link> */}
               </Nav>
 
               <Nav>
@@ -99,21 +87,19 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-                    <NavDropdown.Item href="/favorites">
+                    <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
                       Favorites
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/oldOrders">
+                    <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
                       Orders
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
-                      Cart
-                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>Cart</NavDropdown.Item>
                     {cart_ar.length > 0 && (
-                      <NavDropdown.Item href="/checkout">
+                      <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
                         Checkout
                       </NavDropdown.Item>
                     )}
-                    <NavDropdown.Item href="/uptateAccount">
+                    <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
                       Account
                     </NavDropdown.Item>
                     <NavDropdown.Divider />

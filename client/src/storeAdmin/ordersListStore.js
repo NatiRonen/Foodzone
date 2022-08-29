@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import Table from "react-bootstrap/Table";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { MdAddShoppingCart } from "react-icons/md";
-import { BsPen, BsEraser, BsInfoCircle } from "react-icons/bs";
+import { BsEraser, BsInfoCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import OrderInfo from "../comps/orders/OrderInfo";
@@ -28,10 +27,8 @@ function OrdersListStore() {
     let url = API_URL + "/orders/sotreOrders/" + params.id;
     try {
       let resp = await doApiGet(url);
-      // console.log(resp.data);
       setOrders(resp.data);
       setLoading(false);
-      console.log(resp.data);
     } catch (err) {
       if (err.response) {
         console.log(err.response.data);
@@ -56,6 +53,8 @@ function OrdersListStore() {
       }
     }
   };
+  if (!loading && orders.length === 0)
+    return <h2 className="display-4 text-center mt-5 text-danger">No orders found</h2>;
 
   return (
     <>
@@ -122,11 +121,7 @@ function OrdersListStore() {
             })}
           </tbody>
         </Table>
-        {!loading && orders.length === 0 ? (
-          <h2 className="text-center display-2">No Products</h2>
-        ) : (
-          ""
-        )}
+
         {loading ? <LottieAnimation /> : ""}
       </div>
     </>

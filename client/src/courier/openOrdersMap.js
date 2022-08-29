@@ -11,7 +11,7 @@ const STORE_ICON =
 
 function OpenOrdersMap(props) {
   const [map, setMap] = useState(/**@type google.maps.map*/ (null));
-  const [currentPosition, setCurrentPosition] = useState();
+  const [currentPosition, setCurrentPosition] = useState({ lat: 32.8138752, lng: 34.9896704 });
   const [storeswithOrders, setStoresWithOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [popupInfo, setPopupInfo] = useState([]);

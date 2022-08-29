@@ -41,7 +41,6 @@ function CategoriesStoreAdmin() {
       getCategories();
     }
   };
-
   return (
     <div className="container">
       <h1 className="display-4 mb-5">Categories</h1>
@@ -111,7 +110,7 @@ function CategoriesStoreAdmin() {
       </Row>
       {loading ? <LottieAnimation /> : ""}
       {!loading && categories.length === 0 ? (
-        <h2 className="text-center display-2">No categories found</h2>
+        <h2 className="display-4 text-center mt-5 text-danger">No categories found</h2>
       ) : (
         ""
       )}
