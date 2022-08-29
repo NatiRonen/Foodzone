@@ -11,7 +11,7 @@ import { useAddRemoveFavsMutation } from "../redux/appApi";
 
 function FavsProducts(props) {
   let [ar, setAr] = useState([]);
-  const { fetchFavs, loading, error } = useAddRemoveFavsMutation();
+  let [loading, setLoading] = useState(true);
   const favs = useSelector((state) => state.favs);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ function FavsProducts(props) {
     let resp = await doApiGet(url);
     console.log(resp.data);
     setAr(resp.data);
+    setLoading(false);
   };
 
   return (
