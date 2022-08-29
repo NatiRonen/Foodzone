@@ -25,7 +25,6 @@ function GetAddress(props) {
       //  onLoad={onLoad}
       onPlaceChanged={onPlaceChanged}
       types={["address"]}
-      // types={["geocode"]}
       options={{ componentRestrictions: { country: "il" } }}
       onLoad={onLoad}
     >

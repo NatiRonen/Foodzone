@@ -36,8 +36,9 @@ router.get("/sotreOrders/:store_id", authStoreAdmin, async (req, res) => {
 
 router.get("/userOrder", auth, async (req, res) => {
   try {
+    let user = await UserModel.findOne({ _id: req.tokenData._id });
     let data = await OrderModel.find({
-      client_short_id: req.tokenData._id,
+      client_short_id: user.short_id,
     })
       .limit(20)
       .sort({
