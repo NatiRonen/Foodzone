@@ -7,9 +7,9 @@ import "../../chat/css/newChat.css";
 
 function ChatAdmin() {
   return (
-    <>
+    <div style={{ overflowX: "hidden" }} className="container-fluid border">
       <AuthAdminComp />
-      <Row className=" shadow_chat" style={{ height: "89.7vh" }}>
+      <Row>
         <Col md={4} className="border-end p-0">
           <SideBarAdmin />
         </Col>
@@ -17,7 +17,7 @@ function ChatAdmin() {
           <MessageForm />
         </Col>
       </Row>
-    </>
+    </div>
   );
 }
 
