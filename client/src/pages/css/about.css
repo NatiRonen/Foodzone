@@ -37,3 +37,7 @@
   transform: translate3d(0px, -5px, 0px);
 	color: #316ce8;
 }
+
+.about_icons {
+  font-size: 1.7em;
+}
