@@ -6,7 +6,7 @@ function OrderInfoItem(props) {
   console.log(item);
 
   return (
-    <div className="row justify-content-between align-items-center">
+    <div className="row justify-content-between align-items-center p-2">
       <div className="col-2">
         <div className="mt-2 text-center fw-bold">{i + 1}</div>
       </div>

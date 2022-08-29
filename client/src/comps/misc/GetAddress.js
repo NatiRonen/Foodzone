@@ -25,7 +25,7 @@ function GetAddress(props) {
       //  onLoad={onLoad}
       onPlaceChanged={onPlaceChanged}
       types={["address"]}
-      // types={["geocode"]}
+      options={{ componentRestrictions: { country: "il" } }}
       onLoad={onLoad}
     >
       <Form.Group className="mb-3" controlId="formBasicAddress">

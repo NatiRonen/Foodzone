@@ -67,7 +67,7 @@ function OldOrders(props) {
                     {/* start product */}
                     {ar.length == 0 ? (
                       <h2 className="text-center mt-5">
-                        You have not ordered yet
+                        No orders found
                         <GrDeliver className="mx-2" />
                       </h2>
                     ) : (

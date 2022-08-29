@@ -81,7 +81,7 @@ function StoreHome(props) {
                   Categories <HiTemplate className="mx-2" />
                 </p>
                 <br />
-                <ListGroup variant="flush">
+                <ListGroup variant="flush" className="overflow-visible">
                   <ListGroup.Item
                     active={category === ""}
                     onClick={() => {
@@ -136,18 +136,23 @@ function StoreHome(props) {
                   Details
                   <BsInfoCircleFill className="mx-2" />
                 </p>
-                <p>
-                  <span className="fw-bold">Address: </span>
-                  {store.address}
-                </p>
-                <p>
-                  <span className="fw-bold">Mail: </span>
-                  {store.email}
-                </p>
-                <p>
-                  <span className="fw-bold">Phone: </span>
-                  {store.phone}
-                </p>
+                <ListGroup variant="flush" className="overflow-visible">
+                  <ListGroup.Item>
+                    <span className="text-primary">Address: </span>
+                    <br />
+                    <span className="text-secondary">{store.address} </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="text-primary">Mail: </span>
+                    <br />
+                    <span className="text-secondary">{store.email} </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="text-primary">Phone: </span>
+                    <br />
+                    <span className="text-secondary">{store.phone} </span>
+                  </ListGroup.Item>
+                </ListGroup>
               </Col>
             </Row>
           </Container>

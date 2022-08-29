@@ -22,8 +22,7 @@ function Navigation() {
   let nav = useNavigate();
   const dispatch = useDispatch();
   const { cart_ar } = useSelector((state) => state.cart);
-  const [expanded, setExpanded] = useState(true);
-  const onNavToggle = () => setExpanded(!expanded);
+  const favs = useSelector((state) => state.favs);
 
   return (
     <>
@@ -100,19 +99,14 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/favorites"
-                      href="/favorites"
-                    >
-                      Favorites
-                      <AiOutlineStar className="ms-1" />
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/oldOrders"
-                      href="/oldOrders"
-                    >
+
+                    {favs.length > 0 && (
+                      <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
+                        Favorites
+                      </NavDropdown.Item>
+                    )}
+                    <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
+
                       Orders
                       <BiTime className="ms-1" />
                     </NavDropdown.Item>
@@ -121,14 +115,16 @@ function Navigation() {
                       <HiOutlineShoppingCart className="ms-1" />
                     </NavDropdown.Item>
                     {cart_ar.length > 0 && (
-                      <NavDropdown.Item
-                        as={Link}
-                        to="/checkout"
-                        href="/checkout"
-                      >
-                        Checkout
-                        <BsCartCheck className="ms-1" />
-                      </NavDropdown.Item>
+
+                      <>
+                        <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
+                          Cart
+                        </NavDropdown.Item>
+                        <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
+                          Checkout
+                        </NavDropdown.Item>
+                      </>
+
                     )}
                     <NavDropdown.Item
                       as={Link}
