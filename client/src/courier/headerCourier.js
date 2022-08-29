@@ -1,23 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { checkOpenShipmentLocal } from "../services/localService";
 // react icons
-import { BiHomeAlt } from "react-icons/bi";
-import { GoListUnordered } from "react-icons/go";
-import { MdOutlineDeliveryDining } from "react-icons/md";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import { BiHomeAlt, BiTime } from "react-icons/bi";
+import { MdLocalShipping } from "react-icons/md";
+import { FaShippingFast } from "react-icons/fa";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
+
 import { useSelector } from "react-redux";
-import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { AppContext } from "../context/appContext";
 
 function HeaderCourier(props) {
   const nav = useNavigate();
   const user = useSelector((state) => state.user);
-  const handleLogout = (e) => {
-    e.preventDefault();
-    nav("/logout");
-  };
+
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
       <Container>
@@ -36,34 +39,41 @@ function HeaderCourier(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+              ShipMarket
+            </Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
             <Nav className="mx-auto">
               <Nav.Link as={Link} to="./" href="./">
                 Home
+                <BiHomeAlt className="ms-1" />
               </Nav.Link>
               {!checkOpenShipmentLocal() && (
-
                 <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
                   New shipment
-
+                  <MdLocalShipping className="ms-1" />
                 </Nav.Link>
               )}
               {checkOpenShipmentLocal() && (
                 <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
                   Opned shipment
+                  <FaShippingFast className="ms-1" />
                 </Nav.Link>
               )}
               <Nav.Link as={Link} to="./OrdersHistory" href="./OrdersHistory">
                 Orders history
+                <BiTime className="ms-1" />
               </Nav.Link>
             </Nav>
             <Nav>
               {!user && (
                 <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
+                  <Nav.Link>
+                    Login
+                    <FiLogIn className="ms-1" />
+                  </Nav.Link>
                 </LinkContainer>
               )}
               {user && (
@@ -86,12 +96,13 @@ function HeaderCourier(props) {
                   }
                   id="basic-nav-dropdown"
                 >
-                  {/* <NavDropdown.Item href="#action/3.1">Favorites</NavDropdown.Item> */}
-
                   <NavDropdown.Item>
-                    <Button variant="danger" onClick={handleLogout}>
-                      Logout
-                    </Button>
+                    <LinkContainer to="/logout" className="text-danger">
+                      <Nav.Link>
+                        Logout
+                        <FiLogOut className="ms-1" />
+                      </Nav.Link>
+                    </LinkContainer>
                   </NavDropdown.Item>
                 </NavDropdown>
               )}
