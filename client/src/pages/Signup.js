@@ -79,9 +79,9 @@ function Signup() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.7 }}
-        className="register-photo"
+        // className="register-photo"
       >
-        <Row className="justify-content-between">
+        <Row className="justify-content-between" style={{ height: "87vh" }}>
           <Col
             lg={5}
             className="d-flex shadow flex-direction-column align-items-center justify-content-center mt-3"

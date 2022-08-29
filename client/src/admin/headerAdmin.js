@@ -35,7 +35,9 @@ function HeaderAdmin(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+              ShipMarket
+            </Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>

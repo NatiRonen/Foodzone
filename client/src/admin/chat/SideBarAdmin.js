@@ -92,12 +92,10 @@ function SideBarAdmin() {
     return <></>;
   }
   return (
-    <>
-      <div className="settings-tray">
+    <div className="p-4">
+      <div className="settings-tray ">
         <img className="profile-image" src={user.picture} alt="Profile img" />
-        <span className="text-capitalize fw-semibold fst-italic">
-          Hello {user.name}
-        </span>
+        <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
         <span className="float-end">
           <BiAddToQueue
             title="Add Forum"
@@ -166,9 +164,7 @@ function SideBarAdmin() {
               <h6>{room.name}</h6>
               {/* <p className="text-muted">Hey, you're arrested!</p> */}
               {currentRoom !== room.name && (
-                <span className="badge rounded-pill bg-success">
-                  {user.newMessages[room.name]}
-                </span>
+                <span className="badge rounded-pill bg-success">{user.newMessages[room.name]}</span>
               )}
             </div>
             <BsEraser
@@ -206,7 +202,7 @@ function SideBarAdmin() {
           </div>
         ))}
       </ListGroup>
-    </>
+    </div>
   );
 }
 export default SideBarAdmin;

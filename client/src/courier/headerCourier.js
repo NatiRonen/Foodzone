@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
+import {
+  checkOpenShipmentLocal,
+  checkTokenLocal,
+} from "../services/localService";
 // react icons
 import { BiHomeAlt } from "react-icons/bi";
 import { GoListUnordered } from "react-icons/go";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AppContext } from "../context/appContext";
 
@@ -36,7 +46,9 @@ function HeaderCourier(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+              ShipMarket
+            </Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>

@@ -1,10 +1,14 @@
 import React from "react";
-import "../css/homeStrip.css";
 import { motion } from "framer-motion";
+import "../css/homeStrip.css";
 
 function HomeStrip(props) {
+  let image = props.image;
   return (
-    <div className="strip_home container-fluid d-flex align-items-center">
+    <div
+      style={{ backgroundImage: `url(${image})` }}
+      className="strip_home container-fluid d-flex align-items-center"
+    >
       <motion.div
         className="container text_bg text-center"
         initial={{ x: "-100vw" }}

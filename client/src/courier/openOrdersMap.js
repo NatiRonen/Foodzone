@@ -1,23 +1,20 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { API_URL, doApiGet } from "../services/apiService";
 import PopupMap from "./popupMap";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { getCurrentLocation, getGeoCodings, MAPS_KEY } from "../services/mapServices";
 import "./css_courier/courier.css";
 import LottieAnimation from "../comps/misc/lottieAnimation";
-import { AppContext } from "../context/appContext";
 
 const STORE_ICON =
   "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parcel_package_box_delivery-64.png";
 
 function OpenOrdersMap(props) {
   const [map, setMap] = useState(/**@type google.maps.map*/ (null));
-  const [currentPosition, setCurrentPosition] = useState();
+  const [currentPosition, setCurrentPosition] = useState({ lat: 32.8138752, lng: 34.9896704 });
   const [storeswithOrders, setStoresWithOrders] = useState([]);
   const [show, setShow] = useState(false);
   const [popupInfo, setPopupInfo] = useState([]);
-
-  const { socket } = useContext(AppContext);
 
   const handleToggle = () => setShow(!show);
 
@@ -28,20 +25,19 @@ function OpenOrdersMap(props) {
 
   useEffect(() => {
     doApi();
-    listenToStores();
   }, []);
 
   useEffect(() => {
-    setPopupInfo(storeswithOrders.find((item) => item.store._id === popupInfo?.store._id));
-  }, [storeswithOrders]);
-
-  useEffect(() => {
-    // getCurrentLocation(setCurrentPosition);
-    navigator?.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng } }) => {
-      const pos = { lat, lng };
-      setCurrentPosition(pos);
-    });
+    getCurrentLocation(setCurrentPosition);
+    // getLocatoin();
   }, [map]);
+
+  // const getLocatoin = () => {
+  //   navigator?.geolocation.getCurrentPosition((position) => {
+  //     let pos = [position.coords.latitude, position.coords.longitude];
+  //     console.log(pos);
+  //   });
+  // };
 
   const doApi = async () => {
     let ordersUrl = API_URL + "/orders/storesWithOrders";
@@ -50,9 +46,6 @@ function OpenOrdersMap(props) {
       let storesOrdersArray = resp.data.data;
       for (let item of storesOrdersArray) {
         item.store.coordinates = await getGeoCodings(item.store.address);
-        item.orders.forEach((order) => {
-          socket.emit("join-room-orders", order.short_id);
-        });
       }
       console.log(storesOrdersArray);
       setStoresWithOrders(storesOrdersArray);
@@ -61,51 +54,42 @@ function OpenOrdersMap(props) {
     }
   };
 
-  const listenToStores = async () => {
-    let url = API_URL + "/stores";
-    let resp = await doApiGet(url);
-    resp.data.forEach((store) => {
-      socket.emit("join-room-orders", store.short_id);
-    });
-  };
-  socket.off("status-changed").on("status-changed", () => {
-    console.log("from socket");
-    doApi();
-  });
-
-  if (!isLoaded) return <LottieAnimation />;
+  if (!isLoaded || !currentPosition) return <LottieAnimation />;
   return (
-    <div style={{ width: "100%", height: "100vh" }} className="container map-container">
-      {show && (
-        <PopupMap
-          popupInfo={popupInfo}
-          show={show}
-          handleToggle={handleToggle}
-          currentPosition={currentPosition}
-        />
-      )}
-      <GoogleMap
-        center={currentPosition}
-        zoom={10}
-        mapContainerStyle={{ width: "100%", height: "100%" }}
-        onLoad={(map) => setMap(map)}
-      >
-        {storeswithOrders.map((item, idx) => {
-          return (
-            <Marker
-              key={idx}
-              position={item.store.coordinates}
-              icon={STORE_ICON}
-              title={item.store.name}
-              onClick={() => {
-                handleToggle();
-                setPopupInfo(item);
-              }}
-            ></Marker>
-          );
-        })}
-        {currentPosition && <Marker position={currentPosition} title="You are here" />}
-      </GoogleMap>
+    <div>
+      {/* <div className="float-start">Click on the markets to see the opened orders</div> */}
+      <div style={{ width: "100%", height: " 90.7vh" }} className=" map-container">
+        {show && (
+          <PopupMap
+            popupInfo={popupInfo}
+            show={show}
+            handleToggle={handleToggle}
+            currentPosition={currentPosition}
+          />
+        )}
+        <GoogleMap
+          center={currentPosition}
+          zoom={10}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
+          onLoad={(map) => setMap(map)}
+        >
+          {storeswithOrders.map((item, idx) => {
+            return (
+              <Marker
+                key={idx}
+                position={item.store.coordinates}
+                icon={STORE_ICON}
+                title={item.store.name}
+                onClick={() => {
+                  handleToggle();
+                  setPopupInfo(item);
+                }}
+              ></Marker>
+            );
+          })}
+          <Marker position={currentPosition} title="You are here" />
+        </GoogleMap>
+      </div>
     </div>
   );
 }
