@@ -27,7 +27,7 @@ function Developers(props) {
             className="img-fluid rounded-circle mx-auto d-block"
           />
         </div>
-        <div className=" text-center">
+        <div className="text-center">
           <div className="pt-2">
             <h5 className="mt-4 font-weight-medium mb-0">{devInfo.name}</h5>
             <h6 className="subtitle mb-3">{devInfo.job}</h6>
@@ -36,7 +36,7 @@ function Developers(props) {
               {devInfo.Facebook === "" ? (
                 " "
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     href={devInfo.Facebook}
                     className="text-decoration-none d-block px-1"
@@ -48,7 +48,7 @@ function Developers(props) {
               {devInfo.Twitter === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     target="_blank"
                     href={devInfo.Twitter}
@@ -61,7 +61,7 @@ function Developers(props) {
               {devInfo.Instagram === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     target="_blank"
                     href={devInfo.Instagram}
@@ -74,7 +74,7 @@ function Developers(props) {
               {devInfo.Snapchat === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     target="_blank"
                     href={devInfo.Snapchat}
@@ -87,7 +87,7 @@ function Developers(props) {
               {devInfo.Github === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     target="_blank"
                     href={devInfo.Github}
@@ -100,7 +100,7 @@ function Developers(props) {
               {devInfo.Linkedin === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     target="_blank"
                     href={devInfo.Linkedin}
@@ -113,7 +113,7 @@ function Developers(props) {
               {devInfo.PdfFill === "" ? (
                 ""
               ) : (
-                <li className="list-inline-item">
+                <li className="list-inline-item about_icons">
                   <a
                     href={devInfo.PdfFill}
                     target="_blank"
