@@ -9,6 +9,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 
 function HeaderAdmin(props) {
   const nav = useNavigate();
@@ -18,7 +19,7 @@ function HeaderAdmin(props) {
     nav("/logout");
   };
   return (
-    <Navbar key={"lg"} bg="light" expand={"lg"}>
+    <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
@@ -30,51 +31,32 @@ function HeaderAdmin(props) {
         </LinkContainer>{" "}
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
         <Navbar.Offcanvas
-          id={`offcanvasNavbar-expand-lg`}
+          id={`offcanvasNavbar-expand-md`}
           aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              ShipMarket
-            </Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>
             <Nav className="mx-auto">
-              <Nav.Link
-                onClick={() => {
-                  nav("./Users");
-                }}
-              >
+              <Nav.Link as={Link} to="./" href="./">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="./users" href="./users">
                 Users
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./stores");
-                }}
-              >
+              <Nav.Link as={Link} to="./stores" href="./sotres">
                 Stores
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./products");
-                }}
-              >
+              <Nav.Link as={Link} to="./products" href="./products">
                 Products
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./orders");
-                }}
-              >
+              <Nav.Link as={Link} to="./orders" href="./orders">
                 Orders
               </Nav.Link>
-              <Nav.Link
-                onClick={() => {
-                  nav("./chat");
-                }}
-              >
+              <Nav.Link as={Link} to="./chat" href="./chat">
                 Forums & customers services
               </Nav.Link>
             </Nav>
