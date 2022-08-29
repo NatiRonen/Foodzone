@@ -1,46 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
 
 function Ticket(props) {
   const item = props.item;
   const i = props.i;
+  let params = useParams();
 
-  // useEffect(() => {
-  //   doApi();
-  // }, []);
+  const { socket } = useContext(AppContext);
+
+  useEffect(() => {
+    socket.emit("join-room-orders", item.short_id);
+  }, []);
+
+  socket.off("status-changed").on("status-changed", () => {
+    props.doApi();
+  });
 
   const changeStatus = async (_status) => {
     console.log(item._id);
     console.log("_status", _status);
     let url = API_URL + `/orders/` + item._id + `?status=` + _status;
     try {
-      let data = await doApiMethod(url, "PATCH", {});
-      console.log(data.data);
-      props.doApi();
-      // let filterPending = respOrders.data.filter(
-      //   (order) => order.status === "paid" || order.status === "on_the_way"
-      // );
-      // console.log(filterPending);
-      // setOrders(filterPending);
-      // setLoading(false);
+      let resp = await doApiMethod(url, "PATCH", {});
+      console.log(resp.data);
+      if (resp.data.modifiedCount === 1) {
+        socket.emit("status-changed", item.short_id, _status);
+        socket.emit("status-changed", params.id, _status);
+        props.doApi();
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className="order_card col-md-6 mb-4">
-      <span
-        className={
-          item.status === "on_the_way"
-            ? "badge bg-info"
-            : item.status === "paid"
-            ? "badge bg-warning"
-            : "badge bg-success"
-        }
-      >
-        {item.status === "on_the_way" ? "Courier in the way" : item.status}
-      </span>
+    <div className="order_card col-lg-6 mb-4">
       <section className="order_number p-3">
         <div className="container mt-4">
           <span>x {i + 1}</span>
@@ -59,7 +56,7 @@ function Ticket(props) {
             }}
             className="btn btn-outline-success mt-4"
           >
-            Ready for Shipment
+            Ready for shipment
           </button>
         )}
         {item.status === "on_the_way" && (
@@ -69,11 +66,23 @@ function Ticket(props) {
             }}
             className="btn btn-outline-success mt-4"
           >
-            Order Takend
+            Shipped
           </button>
         )}
       </section>
       <section className="card-cont px-2">
+        <span
+          className={
+            item.status === "on_the_way"
+              ? "badge bg-info float-end"
+              : item.status === "paid"
+              ? "badge bg-warning float-end"
+              : "badge bg-success float-end"
+          }
+          style={{ fontSize: "0.8em" }}
+        >
+          {item.status === "on_the_way" ? "Courier on his way" : item?.status?.replaceAll("_", " ")}
+        </span>
         <small>Total</small>
         <h3>₪ {item.total_price}</h3>
         <div className="even-date">
@@ -87,9 +96,7 @@ function Ticket(props) {
           {item.products_ar.map((prod) => {
             return (
               <div key={prod._id} className="d-flex flex-row">
-                {prod.img_url && (
-                  <img src={prod.img_url} className="prod_img me-2" />
-                )}
+                {prod.img_url && <img src={prod.img_url} className="prod_img me-2" />}
                 <p>
                   {prod.name} <span className="h6">x{prod.qty}</span>
                 </p>

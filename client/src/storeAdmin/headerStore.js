@@ -44,8 +44,9 @@ function HeaderStore(props) {
               <Nav.Link as={Link} to="./" href="./">
                 Home
               </Nav.Link>
+
               <Nav.Link as={Link} to="./openOrders" href="./openOrders">
-                Opened Orders
+                Opened orders
               </Nav.Link>
               <Nav.Link as={Link} to="./categories" href="./categories">
                 Categories

@@ -29,7 +29,15 @@ function OpenOrdersMap(props) {
 
   useEffect(() => {
     getCurrentLocation(setCurrentPosition);
+    // getLocatoin();
   }, [map]);
+
+  // const getLocatoin = () => {
+  //   navigator?.geolocation.getCurrentPosition((position) => {
+  //     let pos = [position.coords.latitude, position.coords.longitude];
+  //     console.log(pos);
+  //   });
+  // };
 
   const doApi = async () => {
     let ordersUrl = API_URL + "/orders/storesWithOrders";

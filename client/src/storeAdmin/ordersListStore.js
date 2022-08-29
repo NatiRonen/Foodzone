@@ -92,7 +92,7 @@ function OrdersListStore() {
                   <td>{item.short_id}</td>
                   <td>{item.client_short_id}</td>
                   <td>{item.total_price}</td>
-                  <td>{item.status}</td>
+                  <td>{item?.status?.replaceAll("_", " ")}</td>
                   <td>
                     <button
                       className="btn btn-outline-info"

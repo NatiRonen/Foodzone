@@ -45,8 +45,10 @@ function HeaderCourier(props) {
                 Home
               </Nav.Link>
               {!checkOpenShipmentLocal() && (
+
                 <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
                   New shipment
+
                 </Nav.Link>
               )}
               {checkOpenShipmentLocal() && (

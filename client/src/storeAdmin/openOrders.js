@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../services/apiService";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import Ticket from "./ticket";
 import "./css/ordersPanel.css";
+import { AppContext } from "../context/appContext";
 
 function OpenOrders(props) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
 
+  const { socket } = useContext(AppContext);
+
   useEffect(() => {
     doApi();
+    socket.emit("join-room-orders", params.id);
   }, []);
+
+  socket.off("new-order").on("new-order", () => {
+    doApi();
+  });
 
   const doApi = async () => {
     let url = API_URL + `/orders/sotreOrders/` + params.id;
@@ -36,9 +44,16 @@ function OpenOrders(props) {
     return <h2 className="display-4 text-center mt-5 text-danger">No orders found</h2>;
 
   return (
-    <div className="container-fluid bg_color">
-      <section className="container">
-        <h1 className="orders_titel">Orders To Make</h1>
+
+    <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
+      <section className="container p-4">
+        <h1 className="orders_titel">Opened orders</h1>
+        {orders.length === 0 && (
+          <div style={{ height: " 90.7vh" }} className="container">
+            <h2 className="display-3 text-center mt-5">No Orders</h2>
+          </div>
+        )}
+
         <div className="container row justify-content-between">
           {/* start Ticket */}
           {orders.map((item, i) => {

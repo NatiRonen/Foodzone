@@ -1,6 +1,6 @@
-.shadow_chat {
+/* .shadow_chat {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
+} */
 
 .chat_titel {
     font-weight: bold;
@@ -9,23 +9,29 @@
 
 .scroll_div {
     overflow-y: auto;
-    max-height: 492px !important;
+    max-height: 467px !important;
 }
 
 .scroll_div_admin {
     overflow-y: auto;
-    max-height: 252px !important;
+    max-height: 250px !important;
 }
 
 .scroll_div_Customers {
     overflow-y: auto;
-    max-height: 250px !important;
+    max-height: 227px !important;
 }
 
 .chat_panel {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 623px;
+    /* height: 623px; */
+    height: 73vh;
+}
+
+.forms_panel {
+    /* height: 623px; */
+    height: 73vh;
 }
 
 .profile-image {

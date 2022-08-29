@@ -32,6 +32,7 @@ function MyOrders(props) {
     <div className="container">
       <AuthCourierComp />
       <h2 className="display-4">Orders history</h2>
+
       <table className="table table-striped table-scrollbar">
         <thead>
           <tr>
@@ -63,6 +64,7 @@ function MyOrders(props) {
                 <td>₪ {item.total_price}</td>
                 <td>{item.products_ar.length}</td>
                 {/* <td>
+
                     <button
                       onClick={() => {
                         // nav("/courier/deliveryInfo/" + item._id, { state: item.driver_id });

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotifications, resetNotifications } from "../../redux/userSlice";
 import { AppContext } from "../../context/appContext";
@@ -25,8 +25,10 @@ function SideBarAdmin() {
   } = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [newForum, setNewForum] = useState("");
+  const [tempRooms, setTempRooms] = useState([]);
 
   const dispatch = useDispatch();
+  const searchRoomRef = useRef();
 
   useEffect(() => {
     console.log(clients);
@@ -43,6 +45,7 @@ function SideBarAdmin() {
     let url = API_URL + "/chat/rooms";
     let resp = await axios(url);
     setRooms(resp.data);
+    setTempRooms(resp.data);
     console.log(resp.data);
   };
 
@@ -85,14 +88,31 @@ function SideBarAdmin() {
   };
   //   const handelDeleteClientChat = (client) => {};
 
+  const searchRoom = async () => {
+    let searchQ = searchRoomRef.current.value;
+    // console.log(searchQ);
+    let temp = await rooms.filter((item) =>
+      item.name.toUpperCase().includes(searchQ.toUpperCase())
+    );
+    setTempRooms(temp);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      searchRoom();
+    }
+  };
+
   if (!user) {
     return <></>;
   }
   return (
-    <div className="p-4">
-      <div className="settings-tray ">
+    <div className="forms_panel">
+      <div className="settings-tray ps-4">
         <img className="profile-image" src={user.picture} alt="Profile img" />
-        <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
+        <span className="text-capitalize fw-semibold fst-italic">
+          Hello {user.name}
+        </span>
         <span className="float-end">
           <BiAddToQueue
             title="Add Forum"
@@ -125,13 +145,21 @@ function SideBarAdmin() {
       </Collapse>
       <div className="search-box">
         <div className="input-wrapper p-2">
-          <FiSearch style={{ cursor: "pointer" }} />
-          <input placeholder="Search here" type="text" className="ps-3" />
+
+          <FiSearch style={{ cursor: "pointer" }} onClick={searchRoom} />
+          <input
+            ref={searchRoomRef}
+            onKeyPress={handleKeyPress}
+            placeholder="Search here"
+            type="text"
+            className="ps-3"
+          />
+
         </div>
       </div>
       <small className="chat_titel ps-3">Forums</small>
       <ListGroup className="scroll_div_admin">
-        {rooms.map((room, idx) => (
+        {tempRooms.map((room, idx) => (
           <div
             key={idx}
             onClick={() => joinRoom(room.name)}
@@ -146,7 +174,9 @@ function SideBarAdmin() {
             <div className="mt-2 col-8">
               <h6>{room.name}</h6>
               {currentRoom !== room.name && (
-                <span className="badge rounded-pill bg-success">{user.newMessages[room.name]}</span>
+                <span className="badge rounded-pill bg-success">
+                  {user.newMessages[room.name]}
+                </span>
               )}
             </div>
             <BsEraser
