@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Modal, Row, ListGroup } from "react-bootstrap";
 import PopupItem from "./popupItem";
 import {
@@ -9,6 +9,7 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { getGeoCodings, MAPS_KEY } from "../services/mapServices";
+import { AppContext } from "../context/appContext";
 
 function PopupMap(props) {
   const [storeGeoCode, setStroeGeoCode] = useState();
@@ -23,10 +24,15 @@ function PopupMap(props) {
   });
 
   useEffect(() => {
-    let pos = getGeoCodings(item.store.address);
+    getPos();
+  }, []);
+
+  const getPos = async () => {
+    let pos = await getGeoCodings(item.store.address);
     console.log(pos);
     setStroeGeoCode(pos);
-  }, []);
+  };
+
   if (!isLoaded) return <div>Loading...</div>;
   return (
     <Modal

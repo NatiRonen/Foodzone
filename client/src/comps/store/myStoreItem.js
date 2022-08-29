@@ -24,7 +24,7 @@ function MyStoreItem(props) {
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
       exit={{ opacity: 0 }}
-      className="col-md-4 col-sm-6 mb-4"
+      className="col-md-6 col-lg-4  mb-4"
     >
       <div
         className={`payment-card rounded-lg shadow bg-white text-center h-100 ${
@@ -40,10 +40,7 @@ function MyStoreItem(props) {
           >
             {item.status}
           </div>
-          <img
-            src={item.imgUrl || "/images/no_image.png"}
-            alt={item.name + " image"}
-          />
+          <img src={item.imgUrl || "/images/no_image.png"} alt={item.name + " image"} />
         </div>
         <div className="payment-card__info p-4">
           <h4>{item.name}</h4>

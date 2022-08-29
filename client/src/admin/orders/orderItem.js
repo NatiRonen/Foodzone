@@ -39,7 +39,7 @@ function OrderItem(props) {
               : "badge bg-success"
           }
         >
-          {item.status}
+          {item?.status?.replaceAll("_", " ")}
         </span>
       </td>
       <td>{item.date_created}</td>

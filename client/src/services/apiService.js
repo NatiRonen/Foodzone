@@ -12,7 +12,7 @@ export const doApiGet = async (_url, _idStore = null) => {
         "x-api-key": localStorage["tok"],
         "content-type": "application/json",
       },
-      withCredentials: true,
+      // withCredentials: true,
     });
     return data;
   } catch (err) {
@@ -31,7 +31,7 @@ export const doApiMethod = async (_url, _method, _body, _idStore = null) => {
         "x-api-key": localStorage["tok"],
         "content-type": "application/json",
       },
-      withCredentials: true,
+      // withCredentials: true,
     });
     return data;
   } catch (err) {

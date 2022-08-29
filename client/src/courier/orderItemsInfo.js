@@ -35,13 +35,11 @@ function OrderItemsInfo(props) {
                   </div>
                   <div className="summary-item">
                     <span className="text">Status</span>
-                    <span className="price">{item.order.status}</span>
+                    <span className="price">{item.order?.status?.replaceAll("_", " ")}</span>
                   </div>
                   <div className="summary-item">
                     <span className="text">Date</span>
-                    <span className="price">
-                      {item.order.date_created.replace(/T/, " ").substr(0, 16)}
-                    </span>
+                    <span className="price">{item.order.date_created}</span>
                   </div>
                   <div className="summary-item">
                     <span className="text">Items</span>

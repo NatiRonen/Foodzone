@@ -3,25 +3,17 @@ import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import RoutingCard from "./routingCard";
 import { toast } from "react-toastify";
-import { MdOutlineDeliveryDining } from "react-icons/md";
-import { BsChevronRight } from "react-icons/bs";
 import io from "socket.io-client";
 import "./css_courier/courier.css";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, DirectionsRenderer } from "@react-google-maps/api";
 import { calculateRoute, getCurrentAddress, MAPS_KEY } from "../services/mapServices";
 import { Button, Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import OrderInfo from "../comps/orders/OrderInfo";
-import { DELIVERED_ORDER_STATUS } from "../services/consts";
+import { DELIVERED_ORDER_STATUS, READY_FOR_SHIPMENT_ORDER_STATUS } from "../services/consts";
 import { AppContext } from "../context/appContext";
-import { checkOpenShipmentLocal, remonveOpenShipment } from "../services/localService";
+import { checkOpenShipmentLocal, remoneOpenShipment } from "../services/localService";
 
 function MapRouting(props) {
   const params = useParams();
@@ -34,6 +26,8 @@ function MapRouting(props) {
 
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
+
+  const { socket } = useContext(AppContext);
 
   let openShipment = checkOpenShipmentLocal();
   let orderId = openShipment.orderId;
@@ -79,8 +73,9 @@ function MapRouting(props) {
     let url = API_URL + "/orders/" + orderData.order._id + "?status=" + DELIVERED_ORDER_STATUS;
     let resp = await doApiMethod(url, "PATCH", {});
     if (resp.data.modifiedCount === 1) {
-      remonveOpenShipment();
+      socket.emit("status-changed", orderData.order.short_id, DELIVERED_ORDER_STATUS);
       toast.success("order completed successfully");
+      remoneOpenShipment();
       nav("../ordersHistory");
     }
   };
@@ -155,55 +150,5 @@ function MapRouting(props) {
     </>
   );
 }
-// const takeDelivery = async (_orderId, _orderShortId) => {
-//   console.log(_orderId);
-//   let url = API_URL + "/orders/shipping/takingOrder";
-//   try {
-//     let resp = await doApiMethod(url, "PATCH", { orderId: _orderId });
-//     // console.log(resp.data);
-//     if (resp.data.modifiedCount === 1) {
-//       const socket = io.connect(API_URL);
-//       socket.emit("taking_order", _orderShortId);
-//       toast.info("You took the shipment");
-//       nav("/courier/myOrders");
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-// <div className="container my-5">
-//   <div className="text-center">
-//     <h2 className="display-4 mb-4 animaLinkSM"> Order Details </h2>
-//     <button
-//       style={{ background: "none" }}
-//       className="position-absolute top-0 end-0 animaLinkSM "
-//       onClick={() => {
-//         nav(-1);
-//       }}
-//     >
-//       Back <BsChevronRight className="mx-2" />
-//     </button>
-//   </div>
-//   {loading && <LottieAnimation />}
-//   {!loading && orderInfo.order.status === "shipped" && (
-//     <h2 className="text-center display-4 text-danger">
-//       The shipment has already been taken... <MdOutlineDeliveryDining className="me-2" />
-//     </h2>
-//   )}
-//   {!loading (
-//     <React.Fragment>
-//       <div className="container text-center">
-//         <button
-//           onClick={() => {
-//             takeDelivery(orderInfo.order._id, orderInfo.order.short_id);
-//           }}
-//           className="btn btn-outline-primary rounded-pill col-6 my-4"
-//         >
-//           Take the delivery <MdOutlineDeliveryDining size="1.5em" className="me-2" />
-//         </button>
-//       </div>
-//     </React.Fragment>
-//   )}
-// </div>
 
 export default MapRouting;
