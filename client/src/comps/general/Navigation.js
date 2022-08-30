@@ -26,13 +26,7 @@ function Navigation() {
 
   return (
     <>
-      <Navbar
-        key={"lg"}
-        bg="light"
-        expand={"lg"}
-        sticky={"top"}
-        collapseOnSelect
-      >
+      <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -49,9 +43,7 @@ function Navigation() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                ShipMarket
-              </Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
@@ -99,38 +91,29 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-
                     {favs.length > 0 && (
                       <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
                         Favorites
+                        <AiOutlineStar className="ms-1" />
                       </NavDropdown.Item>
                     )}
                     <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
-
                       Orders
                       <BiTime className="ms-1" />
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
-                      Cart
-                      <HiOutlineShoppingCart className="ms-1" />
-                    </NavDropdown.Item>
                     {cart_ar.length > 0 && (
-
                       <>
                         <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
                           Cart
+                          <HiOutlineShoppingCart className="ms-1" />
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
                           Checkout
+                          <BsCartCheck className="ms-1" />
                         </NavDropdown.Item>
                       </>
-
                     )}
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/uptateAccount"
-                      href="/uptateAccount"
-                    >
+                    <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
                       Account
                       <BiUserCircle className="ms-1" />
                     </NavDropdown.Item>
