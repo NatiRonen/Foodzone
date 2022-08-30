@@ -10,8 +10,8 @@
 
 .strip_home h2 {
     font-size: 4.2em;
-    /* font-weight: bold; */
-    color: #eee;
+    font-weight: bold;
+    color: rgb(36, 36, 36);
 }
 
 .strip_home h4 {
