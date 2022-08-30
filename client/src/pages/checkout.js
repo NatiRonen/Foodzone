@@ -33,6 +33,11 @@ function Checkout(props) {
     }
     return {};
   };
+  useEffect(() => {
+    if (user) {
+      setDestination(user.address);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (cart_ar.length && destination) {
@@ -122,7 +127,7 @@ function Checkout(props) {
             {/* start Checkout */}
             <div className="col-lg-4 summary shadow card">
               <h3> Destination </h3>
-              <GetAddress currentAddress={user.address} setAddress={setDestination} />
+              <GetAddress address={user?.address} setAddress={setDestination} />
 
               <h3> Payment </h3>
               <div className="summary-item">
