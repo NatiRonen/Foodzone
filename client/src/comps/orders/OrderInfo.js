@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { ImInfo } from "react-icons/im";
 import { Button, Modal } from "react-bootstrap";
-import OrderInfoItem from "./OrderInfoItem";
 import LottieAnimation from "../misc/lottieAnimation";
 import { Row, Col } from "react-bootstrap";
 
@@ -49,17 +48,39 @@ function OrderInfo(props) {
             <div className="container">
               <div className="content">
                 <div className="row">
-                  <div className=" col-lg-8">
+                  <div className=" col-xl-7">
                     <div className="items">
                       {/* start product */}
                       {productsAr.map((item, i) => {
-                        return <OrderInfoItem key={item._id} item={item} i={i} />;
+                        return (
+                          <div
+                            key={1}
+                            className="row justify-content-between align-items-center p-2"
+                          >
+                            <div className="col-1">
+                              <div className="mt-2 text-center fw-bold">{i + 1}</div>
+                            </div>
+                            <div className="col-5 info">
+                              <p className="fw-bold mb-3">{item.name}</p>
+                              <p className="mb-1"> {item.price} ₪</p>
+                              <p>x {item.qty} </p>
+                            </div>
+
+                            <div className="col-6">
+                              <img
+                                // style={{ height: "120px", width: "200px" }}
+                                className="img-fluid mx-auto d-block"
+                                src={item.imgUrl}
+                              />
+                            </div>
+                          </div>
+                        );
                       })}
                       {/* end product */}
                     </div>
                   </div>
                   {/* start Orders Info */}
-                  <div className=" col-lg-4">
+                  <div className=" col-xl-5">
                     <div className="summary">
                       <React.Fragment>
                         <h3>

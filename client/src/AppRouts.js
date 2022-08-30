@@ -26,7 +26,6 @@ import LayoutAdmin from "./admin/layoutAdmin";
 import HomeAdmin from "./admin/HomeAdmin";
 import UsersList from "./admin/usersList";
 import OrdersAdmin from "./admin/orders/ordersAdmin";
-import OrderInfoAdmin from "./admin/orders/orderInfoAdmin";
 import StoresAdmin from "./admin/storesAdmin";
 import ProductsAdmin from "./admin/productsAdmin";
 import HomeStore from "./storeAdmin/HomeStore";
@@ -77,14 +76,8 @@ function AppRouts() {
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
           <Route path="openOrders" element={<OpenOrders />} />
-          <Route
-            path="products/edit/:prodId"
-            element={<EditProductAdminStore />}
-          />
-          <Route
-            path="products/addProduct"
-            element={<AddProductStoreAdmin />}
-          />
+          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
+          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
@@ -94,7 +87,6 @@ function AppRouts() {
           <Route path="stores" element={<StoresAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />
           <Route path="orders" element={<OrdersAdmin />} />
-          <Route path="orders/:id" element={<OrderInfoAdmin />} />
           <Route path="chat" element={<ChatAdmin />} />
         </Route>
         {/* Courier routes */}

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BsEraser } from "react-icons/bs";
-
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
 import PageLinks from "../comps/misc/pageLinks";
-
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import AuthAdminComp from "../comps/auth/authAdminComp";
 

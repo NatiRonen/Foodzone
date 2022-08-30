@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import AuthAdminComp from "../../comps/auth/authAdminComp";
 import MessageForm from "../../chat/MessageForm";
 import SideBarAdmin from "./SideBarAdmin";

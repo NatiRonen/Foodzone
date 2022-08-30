@@ -51,6 +51,7 @@ function StoresAdmin(props) {
       let temp_ar = resp.data.map((item) => {
         return { _id: item._id, name: item.name, email: item.email };
       });
+      console.log(temp_ar);
       setOwnerAr(temp_ar);
     } catch (err) {
       alert("there problem come back later");
@@ -113,10 +114,12 @@ function StoresAdmin(props) {
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Owner</th>
             <th>Image</th>
             <th>Short_id</th>
             <th>status</th>
+            <th>Owner</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -126,7 +129,6 @@ function StoresAdmin(props) {
               <tr key={item._id}>
                 <td>{i + 1 + 5 * (numPage - 1)}</td>
                 <td>{item.name}</td>
-                <td>{item.admin_short_id}</td>
                 <td>
                   <img
                     src={item.imgUrl || "/images/no_image.png"}
@@ -144,6 +146,9 @@ function StoresAdmin(props) {
                     {item.status}
                   </button>
                 </td>
+                <td>{item.admin_short_id}</td>
+                <td>{item.email}</td>
+                <td>{item.phone}</td>
                 <td>
                   <button
                     onClick={() => {
