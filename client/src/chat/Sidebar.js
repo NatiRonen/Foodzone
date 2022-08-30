@@ -33,7 +33,6 @@ function Sidebar() {
     setRooms(resp.data);
     joinRoom(resp.data[0].name);
     setTempRooms(resp.data);
-    console.log(resp.data);
   };
 
   const joinRoom = (_room, _isPublic = true) => {
@@ -59,7 +58,6 @@ function Sidebar() {
 
   const searchRoom = async () => {
     let searchQ = searchRoomRef.current.value;
-    // console.log(searchQ);
     let temp = await rooms.filter((item) =>
       item.name.toUpperCase().includes(searchQ.toUpperCase())
     );

@@ -26,8 +26,6 @@ function Login() {
     if (resp.data) {
       toast.success("You are now logged in ");
       nav("/");
-
-      console.log(resp.data);
     } else {
       console.log(error);
     }

@@ -63,7 +63,6 @@ export const getCurrentAddress = async (_pos) => {
 export const getCurrentLocation = async (_setState) => {
   navigator?.geolocation.getCurrentPosition(({ coords: { latitude: lat, longitude: lng } }) => {
     const pos = { lat, lng };
-    console.log(pos);
     _setState(pos);
   });
 };

@@ -25,7 +25,7 @@ function Ticket(props) {
     let url = API_URL + `/orders/` + item._id + `?status=` + _status;
     try {
       let resp = await doApiMethod(url, "PATCH", {});
-      console.log(resp.data);
+
       if (resp.data.modifiedCount === 1) {
         socket.emit("status-changed", item.short_id, _status);
         socket.emit("status-changed", params.id, _status);

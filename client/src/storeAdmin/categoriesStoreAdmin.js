@@ -21,7 +21,7 @@ function CategoriesStoreAdmin() {
   const getCategories = async () => {
     let url = API_URL + "/categories/" + params.id;
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setCategories(resp.data);
     setloading(false);
   };

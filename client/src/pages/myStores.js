@@ -22,10 +22,9 @@ function MyStores(props) {
     let url = API_URL + "/stores/userStores";
     try {
       let resp = await doApiGet(url);
-      console.log(resp.data);
+
       setAr(resp.data);
       setArSort(resp.data);
-      console.log(resp.data);
     } catch (err) {
       console.log(err);
     }
@@ -36,7 +35,7 @@ function MyStores(props) {
       try {
         let url = API_URL + "/stores/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {}, _short_id);
-        // console.log(resp.data);
+        //
         if (resp.data.deletedCount) {
           toast.info("Stores deleted");
         }
@@ -51,13 +50,11 @@ function MyStores(props) {
 
   const onSelectOption = () => {
     let storeStatus = selectRef.current.value;
-    console.log(storeStatus);
     if (storeStatus != "all") {
       let temp = ar.filter((store) => store.status == storeStatus);
       console.log(temp);
       setArSort(temp);
     } else {
-      console.log(ar);
       setArSort(ar);
     }
   };

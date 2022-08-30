@@ -29,7 +29,7 @@ function StoreHome(props) {
   const doApi = async () => {
     let url = API_URL + "/stores/single/" + params.id;
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setstore(resp.data);
     console.table(resp.data);
 

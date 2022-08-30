@@ -25,7 +25,7 @@ function AllStores(props) {
     let pageQuery = urlParams.get("page") || 1;
     let url = API_URL + "/stores?&status=active&perPage=6&page=" + pageQuery;
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setShops_ar(resp.data);
     setShopsSearched(resp.data);
     setLoading(false);

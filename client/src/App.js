@@ -13,7 +13,6 @@ function App() {
   const [clients, setClients] = useState([]);
   const [serviceMsg, setServiceMsg] = useState(false);
 
-  const [store, setStore] = useState({});
   const [displayFooter, setDisplayFooter] = useState(true);
 
   return (
@@ -32,8 +31,6 @@ function App() {
         setClients,
         serviceMsg,
         setServiceMsg,
-        store,
-        setStore,
         displayFooter,
         setDisplayFooter,
       }}

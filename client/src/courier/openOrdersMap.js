@@ -39,7 +39,6 @@ function OpenOrdersMap(props) {
       for (let item of storesOrdersArray) {
         item.store.coordinates = await getGeoCodings(item.store.address);
       }
-      console.log(storesOrdersArray);
       setStoresWithOrders(storesOrdersArray);
     } catch (err) {
       console.log(err);

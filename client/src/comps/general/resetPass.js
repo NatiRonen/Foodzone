@@ -65,7 +65,6 @@ function ResetPass(props) {
         },
       });
       if (resp.data.emailSent === true) {
-        console.log(resp.data);
         setUserEmail(email);
         setEmail("");
         setContent(SEND_CODE);

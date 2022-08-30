@@ -52,7 +52,6 @@ function StoresAdmin(props) {
       let temp_ar = resp.data.map((item) => {
         return { _id: item._id, name: item.name, email: item.email };
       });
-      console.log(temp_ar);
       setOwnerAr(temp_ar);
     } catch (err) {
       alert("there problem come back later");

@@ -10,7 +10,6 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 
 function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
-  const [store, setStore] = useState([]);
   const [loading, setLoading] = useState(true);
   let params = useParams();
   let nav = useNavigate();
@@ -23,7 +22,7 @@ function ProductsStoreAdmin(props) {
     let url = API_URL + "/products/storeProducts/" + params.id;
     try {
       let resp = await doApiGet(url);
-      // console.log(resp.data);
+      //
       setProducts(resp.data);
       setLoading(false);
     } catch (err) {
@@ -38,7 +37,7 @@ function ProductsStoreAdmin(props) {
       try {
         let url = API_URL + "/products/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {}, params.id);
-        // console.log(resp.data);
+        //
         if (resp.data.deletedCount) {
           toast.info("Product deleted successfully");
         }
@@ -62,7 +61,7 @@ function ProductsStoreAdmin(props) {
       >
         Back <IoMdArrowRoundBack />
       </button>
-      <Link className="btn btn-outline-success my-3" to="./addProduct" state={{ store }}>
+      <Link className="btn btn-outline-success my-3" to="./addProduct">
         Add Product <MdAddShoppingCart />
       </Link>
 
@@ -101,7 +100,6 @@ function ProductsStoreAdmin(props) {
                 <td>
                   <Link
                     to={"./edit/" + item._id}
-                    state={{ store }}
                     className="btn btn-outline-secondary mx-2"
                     title="Edit"
                   >

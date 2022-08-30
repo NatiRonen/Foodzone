@@ -1,9 +1,7 @@
 const express = require("express");
-const { random } = require("lodash");
-const { authAdmin, authStoreAdmin } = require("../middlewares/auth");
+const { authStoreAdmin } = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { ProductModel } = require("../models/productModel");
-const { StoreModel } = require("../models/storeModel");
 const router = express.Router();
 
 //?cat=

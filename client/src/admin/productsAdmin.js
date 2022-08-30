@@ -25,7 +25,6 @@ function ProductsAdmin(props) {
     let url = API_URL + "/products?page=" + pageQuery;
     try {
       let resp = await doApiGet(url);
-      // console.log(resp.data);
       setAr(resp.data);
     } catch (err) {
       if (err.response) {

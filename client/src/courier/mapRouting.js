@@ -30,7 +30,6 @@ function MapRouting(props) {
   let orderId = openShipment.orderId;
   let currentPosition = openShipment.currentPosition;
 
-  console.log(currentPosition);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: MAPS_KEY,
     libraries: ["places"],
@@ -46,7 +45,6 @@ function MapRouting(props) {
     let url = API_URL + "/orders/deliveryInfo/" + orderId;
     try {
       let resp = await doApiGet(url);
-      console.log(resp.data);
       setOrderData(resp.data);
       setRoutes(resp.data);
     } catch (err) {
@@ -61,7 +59,6 @@ function MapRouting(props) {
       _data.store.address,
       _data.order.destination
     );
-    console.log(results);
     setRouteDetails(routeDetails);
     setDirectionResponse(results);
   };

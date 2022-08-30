@@ -22,7 +22,6 @@ function ApplyForCourier(props) {
     let url = API_URL + "/users/applyingForCourier";
     try {
       let resp = await doApiMethod(url, "PATCH", {});
-      console.log(resp);
       if (resp.data.modifiedCount === 1) {
         toast.success("Application sent successfully");
       } else {

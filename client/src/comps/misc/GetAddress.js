@@ -17,7 +17,6 @@ function GetAddress(props) {
   }, [props.currentAddress]);
 
   const onPlaceChanged = (e) => {
-    console.log(addressRef.current.value);
     setAddress(addressRef.current.value);
   };
 

@@ -54,15 +54,13 @@ function Checkout(props) {
       store_short_id: store_short_id,
       destination: destination,
     };
-    console.log(body);
     let resp = await doApiMethod(url, "POST", body);
-    console.log(resp.data);
+
     setOrderShortId(resp.data.short_id);
   };
 
   // paypal pay
   const onCommit = async (_data) => {
-    console.log(_data);
     let url = API_URL + "/orders/orderPaid/";
     let paypalObject = {
       tokenId: _data.facilitatorAccessToken,

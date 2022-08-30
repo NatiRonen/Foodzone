@@ -45,7 +45,6 @@ function UpdateAccount() {
     const picUrl = image ? await uploadImage(image) : imagePreview;
     let encryptCurrentPass = encrypt(currentPassword);
     let encryptNewPass = newPassword ? encrypt(newPassword) : null;
-    console.log(address);
     let resp = await updateUser({
       name,
       email,
@@ -55,13 +54,13 @@ function UpdateAccount() {
       address,
       phone,
     });
-    console.log(resp.data);
+
     if (resp.data.data.modifiedCount === 0) {
       toast.warning("no changes were made");
     }
     if (resp.data.data.modifiedCount === 1) {
       toast.info("Accoutn details updated");
-      console.log(resp.data);
+
       nav("/");
     }
   };
@@ -86,7 +85,6 @@ function UpdateAccount() {
         method: "POST",
         body: data,
       });
-      console.log(data);
       const urlData = await res.json();
       setUploading(false);
       return urlData.url;

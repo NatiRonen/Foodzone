@@ -13,7 +13,6 @@ function OrderItem(props) {
       try {
         let url = API_URL + "/orders/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {});
-        // console.log(resp.data);
         if (resp.data.deletedCount) {
           toast.info("Order deleted");
         }

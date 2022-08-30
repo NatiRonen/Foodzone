@@ -63,7 +63,6 @@ function MessageForm() {
       minute: "2-digit",
     });
     const roomId = currentRoom;
-    console.log(roomId);
     socket.emit("message-room", roomId, message, user, time, todayDate);
     setMessage("");
   };
