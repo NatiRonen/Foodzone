@@ -7,12 +7,11 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./css/checkout.css";
 import { resetCart } from "../redux/cartSlice";
 import AuthClientComp from "../comps/auth/authClientComp";
 import GetAddress from "../comps/misc/GetAddress";
-import { Row, Col } from "react-bootstrap";
 import { AppContext } from "../context/appContext";
+import "./css/checkout.css";
 
 function Checkout(props) {
   const { cart_ar, totalPrice, store_short_id } = useSelector((state) => state.cart);
@@ -55,15 +54,13 @@ function Checkout(props) {
       store_short_id: store_short_id,
       destination: destination,
     };
-    console.log(body);
     let resp = await doApiMethod(url, "POST", body);
-    console.log(resp.data);
+
     setOrderShortId(resp.data.short_id);
   };
 
   // paypal pay
   const onCommit = async (_data) => {
-    console.log(_data);
     let url = API_URL + "/orders/orderPaid/";
     let paypalObject = {
       tokenId: _data.facilitatorAccessToken,

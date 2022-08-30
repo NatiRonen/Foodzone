@@ -10,9 +10,10 @@ import { motion } from "framer-motion";
 
 function AllStores(props) {
   const [shops_ar, setShops_ar] = useState([]);
-  const [shops_temp, setShops_temp] = useState([]);
+  const [shopsSearched, setShopsSearched] = useState([]);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     doApi();
@@ -24,9 +25,9 @@ function AllStores(props) {
     let pageQuery = urlParams.get("page") || 1;
     let url = API_URL + "/stores?&status=active&perPage=6&page=" + pageQuery;
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setShops_ar(resp.data);
-    setShops_temp(resp.data);
+    setShopsSearched(resp.data);
     setLoading(false);
   };
 
@@ -37,7 +38,8 @@ function AllStores(props) {
           <Search
             text="What store are you searching for?"
             shops_ar={shops_ar}
-            setShops_temp={setShops_temp}
+            setShopsSearched={setShopsSearched}
+            setSearchTerm={setSearchTerm}
           />
         </div>
       </div>
@@ -51,7 +53,7 @@ function AllStores(props) {
         transition={{ delay: 0.5, duration: 0.7 }}
         className="row"
       >
-        {shops_temp.map((item) => {
+        {shopsSearched.map((item) => {
           return <StoreCard key={item._id} item={item} />;
         })}
       </motion.div>
@@ -59,12 +61,14 @@ function AllStores(props) {
       {shops_ar.length === 0 && !loading && (
         <h1 className="text-center text-muted display-2">No store found</h1>
       )}
-      <PageLinks
-        perPage="6"
-        apiUrlAmount={API_URL + "/stores/amount?status=active"}
-        urlLinkTo={"/stores"}
-        clsCss="btn me-2 mt-4 pageLinks"
-      />
+      {!searchTerm > 0 && (
+        <PageLinks
+          perPage="6"
+          apiUrlAmount={API_URL + "/stores/amount?status=active"}
+          urlLinkTo={"/stores"}
+          clsCss="btn me-2 mt-4 pageLinks"
+        />
+      )}
     </main>
   );
 }

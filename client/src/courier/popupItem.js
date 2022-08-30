@@ -1,13 +1,12 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Modal, Row, ListGroup } from "react-bootstrap";
+import { Col, Row, ListGroup } from "react-bootstrap";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
 import { ON_THE_WAY_ORDER_STATUS } from "../services/consts";
 import { saveOpenShipmentLocal } from "../services/localService";
-import { calculateRoute, getCurrentAddress, handleRouteDetails } from "../services/mapServices";
+import { calculateRoute, getCurrentAddress } from "../services/mapServices";
 
 function PopupItem(props) {
   let order = props.order;

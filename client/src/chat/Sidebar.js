@@ -1,18 +1,17 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
-import { Col, ListGroup, Row } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from "../redux/userSlice";
 import { FiSearch } from "react-icons/fi";
 import { API_URL } from "../services/apiService";
-import { toast } from "react-toastify";
 
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const [tempRooms, setTempRooms] = useState([]);
-  const { socket, setCurrentRoom, rooms, setRooms, currentRoom, serviceMsg, setServiceMsg } =
+  const { socket, setCurrentRoom, rooms, setRooms, currentRoom, setServiceMsg } =
     useContext(AppContext);
 
   const dispatch = useDispatch();
@@ -34,7 +33,6 @@ function Sidebar() {
     setRooms(resp.data);
     joinRoom(resp.data[0].name);
     setTempRooms(resp.data);
-    console.log(resp.data);
   };
 
   const joinRoom = (_room, _isPublic = true) => {
@@ -60,7 +58,6 @@ function Sidebar() {
 
   const searchRoom = async () => {
     let searchQ = searchRoomRef.current.value;
-    // console.log(searchQ);
     let temp = await rooms.filter((item) =>
       item.name.toUpperCase().includes(searchQ.toUpperCase())
     );

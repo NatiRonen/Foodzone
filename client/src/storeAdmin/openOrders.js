@@ -26,14 +26,12 @@ function OpenOrders(props) {
     let url = API_URL + `/orders/sotreOrders/` + params.id;
     try {
       let respOrders = await doApiGet(url);
-      // console.log(respOrders.data);
       let filterPending = respOrders.data.filter(
         (order) =>
           order.status === "paid" ||
           order.status === "on_the_way" ||
           order.status === "ready_for_shipment"
       );
-      console.log(filterPending);
       setOrders(filterPending);
       setLoading(false);
     } catch (err) {
@@ -44,7 +42,6 @@ function OpenOrders(props) {
     return <h2 className="display-4 text-center mt-5 text-danger">No orders found</h2>;
 
   return (
-
     <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
       <section className="container p-4">
         <h1 className="orders_titel">Opened orders</h1>

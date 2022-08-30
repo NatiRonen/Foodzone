@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { BsPen, BsEraser, BsInfoCircle } from "react-icons/bs";
+import { BsPen, BsEraser } from "react-icons/bs";
 import Table from "react-bootstrap/Table";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
@@ -10,15 +10,11 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 
 function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
-  const [store, setStore] = useState([]);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
   let params = useParams();
   let nav = useNavigate();
 
   useEffect(() => {
-    // get the store info from the link state by location
-    // setStore(location.state.item);
     doApi();
   }, []);
 
@@ -26,7 +22,7 @@ function ProductsStoreAdmin(props) {
     let url = API_URL + "/products/storeProducts/" + params.id;
     try {
       let resp = await doApiGet(url);
-      // console.log(resp.data);
+      //
       setProducts(resp.data);
       setLoading(false);
     } catch (err) {
@@ -41,7 +37,7 @@ function ProductsStoreAdmin(props) {
       try {
         let url = API_URL + "/products/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {}, params.id);
-        // console.log(resp.data);
+        //
         if (resp.data.deletedCount) {
           toast.info("Product deleted successfully");
         }
@@ -65,7 +61,7 @@ function ProductsStoreAdmin(props) {
       >
         Back <IoMdArrowRoundBack />
       </button>
-      <Link className="btn btn-outline-success my-3" to="./addProduct" state={{ store }}>
+      <Link className="btn btn-outline-success my-3" to="./addProduct">
         Add Product <MdAddShoppingCart />
       </Link>
 
@@ -104,7 +100,6 @@ function ProductsStoreAdmin(props) {
                 <td>
                   <Link
                     to={"./edit/" + item._id}
-                    state={{ store }}
                     className="btn btn-outline-secondary mx-2"
                     title="Edit"
                   >

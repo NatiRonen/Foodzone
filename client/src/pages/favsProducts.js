@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import AuthClientComp from "../comps/auth/authClientComp";
 import Product from "../comps/store/product";
-import { useAddRemoveFavsMutation } from "../redux/appApi";
 
 function FavsProducts(props) {
   let [ar, setAr] = useState([]);
@@ -21,7 +20,7 @@ function FavsProducts(props) {
   const doApiListFav = async () => {
     let url = API_URL + "/favs/productsInfo";
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setAr(resp.data);
     setLoading(false);
   };

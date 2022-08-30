@@ -89,7 +89,6 @@ function SideBarAdmin() {
 
   const searchRoom = async () => {
     let searchQ = searchRoomRef.current.value;
-    // console.log(searchQ);
     let temp = await rooms.filter((item) =>
       item.name.toUpperCase().includes(searchQ.toUpperCase())
     );

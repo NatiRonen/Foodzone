@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner, Button } from "react-bootstrap";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import ImagesSearch from "../misc/imagesSearch";
 

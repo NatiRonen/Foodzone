@@ -18,17 +18,22 @@ function EditStoreAdmin(props) {
   }, []);
 
   const doApi = async () => {
+    setIsLoading(true);
     let urlStore = API_URL + "/stores/single/" + params.id;
-    let resp2 = await doApiGet(urlStore);
-    console.log(resp2.data);
-    setStore(resp2.data);
+    try {
+      let resp2 = await doApiGet(urlStore);
+      setStore(resp2.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
   };
 
   const doFormApi = async (formData) => {
     let url = API_URL + "/stores/" + store._id;
     try {
       let resp = await doApiMethod(url, "PUT", formData);
-      // console.log(resp.data);
+      //
       if (resp.data.modifiedCount) {
         toast.success("Store Updated");
         // back to the list of stores

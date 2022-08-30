@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { useForm } from "react-hook-form";
-import { MdAddShoppingCart } from "react-icons/md";
+import React, { useState } from "react";
+import { API_URL, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { BsCardImage } from "react-icons/bs";
-import { Col, Container, Form, Row, Spinner, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
 import { motion } from "framer-motion";
-
 import ProductForm from "../comps/forms/ProductForm";
 
 function AddProductStoreAdmin(props) {
-  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
 
   let nav = useNavigate();
 
   const doFormApi = async (formData) => {
+    setIsLoading(true);
     let url = API_URL + "/products/" + params.id;
     try {
       let resp = await doApiMethod(url, "POST", formData, params.id);
@@ -29,6 +25,7 @@ function AddProductStoreAdmin(props) {
       console.log(err.response);
       alert("failed to create product");
     }
+    setIsLoading(false);
   };
 
   return (

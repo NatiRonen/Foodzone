@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Form, Spinner, Button } from "react-bootstrap";
+import { Form, Spinner, Button } from "react-bootstrap";
 import GetAddress from "../misc/GetAddress";
 import ImagesSearch from "../misc/imagesSearch";
 
@@ -66,7 +66,7 @@ function StoreForm(props) {
       </Form.Group>
 
       <Form.Group className="mb-3 ">
-        {item ? <GetAddress setAddress={setAddress} currentAddress={address} /> : ""}
+        <GetAddress setAddress={setAddress} currentAddress={address} />
       </Form.Group>
 
       <Form.Group className="mb-3 ">
@@ -79,7 +79,6 @@ function StoreForm(props) {
           required
         />
       </Form.Group>
-
       <Form.Group className="mb-3 ">
         <Form.Label>Info</Form.Label>
         <Form.Control
@@ -91,8 +90,6 @@ function StoreForm(props) {
           required
         />
       </Form.Group>
-
-      <ImagesSearch show={show} handleToggle={handleToggle} setImgUrl={setImgUrl} />
 
       <Form.Group className="mb-3 ">
         <Form.Label>Image</Form.Label>
@@ -107,6 +104,7 @@ function StoreForm(props) {
         ></Form.Control>
       </Form.Group>
 
+      <ImagesSearch show={show} handleToggle={handleToggle} setImgUrl={setImgUrl} />
       <Button variant="primary" type="submit">
         {isLoading ? <Spinner animation="grow" /> : "Submit"}
       </Button>

@@ -1,21 +1,20 @@
 import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import "../css/search.css";
 
 function Search(props) {
   const shops_ar = props.shops_ar;
   const searchRef = useRef();
-  const nav = useNavigate();
 
   const search = () => {
     let search = searchRef.current.value;
-    let temp = shops_ar.filter(
+    let shopsSearched = shops_ar.filter(
       (item) =>
         item.name.toUpperCase().includes(search.toUpperCase()) ||
         item.info.toUpperCase().includes(search.toUpperCase())
     );
-    props.setShops_temp(temp);
+    props.setShopsSearched(shopsSearched);
+    props.setSearchTerm(search);
   };
 
   const handleKeyPress = (event) => {
@@ -35,10 +34,7 @@ function Search(props) {
           className="form-control border-0 bg-light"
         />
         <div className="input-group-append">
-          <button
-            onClick={search}
-            className="btn btn-link text-primary searchBtn"
-          >
+          <button onClick={search} className="btn btn-link text-primary searchBtn">
             <BsSearch />
           </button>
         </div>

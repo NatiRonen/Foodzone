@@ -23,7 +23,6 @@ function Layout() {
     });
   };
   socket.off("status-changed").on("status-changed", (_status) => {
-    // toast.info(`Your order is  ${_status}`);
     toast.info(`Your order is ${_status.replaceAll("_", " ")}`);
   });
   return (

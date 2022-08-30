@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -19,20 +18,13 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 
 function Navigation() {
   const user = useSelector((state) => state.user);
-  let nav = useNavigate();
   const dispatch = useDispatch();
   const { cart_ar } = useSelector((state) => state.cart);
   const favs = useSelector((state) => state.favs);
 
   return (
     <>
-      <Navbar
-        key={"lg"}
-        bg="light"
-        expand={"lg"}
-        sticky={"top"}
-        collapseOnSelect
-      >
+      <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -49,9 +41,7 @@ function Navigation() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                ShipMarket
-              </Offcanvas.Title>
+              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
@@ -99,38 +89,29 @@ function Navigation() {
                     }
                     id="basic-nav-dropdown"
                   >
-
                     {favs.length > 0 && (
                       <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
                         Favorites
+                        <AiOutlineStar className="ms-1" />
                       </NavDropdown.Item>
                     )}
                     <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
-
                       Orders
                       <BiTime className="ms-1" />
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
-                      Cart
-                      <HiOutlineShoppingCart className="ms-1" />
-                    </NavDropdown.Item>
                     {cart_ar.length > 0 && (
-
                       <>
                         <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
                           Cart
+                          <HiOutlineShoppingCart className="ms-1" />
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
                           Checkout
+                          <BsCartCheck className="ms-1" />
                         </NavDropdown.Item>
                       </>
-
                     )}
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/uptateAccount"
-                      href="/uptateAccount"
-                    >
+                    <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
                       Account
                       <BiUserCircle className="ms-1" />
                     </NavDropdown.Item>

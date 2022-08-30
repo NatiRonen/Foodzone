@@ -6,7 +6,6 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useLoginUserMutation } from "../redux/appApi";
-import { API_URL, doApiMethod } from "../services/apiService";
 import "./css/Login.css";
 import { encrypt } from "../utils/encryption";
 import ResetPass from "../comps/general/resetPass";
@@ -27,8 +26,6 @@ function Login() {
     if (resp.data) {
       toast.success("You are now logged in ");
       nav("/");
-
-      console.log(resp.data);
     } else {
       console.log(error);
     }

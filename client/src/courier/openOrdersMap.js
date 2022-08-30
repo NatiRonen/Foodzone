@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API_URL, doApiGet } from "../services/apiService";
 import PopupMap from "./popupMap";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
@@ -29,15 +29,7 @@ function OpenOrdersMap(props) {
 
   useEffect(() => {
     getCurrentLocation(setCurrentPosition);
-    // getLocatoin();
   }, [map]);
-
-  // const getLocatoin = () => {
-  //   navigator?.geolocation.getCurrentPosition((position) => {
-  //     let pos = [position.coords.latitude, position.coords.longitude];
-  //     console.log(pos);
-  //   });
-  // };
 
   const doApi = async () => {
     let ordersUrl = API_URL + "/orders/storesWithOrders";
@@ -47,7 +39,6 @@ function OpenOrdersMap(props) {
       for (let item of storesOrdersArray) {
         item.store.coordinates = await getGeoCodings(item.store.address);
       }
-      console.log(storesOrdersArray);
       setStoresWithOrders(storesOrdersArray);
     } catch (err) {
       console.log(err);

@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import PageLinks from "../comps/misc/pageLinks";
 import AuthAdminComp from "../comps/auth/authAdminComp";
+import { Table } from "react-bootstrap";
 import {
   ADMIN_ROLE,
   APPLY_FOR_COURIER_ROLE,
@@ -12,6 +13,7 @@ import {
   COURIER_ROLE,
   STOER_ADMIN_ROLE,
 } from "../services/consts";
+import { toast } from "react-toastify";
 
 function UsersList(props) {
   const [ar, setAr] = useState([]);
@@ -31,17 +33,18 @@ function UsersList(props) {
     let pageQuery = urlParams.get("page") || 1;
     setPageNum(pageQuery);
     let url = API_URL + `/users/usersList?page=${pageQuery}&role=${role}`;
+    setLoading(true);
     try {
       let resp = await doApiGet(url);
-      console.log(resp.data);
       setAr(resp.data);
       setLoading(false);
     } catch (err) {
-      alert("there problem come back later");
+      alert("Something went wrong");
       if (err.response) {
         console.log(err.response.data);
       }
     }
+    setLoading(false);
   };
 
   // delete user
@@ -63,20 +66,25 @@ function UsersList(props) {
   };
 
   // change user's role
-  const changeRole = async (e, _userId) => {
+  const changeRole = async (e, _user) => {
     let newRole = e.target.value;
-    let url = API_URL + `/users/changeRole/${_userId}/${newRole}`;
-    try {
-      let resp = await doApiMethod(url, "PATCH", {});
-      if (resp.data.modifiedCount) {
-        setLoading(true);
-        doApi();
+    if (window.confirm(`${_user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`)) {
+      let url = API_URL + `/users/changeRole/${_user._id}/${newRole}`;
+      try {
+        let resp = await doApiMethod(url, "PATCH", {});
+        console.log(resp.data);
+        if (resp.data) {
+          // doApi();
+          toast.info(`${_user.name} role's was changed to ${newRole.replaceAll("_", " ")}`);
+        }
+      } catch (err) {
+        alert("Something went wrong");
+        if (err.response) {
+          console.log(err.response.data);
+        }
       }
-    } catch (err) {
-      alert("there problem come back later");
-      if (err.response) {
-        console.log(err.response.data);
-      }
+    } else {
+      e.target.value = _user.role;
     }
   };
 
@@ -88,10 +96,15 @@ function UsersList(props) {
   return (
     <div className="container">
       <AuthAdminComp />
-      <h1 className="display-4">Users List</h1>
+      <h1 className="display-4">Users list</h1>
       {/* filter users list by role */}
-      <div className="my-5 col-md-3 position-absolute top-0 end-0">
-        <select ref={selectRef} onChange={onSelectOption} className="form-select">
+      <div className="col-md-3 position-absolute top-0 end-0 mt-3">
+        <select
+          ref={selectRef}
+          onSelect={() => alert("sdfkj")}
+          onChange={onSelectOption}
+          className="form-select"
+        >
           <option value="">All users</option>
           <option value={ADMIN_ROLE}>Admin</option>
           <option value={STOER_ADMIN_ROLE}>Store admins</option>
@@ -101,7 +114,7 @@ function UsersList(props) {
         </select>
       </div>
       {ar.length > 0 ? (
-        <table className="table table-striped mt-5">
+        <Table responsive striped hover>
           <thead>
             <tr>
               <th>#</th>
@@ -124,12 +137,12 @@ function UsersList(props) {
                     <select
                       defaultValue={item.role}
                       onChange={(e) => {
-                        changeRole(e, item._id);
+                        changeRole(e, item);
                       }}
                       className="form-select"
                     >
                       <option value={ADMIN_ROLE}>Admin</option>
-                      <option value={STOER_ADMIN_ROLE}>StoreAdmin</option>
+                      <option value={STOER_ADMIN_ROLE}>Store admin</option>
                       <option value={CLIENT_ROLE}>User</option>
                       <option value={COURIER_ROLE}>Courier</option>
                       <option value={APPLY_FOR_COURIER_ROLE}>Apply for Courier</option>
@@ -150,7 +163,7 @@ function UsersList(props) {
               );
             })}
           </tbody>
-        </table>
+        </Table>
       ) : (
         ""
       )}

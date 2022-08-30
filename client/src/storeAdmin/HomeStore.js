@@ -1,6 +1,6 @@
 import React from "react";
-import "../comps/css/homeStrip.css";
 import { motion } from "framer-motion";
+import "../comps/css/homeStrip.css";
 
 function HomeStore(props) {
   return (
