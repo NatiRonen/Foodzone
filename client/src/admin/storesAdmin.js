@@ -54,7 +54,7 @@ function StoresAdmin(props) {
       });
       setOwnerAr(temp_ar);
     } catch (err) {
-      alert("there problem come back later");
+      alert("Something went wrong");
       if (err.response) {
         console.log(err.response.data);
       }
