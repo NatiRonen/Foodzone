@@ -10,12 +10,13 @@ function Search(props) {
 
   const search = () => {
     let search = searchRef.current.value;
-    let temp = shops_ar.filter(
+    let shopsSearched = shops_ar.filter(
       (item) =>
         item.name.toUpperCase().includes(search.toUpperCase()) ||
         item.info.toUpperCase().includes(search.toUpperCase())
     );
-    props.setShops_temp(temp);
+    props.setShopsSearched(shopsSearched);
+    props.setSearchTerm(search);
   };
 
   const handleKeyPress = (event) => {
@@ -35,10 +36,7 @@ function Search(props) {
           className="form-control border-0 bg-light"
         />
         <div className="input-group-append">
-          <button
-            onClick={search}
-            className="btn btn-link text-primary searchBtn"
-          >
+          <button onClick={search} className="btn btn-link text-primary searchBtn">
             <BsSearch />
           </button>
         </div>
