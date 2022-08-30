@@ -11,8 +11,14 @@ import { API_URL } from "../services/apiService";
 function Sidebar() {
   const user = useSelector((state) => state.user);
   const [tempRooms, setTempRooms] = useState([]);
-  const { socket, setCurrentRoom, rooms, setRooms, currentRoom, setServiceMsg } =
-    useContext(AppContext);
+  const {
+    socket,
+    setCurrentRoom,
+    rooms,
+    setRooms,
+    currentRoom,
+    setServiceMsg,
+  } = useContext(AppContext);
 
   const dispatch = useDispatch();
   const searchRoomRef = useRef();
@@ -78,7 +84,9 @@ function Sidebar() {
       <div className="forms_panel">
         <div className="settings-tray ps-4">
           <img className="profile-image" src={user.picture} alt="Profile img" />
-          <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
+          <span className="text-capitalize fw-semibold fst-italic">
+            Hello {user.name}
+          </span>
         </div>
         <div className="search-box">
           <div className="input-wrapper p-2">

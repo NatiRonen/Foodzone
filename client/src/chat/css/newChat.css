@@ -9,17 +9,17 @@
 
 .scroll_div {
     overflow-y: auto;
-    max-height: 467px !important;
+    height: 467px !important;
 }
 
 .scroll_div_admin {
     overflow-y: auto;
-    max-height: 250px !important;
+    height: 250px !important;
 }
 
 .scroll_div_Customers {
     overflow-y: auto;
-    max-height: 350px !important;
+    height: 350px !important;
 }
 
 .chat_panel {
@@ -31,7 +31,7 @@
 
 .forms_panel {
     /* height: 623px; */
-    height: 73vh;
+    /* height: 73vh; */
 }
 
 .profile-image {
