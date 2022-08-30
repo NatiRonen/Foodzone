@@ -1,18 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Modal, Row, ListGroup } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Modal, ListGroup } from "react-bootstrap";
 import PopupItem from "./popupItem";
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
-import { getGeoCodings, MAPS_KEY } from "../services/mapServices";
-import { AppContext } from "../context/appContext";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
+import { MAPS_KEY } from "../services/mapServices";
 
 function PopupMap(props) {
-  const [storeGeoCode, setStroeGeoCode] = useState();
   const [map, setMap] = useState(/**@type google.maps.map*/ (null));
   let show = props.show;
   let handleToggle = props.handleToggle;
@@ -22,16 +14,6 @@ function PopupMap(props) {
     googleMapsApiKey: MAPS_KEY,
     libraries: ["places"],
   });
-
-  useEffect(() => {
-    getPos();
-  }, []);
-
-  const getPos = async () => {
-    let pos = await getGeoCodings(item.store.address);
-    console.log(pos);
-    setStroeGeoCode(pos);
-  };
 
   if (!isLoaded) return <div>Loading...</div>;
   return (

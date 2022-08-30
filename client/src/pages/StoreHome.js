@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../services/apiService";
-import { MdOutlineLocationCity, MdOutlinestorepingCart } from "react-icons/md";
-import { BsInfoCircleFill, BsChevronRight } from "react-icons/bs";
+import { BsInfoCircleFill } from "react-icons/bs";
 import { HiTemplate } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +9,7 @@ import { toast } from "react-toastify";
 import "./css/storeHome.css";
 import Product from "../comps/store/product";
 import LottieAnimation from "../comps/misc/lottieAnimation";
-import { resetCart, toggleCart } from "../redux/cartSlice";
+import { resetCart } from "../redux/cartSlice";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 function StoreHome(props) {
@@ -20,24 +19,17 @@ function StoreHome(props) {
   const [category, setCategory] = useState("");
   let params = useParams();
   const dispatch = useDispatch();
-
-  const [itemsInCart, setItemsInCart] = useState(0);
   const { cart_ar } = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(resetCart()); // reset cart
     doApi();
   }, []);
 
-  useEffect(() => {
-    setItemsInCart(cart_ar.length);
-  }, [cart_ar]);
-
   const doApi = async () => {
     let url = API_URL + "/stores/single/" + params.id;
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setstore(resp.data);
     console.table(resp.data);
 
@@ -81,7 +73,7 @@ function StoreHome(props) {
                   Categories <HiTemplate className="mx-2" />
                 </p>
                 <br />
-                <ListGroup variant="flush">
+                <ListGroup variant="flush" className="overflow-visible">
                   <ListGroup.Item
                     active={category === ""}
                     onClick={() => {
@@ -136,18 +128,23 @@ function StoreHome(props) {
                   Details
                   <BsInfoCircleFill className="mx-2" />
                 </p>
-                <p>
-                  <span className="fw-bold">Address: </span>
-                  {store.address}
-                </p>
-                <p>
-                  <span className="fw-bold">Mail: </span>
-                  {store.email}
-                </p>
-                <p>
-                  <span className="fw-bold">Phone: </span>
-                  {store.phone}
-                </p>
+                <ListGroup variant="flush" className="overflow-visible">
+                  <ListGroup.Item>
+                    <span className="text-primary">Address: </span>
+                    <br />
+                    <span className="text-secondary">{store.address} </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="text-primary">Mail: </span>
+                    <br />
+                    <span className="text-secondary">{store.email} </span>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <span className="text-primary">Phone: </span>
+                    <br />
+                    <span className="text-secondary">{store.phone} </span>
+                  </ListGroup.Item>
+                </ListGroup>
               </Col>
             </Row>
           </Container>

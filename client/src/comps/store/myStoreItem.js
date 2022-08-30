@@ -1,8 +1,7 @@
 import React from "react";
-import { MdDelete, MdEdit } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Button } from "react-bootstrap";
 
 function MyStoreItem(props) {
   let nav = useNavigate();

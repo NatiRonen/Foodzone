@@ -7,11 +7,10 @@ import { useSelector } from "react-redux";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import AuthClientComp from "../comps/auth/authClientComp";
 import Product from "../comps/store/product";
-import { useAddRemoveFavsMutation } from "../redux/appApi";
 
 function FavsProducts(props) {
   let [ar, setAr] = useState([]);
-  const { fetchFavs, loading, error } = useAddRemoveFavsMutation();
+  let [loading, setLoading] = useState(true);
   const favs = useSelector((state) => state.favs);
 
   useEffect(() => {
@@ -21,12 +20,13 @@ function FavsProducts(props) {
   const doApiListFav = async () => {
     let url = API_URL + "/favs/productsInfo";
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     setAr(resp.data);
+    setLoading(false);
   };
 
   return (
-    <div className="container-fluid" style={{ minHeight: "85vh" }}>
+    <div className="container-fluid" style={{ maxWidth: "900px", minHeight: "85vh" }}>
       <div className="container">
         <AuthClientComp />
         {!loading && ar.length === 0 ? (
@@ -40,8 +40,8 @@ function FavsProducts(props) {
             transition={{ delay: 0.5, duration: 0.7 }}
             className="text-center my-5"
           >
-            <h3 className="display-2 mt-5">
-              Your Favorites Products <BsStar />
+            <h3 className="display-4 mt-5">
+              Favorites products <BsStar />
             </h3>
             <h6>Click on star to remove them from the list</h6>
           </motion.div>

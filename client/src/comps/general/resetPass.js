@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { AiOutlineClose } from "react-icons/ai";
-import { API_URL, doApiGet } from "../../services/apiService";
+import { API_URL } from "../../services/apiService";
 import isEmail from "validator/lib/isEmail";
 import axios from "axios";
 import { encrypt } from "../../utils/encryption";
@@ -66,7 +65,6 @@ function ResetPass(props) {
         },
       });
       if (resp.data.emailSent === true) {
-        console.log(resp.data);
         setUserEmail(email);
         setEmail("");
         setContent(SEND_CODE);

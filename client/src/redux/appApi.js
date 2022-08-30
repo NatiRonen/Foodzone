@@ -41,7 +41,8 @@ const appApi = createApi({
         url: "/users",
         method: "DELETE",
         headers: {
-          "x-api-key": password,
+          "x-api-key": localStorage["tok"],
+          "user-password": password,
           "content-type": "application/json",
         },
       }),

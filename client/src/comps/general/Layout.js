@@ -9,7 +9,7 @@ import { API_URL, doApiGet } from "../../services/apiService";
 // import Cart from "./store/cart";
 
 function Layout() {
-  const { socket } = useContext(AppContext);
+  const { socket, displayFooter } = useContext(AppContext);
 
   useEffect(() => {
     listenToOrders();
@@ -23,7 +23,6 @@ function Layout() {
     });
   };
   socket.off("status-changed").on("status-changed", (_status) => {
-    // toast.info(`Your order is  ${_status}`);
     toast.info(`Your order is ${_status.replaceAll("_", " ")}`);
   });
   return (
@@ -32,7 +31,7 @@ function Layout() {
       <Navigation />
       <Cart />
       <Outlet className="content-wrap" />
-      <Footer />
+      {displayFooter && <Footer />}
     </div>
   );
 }

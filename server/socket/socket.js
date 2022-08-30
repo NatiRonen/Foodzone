@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
   //inform the all user about new user
   console.log("user whit id" + socket.id + " connects");
 
-  socket.on("join-room", async (room) => {
+  socket.on("join-room", async (room, roomData) => {
     socket.leaveAll();
     socket.join(room);
     console.log(`${socket.id} joined room ${room}`);
@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
     console.log(roomMessages);
     roomMessages = sortRoomMessagesByDate(roomMessages);
     console.log(roomMessages);
-    socket.emit("room-messages", roomMessages);
+    socket.emit("room-messages", roomMessages, roomData);
   });
 
   socket.on("message-room", async (room, content, sender, time, date) => {

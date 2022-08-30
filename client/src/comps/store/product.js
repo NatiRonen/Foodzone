@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { MdAddShoppingCart } from "react-icons/md";
@@ -35,8 +35,8 @@ function Product(props) {
 
   return (
     <div className="row">
-      <div className="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded position-relative hover">
-        <div className="blog-image overflow-hidden d-flex align-items-center">
+      <div className="blog-card bg-white mb-4 overflow-hidden d-lg-flex rounded position-relative hover ps-0 ">
+        <div className="blog-image overflow-hidden d-flex align-items-center ">
           <img
             src={item.imgUrl || "/images/no_image.png"}
             alt={item.name}

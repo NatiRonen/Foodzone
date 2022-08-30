@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AuthCourierComp from "../comps/auth/authCourierComp";
 import LottieAnimation from "../comps/misc/lottieAnimation";
-import { BsInfoCircle } from "react-icons/bs";
 import { API_URL, doApiGet } from "../services/apiService";
 import { useSelector } from "react-redux";
 
@@ -19,7 +18,7 @@ function MyOrders(props) {
 
     try {
       let resp = await doApiGet(url);
-      console.log(resp.data);
+
       setAr(resp.data);
       setLoading(false);
     } catch (err) {

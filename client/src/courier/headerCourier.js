@@ -1,24 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { checkOpenShipmentLocal } from "../services/localService";
 // react icons
 import { BiHomeAlt, BiTime } from "react-icons/bi";
 import { MdLocalShipping } from "react-icons/md";
 import { FaShippingFast } from "react-icons/fa";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
-
 import { useSelector } from "react-redux";
-import {
-  Container,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Offcanvas,
-} from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 function HeaderCourier(props) {
-  const nav = useNavigate();
   const user = useSelector((state) => state.user);
 
   return (
@@ -39,9 +31,7 @@ function HeaderCourier(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              ShipMarket
-            </Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>

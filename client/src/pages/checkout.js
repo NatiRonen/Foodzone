@@ -7,12 +7,11 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./css/checkout.css";
 import { resetCart } from "../redux/cartSlice";
 import AuthClientComp from "../comps/auth/authClientComp";
 import GetAddress from "../comps/misc/GetAddress";
-import { Row, Col } from "react-bootstrap";
 import { AppContext } from "../context/appContext";
+import "./css/checkout.css";
 
 function Checkout(props) {
   const { cart_ar, totalPrice, store_short_id } = useSelector((state) => state.cart);
@@ -55,15 +54,13 @@ function Checkout(props) {
       store_short_id: store_short_id,
       destination: destination,
     };
-    console.log(body);
     let resp = await doApiMethod(url, "POST", body);
-    console.log(resp.data);
+
     setOrderShortId(resp.data.short_id);
   };
 
   // paypal pay
   const onCommit = async (_data) => {
-    console.log(_data);
     let url = API_URL + "/orders/orderPaid/";
     let paypalObject = {
       tokenId: _data.facilitatorAccessToken,
@@ -105,7 +102,7 @@ function Checkout(props) {
       <AuthClientComp />
       <section className="shopping-cart">
         <div className="container">
-          <div className="row g-2">
+          <div className="row g-2" data-masonry='{"percentPosition": true }'>
             <div className="col-lg-8">
               <div className="items">
                 {/* start product */}
@@ -123,58 +120,55 @@ function Checkout(props) {
               </div>
             </div>
             {/* start Checkout */}
-            <div className="col-lg-4">
-              <div className="summary shadow">
-                <h3> Destination </h3>
-                <GetAddress currentAddress={user.address} setAddress={setDestination} />
+            <div className="col-lg-4 summary shadow card">
+              <h3> Destination </h3>
+              <GetAddress currentAddress={user.address} setAddress={setDestination} />
 
-                <h3> Payment </h3>
-                <div className="summary-item">
-                  <span className="text"> Tip </span>
-                  <span className="price"> It 's up to you.</span>
-                </div>
-                <div className="summary-item">
-                  <span className="text"> Delivery </span>
-                  <span className="price"> ₪{cart_ar.length == 0 ? 0 : 20} </span>
-                </div>
-                <div className="summary-item">
-                  <span className="text"> Total </span>
-                  <span className="price"> ₪{totalPrice} </span>
-                </div>
-                {cart_ar.length > 0 ? (
-                  <button onClick={dellAll} className="btn btn-outline-danger col-12 my-5">
-                    Delete all Products
-                  </button>
-                ) : (
-                  ""
-                )}
-                <div style={disabledBtn()}>
-                  <PayPalButton
-                    amount={totalPrice}
-                    options={{
-                      clientId:
-                        "ATRPIUvU2B6lrdeCovo7c4NzauAsSjlElL4xi_BaxHyCrrcmAO_fjdCddURxRhRPcq9W9hBQpnxjBzMD",
-                      currency: "ILS",
-                    }}
-                    onSuccess={(details, data) => {
-                      // data - have info of pay token to check in nodejs
-                      // details have info about the buyer
-                      // if payment success ,
-                      if (data.orderID) {
-                        onCommit(data);
-                      }
-                    }}
-                    onCancel={(err) => {
-                      toast.error("Process end before payment. Please try again");
-                    }}
-                  />
-                </div>
+              <h3> Payment </h3>
+              <div className="summary-item">
+                <span className="text"> Tip </span>
+                <span className="price"> Up to you</span>
+              </div>
+              <div className="summary-item">
+                <span className="text"> Delivery </span>
+                <span className="price"> ₪{cart_ar.length == 0 ? 0 : 20} </span>
+              </div>
+              <div className="summary-item">
+                <span className="text"> Total </span>
+                <span className="price"> ₪{totalPrice} </span>
+              </div>
+              {cart_ar.length > 0 ? (
+                <button onClick={dellAll} className="btn btn-outline-danger col-12 my-5">
+                  Delete all Products
+                </button>
+              ) : (
+                ""
+              )}
+              <div style={disabledBtn()}>
+                <PayPalButton
+                  amount={totalPrice}
+                  options={{
+                    clientId: process.env.REACT_APP_PAYPAL_API_KEY,
+                    currency: "ILS",
+                  }}
+                  onSuccess={(details, data) => {
+                    // data - have info of pay token to check in nodejs
+                    // details have info about the buyer
+                    // if payment success ,
+                    if (data.orderID) {
+                      onCommit(data);
+                    }
+                  }}
+                  onCancel={(err) => {
+                    toast.error("Process end before payment. Please try again");
+                  }}
+                />
               </div>
             </div>
             {/* end Checkout */}
           </div>
         </div>
-        <button onClick={devOrder}>socket</button>
+        {/* <button onClick={devOrder}>socket</button> */}
       </section>
     </motion.div>
   );

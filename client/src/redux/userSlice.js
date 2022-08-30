@@ -23,10 +23,10 @@ export const userSlice = createSlice({
 
   extraReducers: (builder) => {
     //save user after signup
-    builder.addMatcher(
-      appApi.endpoints.signupUser.matchFulfilled,
-      (state, { payload }) => payload.user
-    );
+    builder.addMatcher(appApi.endpoints.signupUser.matchFulfilled, (state, { payload }) => {
+      saveTokenLocal(payload.token);
+      return payload.user;
+    });
     //save user after login
     builder.addMatcher(appApi.endpoints.loginUser.matchFulfilled, (state, { payload }) => {
       saveTokenLocal(payload.token);

@@ -1,13 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-import {
-  Form,
-  Row,
-  Col,
-  FormGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { IoSend } from "react-icons/io5";
@@ -16,9 +9,9 @@ import "./css/message.css";
 
 function MessageForm() {
   const [message, setMessage] = useState("");
+  const [roomServeiceData, setRoomServiceData] = useState("");
   const user = useSelector((state) => state.user);
-  const { socket, currentRoom, setMessages, messages, serviceMsg } =
-    useContext(AppContext);
+  const { socket, currentRoom, setMessages, messages, serviceMsg } = useContext(AppContext);
   const messageEndRef = useRef(null);
 
   useEffect(() => {
@@ -40,13 +33,23 @@ function MessageForm() {
     return date;
   };
 
+  const customersServiseHeader = {
+    image: "/images/support.png",
+    name: "Contact Us",
+  };
+
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const todayDate = getFromattedDate();
 
-  socket.off("room-messages").on("room-messages", (roomMessages) => {
+  socket.off("room-messages").on("room-messages", (roomMessages, _roomData) => {
+    if (_roomData) {
+      setRoomServiceData(_roomData);
+    } else {
+      setRoomServiceData(customersServiseHeader);
+    }
     setMessages(roomMessages);
   });
 
@@ -60,7 +63,6 @@ function MessageForm() {
       minute: "2-digit",
     });
     const roomId = currentRoom;
-    console.log(roomId);
     socket.emit("message-room", roomId, message, user, time, todayDate);
     setMessage("");
   };
@@ -73,26 +75,19 @@ function MessageForm() {
           height: "100%",
         }}
       >
-        <div className="settings-tray">
+        <div className="settings-tray ">
           <div className="friend-drawer no-gutters friend-drawer--grey">
             <img
               className="profile-image"
               src={
                 serviceMsg
-                  ? "/images/support.png"
+                  ? roomServeiceData.image
                   : `https://avatars.dicebear.com/api/bottts/${currentRoom}.svg`
               }
               alt=""
             />
-            <div className="">
-              <h6 className="m-0 pt-2">
-                {!currentRoom ? "" : serviceMsg ? "Contact Us" : currentRoom}
-              </h6>
-              <p className="text-muted">
-                {serviceMsg
-                  ? "We are here for everything you need ❤"
-                  : "Keep the conversation proper and enjoyable 😃"}
-              </p>
+            <div className="d-flex  align-items-center">
+              <h6>{!currentRoom ? "" : serviceMsg ? roomServeiceData.name : currentRoom}</h6>
             </div>
           </div>
         </div>
@@ -103,37 +98,40 @@ function MessageForm() {
               <div key={idx}>
                 <div className="chat_box touchscroll chat_box_colors_a">
                   <div className="d-flex justify-content-center">
-                    <p className="text-center col-3 col-md-2 chat_date_indicator">
-                      {date}
-                    </p>
+                    <p className="text-center col-3 col-md-2 chat_date_indicator">{date}</p>
                   </div>
 
-                  {messagesByDate.map(
-                    ({ content, time, from: sender }, idx) => (
-                      <div
-                        key={idx}
-                        className={
-                          sender._id === user._id
-                            ? "chat_message_wrapper"
-                            : "chat_message_wrapper chat_message_right"
-                        }
-                      >
-                        <div className="chat_user_avatar">
-                          <img
-                            alt="profile pic"
-                            src={sender.picture}
-                            className="md-user-image"
-                          />
-                        </div>
-                        <ul className="chat_message">
-                          <li>
-                            <p>{content}</p>
-                            <span className="chat_message_time">{time}</span>
-                          </li>
-                        </ul>
+                  {messagesByDate.map(({ content, time, from: sender }, idx) => (
+                    <div
+                      key={idx}
+                      className={
+                        sender._id === user._id
+                          ? "chat_message_wrapper"
+                          : "chat_message_wrapper chat_message_right"
+                      }
+                    >
+                      <div className="chat_user_avatar">
+                        <img alt="profile pic" src={sender.picture} className="md-user-image" />
                       </div>
-                    )
-                  )}
+                      <ul className="chat_message">
+                        <li>
+                          {!serviceMsg && sender._id !== user._id && (
+                            <p className="text-muted text-end">{sender.name}</p>
+                          )}
+                          <p className="chat_message_content fs-6">{content}</p>
+                          <span
+                            className={
+                              sender._id === user._id
+                                ? "chat_message_time text-muted"
+                                : "chat_message_time text-end"
+                            }
+                          >
+                            {time}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}

@@ -8,7 +8,6 @@ import { useUpdateUserMutation } from "../redux/appApi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import DeleteAccount from "../comps/general/DeleteAccount";
-import { motion } from "framer-motion";
 import { encrypt } from "../utils/encryption";
 import GetAddress from "../comps/misc/GetAddress";
 import { FiSettings } from "react-icons/fi";
@@ -46,7 +45,6 @@ function UpdateAccount() {
     const picUrl = image ? await uploadImage(image) : imagePreview;
     let encryptCurrentPass = encrypt(currentPassword);
     let encryptNewPass = newPassword ? encrypt(newPassword) : null;
-    console.log(address);
     let resp = await updateUser({
       name,
       email,
@@ -56,13 +54,13 @@ function UpdateAccount() {
       address,
       phone,
     });
-    console.log(resp.data);
+
     if (resp.data.data.modifiedCount === 0) {
       toast.warning("no changes were made");
     }
     if (resp.data.data.modifiedCount === 1) {
       toast.info("Accoutn details updated");
-      console.log(resp.data);
+
       nav("/");
     }
   };
@@ -83,14 +81,10 @@ function UpdateAccount() {
     data.append("upload_preset", "ucq0egki");
     try {
       setUploading(true);
-      let res = await fetch(
-        "https://api.cloudinary.com/v1_1/nati5550558/image/upload",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-      console.log(data);
+      let res = await fetch("https://api.cloudinary.com/v1_1/nati5550558/image/upload", {
+        method: "POST",
+        body: data,
+      });
       const urlData = await res.json();
       setUploading(false);
       return urlData.url;
@@ -141,9 +135,7 @@ function UpdateAccount() {
               <h3 className="mb-4">Account Details</h3>
               <div className="row">
                 <Form.Group className="mb-3 col-md-6" controlId="formBasicName">
-                  {error && (
-                    <p className="alert alert-danger">{error.data.err}</p>
-                  )}
+                  {error && <p className="alert alert-danger">{error.data.err}</p>}
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="text"
@@ -153,10 +145,7 @@ function UpdateAccount() {
                     required
                   />
                 </Form.Group>
-                <Form.Group
-                  className="mb-3 col-md-6 "
-                  controlId="formBasicEmail"
-                >
+                <Form.Group className="mb-3 col-md-6 " controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     type="email"
@@ -169,10 +158,7 @@ function UpdateAccount() {
                     We'll never share your email with anyone else.
                   </Form.Text>
                 </Form.Group>
-                <Form.Group
-                  className="mb-3 col-md-6"
-                  controlId="formBasicPassword"
-                >
+                <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
                   <Form.Label>Current password</Form.Label>
                   <Form.Control
                     type="password"
@@ -182,10 +168,7 @@ function UpdateAccount() {
                     required
                   />
                 </Form.Group>
-                <Form.Group
-                  className="mb-3 col-md-6"
-                  controlId="formBasicPassword"
-                >
+                <Form.Group className="mb-3 col-md-6" controlId="formBasicPassword">
                   <Form.Label>New password (optional)</Form.Label>
                   <Form.Control
                     type="password"
@@ -195,15 +178,9 @@ function UpdateAccount() {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3 col-md-6">
-                  <GetAddress
-                    setAddress={setAddress}
-                    currentAddress={address}
-                  />
+                  <GetAddress setAddress={setAddress} currentAddress={address} />
                 </Form.Group>
-                <Form.Group
-                  className="mb-3 col-md-6"
-                  controlId="formBasicEmail"
-                >
+                <Form.Group className="mb-3 col-md-6" controlId="formBasicEmail">
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
                     type="text"
@@ -216,11 +193,7 @@ function UpdateAccount() {
               </div>
               <div>
                 <Button variant="primary" type="submit">
-                  {uploading || isLoading ? (
-                    <Spinner animation="grow" />
-                  ) : (
-                    "Update"
-                  )}
+                  {uploading || isLoading ? <Spinner animation="grow" /> : "Update"}
                 </Button>
               </div>
             </Form>

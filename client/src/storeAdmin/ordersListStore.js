@@ -41,7 +41,7 @@ function OrdersListStore() {
       try {
         let url = API_URL + "/products/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {}, params.id);
-        // console.log(resp.data);
+        //
         if (resp.data.deletedCount) {
           toast.info("Product deleted successfully");
         }
@@ -60,7 +60,7 @@ function OrdersListStore() {
     <>
       <OrderInfo handleToggle={handleToggle} show={show} item={orderInfo} />;
       <div className="container">
-        <h1>Orders</h1>
+        <h1 className="display-4">Orders</h1>
         <button
           onClick={() => {
             nav("../");

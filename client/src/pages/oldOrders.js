@@ -29,9 +29,8 @@ function OldOrders(props) {
   const doApi = async () => {
     let url = API_URL + "/orders/userOrder";
     let resp = await doApiGet(url);
-    console.log(resp.data);
+
     let temp_ar = resp.data.filter((item) => item.status != "pending");
-    // console.log(temp_ar);
     setAr(temp_ar);
   };
 
@@ -67,7 +66,7 @@ function OldOrders(props) {
                     {/* start product */}
                     {ar.length == 0 ? (
                       <h2 className="text-center mt-5">
-                        You have not ordered yet
+                        No orders found
                         <GrDeliver className="mx-2" />
                       </h2>
                     ) : (

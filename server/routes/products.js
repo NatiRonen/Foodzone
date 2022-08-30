@@ -1,9 +1,7 @@
 const express = require("express");
-const { random } = require("lodash");
-const { authAdmin, authStoreAdmin } = require("../middlewares/auth");
+const { authStoreAdmin } = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { ProductModel } = require("../models/productModel");
-const { StoreModel } = require("../models/storeModel");
 const router = express.Router();
 
 //?cat=
@@ -99,7 +97,6 @@ router.post("/:id", authStoreAdmin, async (req, res) => {
   try {
     let product = new ProductModel(req.body);
     product.store_short_id = req.params.id;
-    product.user_id = req.tokenData._id;
     product.short_id = await genShortId(ProductModel);
     await product.save();
     res.status(201).json(product);

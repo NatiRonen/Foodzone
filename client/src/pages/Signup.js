@@ -34,7 +34,6 @@ function Signup() {
     signupUser({ name, email, phone, address, password: encryptPass, picture: picUrl }).then(
       ({ data }) => {
         if (data) {
-          console.log(data);
           toast.success("Account created successfully");
           nav("/");
         }
@@ -62,7 +61,6 @@ function Signup() {
         method: "POST",
         body: data,
       });
-      console.log(data);
       const urlData = await res.json();
       setUploading(false);
       return urlData.url;

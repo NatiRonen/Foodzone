@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { Col, Container, Form, Row, Spinner, Button } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import ProductForm from "../comps/forms/ProductForm";
 import { motion } from "framer-motion";
 
@@ -19,11 +18,15 @@ function EditProductAdminStore(props) {
   }, []);
 
   const doApi = async () => {
+    setIsLoading(true);
     let urlProduct = API_URL + "/products/single/" + params.prodId;
-    let resp2 = await doApiGet(urlProduct);
-    setProduct(resp2.data);
-    console.log(resp2.data);
-    console.log(product);
+    try {
+      let resp2 = await doApiGet(urlProduct);
+      setProduct(resp2.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
   };
 
   const doFormApi = async (formData) => {

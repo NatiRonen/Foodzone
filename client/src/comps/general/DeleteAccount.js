@@ -21,7 +21,6 @@ function DeleteAccount(props) {
       if (resp.data.deletedCount === 1) {
         nav("/");
         toast.info("Your account has been deleted");
-        console.log(resp);
         handleToggle();
       }
     }

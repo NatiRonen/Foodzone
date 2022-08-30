@@ -10,6 +10,7 @@ import { BiAddToQueue } from "react-icons/bi";
 import { MdOutlineAddBox } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import Collapse from "react-bootstrap/Collapse";
+import { ADMIN_ROLE } from "../../services/consts";
 
 function SideBarAdmin() {
   const user = useSelector((state) => state.user);
@@ -31,7 +32,6 @@ function SideBarAdmin() {
   const searchRoomRef = useRef();
 
   useEffect(() => {
-    console.log(clients);
     getRooms();
     getClients();
     socket.emit("join-room", rooms[0]?.name);
@@ -45,22 +45,22 @@ function SideBarAdmin() {
     let url = API_URL + "/chat/rooms";
     let resp = await axios(url);
     setRooms(resp.data);
+    joinRoom(resp.data[0].name);
     setTempRooms(resp.data);
-    console.log(resp.data);
   };
 
   const getClients = async () => {
     let url = API_URL + "/users/usersList";
     let resp = await doApiGet(url);
-    let clients = resp.data.filter((client) => client.role !== "admin");
+    let clients = resp.data.filter((client) => client.role !== ADMIN_ROLE);
     setClients(clients);
   };
 
-  const joinRoom = (_room, _isPublic = true) => {
+  const joinRoom = (_room, _isPublic = true, _roomData) => {
     if (!user) {
       return alert("Please login first");
     }
-    socket.emit("join-room", _room);
+    socket.emit("join-room", _room, _roomData);
     setCurrentRoom(_room);
     if (_isPublic) {
       setServiceMsg(false);
@@ -76,7 +76,7 @@ function SideBarAdmin() {
 
   const handleServiceMgs = (client) => {
     setServiceMsg(true);
-    joinRoom(client._id, false);
+    joinRoom(client._id, false, { name: client.name, image: client.picture });
   };
 
   const handelAddRmoveRoom = async (room) => {
@@ -86,11 +86,9 @@ function SideBarAdmin() {
     };
     let resp = await doApiMethod(url, "POST", body);
   };
-  //   const handelDeleteClientChat = (client) => {};
 
   const searchRoom = async () => {
     let searchQ = searchRoomRef.current.value;
-    // console.log(searchQ);
     let temp = await rooms.filter((item) =>
       item.name.toUpperCase().includes(searchQ.toUpperCase())
     );
@@ -110,9 +108,7 @@ function SideBarAdmin() {
     <div className="forms_panel">
       <div className="settings-tray ps-4">
         <img className="profile-image" src={user.picture} alt="Profile img" />
-        <span className="text-capitalize fw-semibold fst-italic">
-          Hello {user.name}
-        </span>
+        <span className="text-capitalize fw-semibold fst-italic">Hello {user.name}</span>
         <span className="float-end">
           <BiAddToQueue
             title="Add Forum"
@@ -145,7 +141,6 @@ function SideBarAdmin() {
       </Collapse>
       <div className="search-box">
         <div className="input-wrapper p-2">
-
           <FiSearch style={{ cursor: "pointer" }} onClick={searchRoom} />
           <input
             ref={searchRoomRef}
@@ -154,7 +149,6 @@ function SideBarAdmin() {
             type="text"
             className="ps-3"
           />
-
         </div>
       </div>
       <small className="chat_titel ps-3">Forums</small>
@@ -164,17 +158,17 @@ function SideBarAdmin() {
             key={idx}
             onClick={() => joinRoom(room.name)}
             active={room.name === currentRoom}
-            className="friend-drawer friend-drawer--onhover"
+            className="friend-drawer friend-drawer--onhover "
           >
             <img
               className="profile-image"
               src={`https://avatars.dicebear.com/api/bottts/${room.name}.svg`}
               alt=""
             />
-            <div className="mt-2 col-8">
+            <div className="mt-2 col-8 d-flex align-items-center ">
               <h6>{room.name}</h6>
               {currentRoom !== room.name && (
-                <span className="badge rounded-pill bg-success">
+                <span className="badge rounded-pill bg-success ms-4">
                   {user.newMessages[room.name]}
                 </span>
               )}
@@ -197,10 +191,10 @@ function SideBarAdmin() {
             className="friend-drawer friend-drawer--onhover"
           >
             <img className="profile-image" src={client.picture} alt="" />
-            <div className="mt-2">
+            <div className="mt-2 d-flex align-items-center">
               <h6>{client.name}</h6>
               {currentRoom !== client._id && (
-                <span className="badge rounded-pill bg-primary">
+                <span className="badge rounded-pill bg-primary ms-4">
                   {user.newMessages[client._id]}
                 </span>
               )}

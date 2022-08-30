@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Col, Container, Form, Row, Spinner, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { API_URL, doApiMethod } from "../services/apiService";
@@ -11,6 +11,7 @@ function CreateStore(props) {
   const nav = useNavigate();
 
   const doApi = async (_dataBody) => {
+    setIsLoading(true);
     let url = API_URL + "/stores/";
     try {
       let resp = await doApiMethod(url, "POST", _dataBody);
@@ -29,6 +30,7 @@ function CreateStore(props) {
         console.log(err);
       }
     }
+    setIsLoading(false);
   };
 
   return (
