@@ -178,7 +178,7 @@ function UpdateAccount() {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3 col-md-6">
-                  <GetAddress setAddress={setAddress} currentAddress={address} />
+                  <GetAddress setAddress={setAddress} address={address} />
                 </Form.Group>
                 <Form.Group className="mb-3 col-md-6" controlId="formBasicEmail">
                   <Form.Label>Phone</Form.Label>
