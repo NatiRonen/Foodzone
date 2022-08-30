@@ -8,16 +8,18 @@ function GetAddress(props) {
     libraries: ["places"],
   });
   const setAddress = props.setAddress;
+  const address = props.address;
   const addressRef = useRef();
-
-  useEffect(() => {
-    if (props.currentAddress) {
-      addressRef.current.value = props.currentAddress;
-    }
-  }, [props.currentAddress]);
 
   const onPlaceChanged = (e) => {
     setAddress(addressRef.current.value);
+  };
+  const onLoad = () => {
+    addressRef.current.value = address;
+    setAddress(address);
+  };
+  const onChangeInput = () => {
+    setAddress("");
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -26,10 +28,17 @@ function GetAddress(props) {
       onPlaceChanged={onPlaceChanged}
       types={["address"]}
       options={{ componentRestrictions: { country: "il" } }}
+      onLoad={onLoad}
     >
       <Form.Group className="mb-3" controlId="formBasicAddress">
         <Form.Label>Address</Form.Label>
-        <Form.Control type="address" ref={addressRef} placeholder="Enter Your Address" required />
+        <Form.Control
+          onChange={onChangeInput}
+          type="address"
+          ref={addressRef}
+          placeholder="Enter Your Address"
+          required
+        />
       </Form.Group>
     </Autocomplete>
   );
