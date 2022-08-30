@@ -1,12 +1,10 @@
 import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import "../css/search.css";
 
 function Search(props) {
   const shops_ar = props.shops_ar;
   const searchRef = useRef();
-  const nav = useNavigate();
 
   const search = () => {
     let search = searchRef.current.value;

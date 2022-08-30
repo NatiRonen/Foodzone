@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -14,7 +13,6 @@ import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { HiTemplate, HiOutlineClipboardList } from "react-icons/hi";
 
 function HeaderStore(props) {
-  const nav = useNavigate();
   const user = useSelector((state) => state.user);
 
   return (
@@ -35,9 +33,7 @@ function HeaderStore(props) {
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              ShipMarket
-            </Offcanvas.Title>
+            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
           </Offcanvas.Header>
 
           <Offcanvas.Body>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { BsPen, BsEraser, BsInfoCircle } from "react-icons/bs";
+import { BsPen, BsEraser } from "react-icons/bs";
 import Table from "react-bootstrap/Table";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
@@ -12,13 +12,10 @@ function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
   const [store, setStore] = useState([]);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
   let params = useParams();
   let nav = useNavigate();
 
   useEffect(() => {
-    // get the store info from the link state by location
-    // setStore(location.state.item);
     doApi();
   }, []);
 

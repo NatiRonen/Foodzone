@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -19,7 +18,6 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 
 function Navigation() {
   const user = useSelector((state) => state.user);
-  let nav = useNavigate();
   const dispatch = useDispatch();
   const { cart_ar } = useSelector((state) => state.cart);
   const favs = useSelector((state) => state.favs);

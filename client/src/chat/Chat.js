@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import Sidebar from "./Sidebar";
 import MessageForm from "./MessageForm";
 import "./css/newChat.css";

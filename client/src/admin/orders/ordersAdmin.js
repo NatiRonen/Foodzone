@@ -3,6 +3,7 @@ import LottieAnimation from "../../comps/misc/lottieAnimation";
 import OrderInfo from "../../comps/orders/OrderInfo";
 import { API_URL, doApiGet } from "../../services/apiService";
 import OrderItem from "./orderItem";
+import { Table } from "react-bootstrap";
 
 function OrdersAdmin(props) {
   const [ar, setAr] = useState([]);
@@ -42,7 +43,7 @@ function OrdersAdmin(props) {
       <div className="container">
         <h2 className="display-4">Orders list</h2>
         {/* filter orders by the status */}
-        <div className="my-5 col-md-3 position-absolute top-0 end-0">
+        <div className="col-md-3 position-absolute top-0 end-0 mt-3">
           <select ref={selectRef} onChange={onSelectOption} className="form-select">
             <option value="">All Orders</option>
             <option value="pending">Pending</option>
@@ -52,7 +53,7 @@ function OrdersAdmin(props) {
         {ar.length === 0 && !loading ? (
           <h2 className="display-4 text-center mt-5">No Orders found</h2>
         ) : (
-          <table className="table table-striped table-scrollbar mt-5">
+          <Table responsive striped hover>
             <thead>
               <tr>
                 <th>#</th>
@@ -61,7 +62,8 @@ function OrdersAdmin(props) {
                 <th>Store id</th>
                 <th>Total price</th>
                 <th>Products</th>
-                <th>Info / Del</th>
+                <th>Order Info</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +80,7 @@ function OrdersAdmin(props) {
                 );
               })}
             </tbody>
-          </table>
+          </Table>
         )}
         {loading && <LottieAnimation />}
       </div>

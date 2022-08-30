@@ -3,11 +3,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { BsSearch } from "react-icons/bs";
 import { BiLoader } from "react-icons/bi";
-import "../css/search.css";
-import "../css/imagesSearch.css";
 import { PEXELS_API_KEY } from "../../services/apiService";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import LottieAnimation from "./lottieAnimation";
+import "../css/search.css";
+import "../css/imagesSearch.css";
 
 function ImagesSearch(props) {
   const [images, setImages] = useState([]);

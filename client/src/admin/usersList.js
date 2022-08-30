@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import PageLinks from "../comps/misc/pageLinks";
 import AuthAdminComp from "../comps/auth/authAdminComp";
+import { Table } from "react-bootstrap";
 import {
   ADMIN_ROLE,
   APPLY_FOR_COURIER_ROLE,
@@ -88,9 +89,9 @@ function UsersList(props) {
   return (
     <div className="container">
       <AuthAdminComp />
-      <h1 className="display-4">Users List</h1>
+      <h1 className="display-4">Users list</h1>
       {/* filter users list by role */}
-      <div className="my-5 col-md-3 position-absolute top-0 end-0">
+      <div className="col-md-3 position-absolute top-0 end-0 mt-3">
         <select ref={selectRef} onChange={onSelectOption} className="form-select">
           <option value="">All users</option>
           <option value={ADMIN_ROLE}>Admin</option>
@@ -101,7 +102,7 @@ function UsersList(props) {
         </select>
       </div>
       {ar.length > 0 ? (
-        <table className="table table-striped mt-5">
+        <Table responsive striped hover>
           <thead>
             <tr>
               <th>#</th>
@@ -150,7 +151,7 @@ function UsersList(props) {
               );
             })}
           </tbody>
-        </table>
+        </Table>
       ) : (
         ""
       )}

@@ -3,14 +3,13 @@ import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../services/apiService";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import Ticket from "./ticket";
-import "./css/ordersPanel.css";
 import { AppContext } from "../context/appContext";
+import "./css/ordersPanel.css";
 
 function OpenOrders(props) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
-
   const { socket } = useContext(AppContext);
 
   useEffect(() => {
@@ -44,7 +43,6 @@ function OpenOrders(props) {
     return <h2 className="display-4 text-center mt-5 text-danger">No orders found</h2>;
 
   return (
-
     <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
       <section className="container p-4">
         <h1 className="orders_titel">Opened orders</h1>

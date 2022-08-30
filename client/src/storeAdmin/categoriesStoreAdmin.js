@@ -74,6 +74,13 @@ function CategoriesStoreAdmin() {
                 </div>
                 <div className="cat_list">
                   <ul className="list-group cat_list mb-0">
+                    {!loading && categories.length === 0 ? (
+                      <h2 className="display-4 text-center mt-5 text-danger">
+                        No categories found
+                      </h2>
+                    ) : (
+                      ""
+                    )}
                     {categories.map((category, idx) => {
                       return (
                         <li
@@ -101,13 +108,6 @@ function CategoriesStoreAdmin() {
         </div>
       </div>
       {loading ? <LottieAnimation /> : ""}
-      {!loading && categories.length === 0 ? (
-        <h2 className="display-4 text-center mt-5 text-danger">
-          No categories found
-        </h2>
-      ) : (
-        ""
-      )}
     </div>
   );
 }

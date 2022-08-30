@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { ImInfo } from "react-icons/im";
 import { Button, Modal } from "react-bootstrap";

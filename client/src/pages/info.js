@@ -1,7 +1,6 @@
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
 import { MdSecurity, MdDeliveryDining } from "react-icons/md";
-// import "./css/info.css";
 import "./css/info.css";
 
 function Info(props) {
@@ -18,8 +17,7 @@ function Info(props) {
                   </div>
                   <h3>Delivery</h3>
                   <p className="text-muted">
-                    You can count on us to always get to you with delicious, hot
-                    food fast.
+                    You can count on us to always get to you with delicious, hot food fast.
                   </p>
                 </div>
               </div>
@@ -31,9 +29,7 @@ function Info(props) {
                     <FaHamburger className="icon" />
                   </div>
                   <h3>Food</h3>
-                  <p className="text-muted">
-                    Great variety of restaurants throughout the country
-                  </p>
+                  <p className="text-muted">Great variety of restaurants throughout the country</p>
                 </div>
               </div>
             </div>
@@ -45,8 +41,7 @@ function Info(props) {
                   </div>
                   <h3>Security</h3>
                   <p className="text-muted">
-                    You don't have to worry about your details. You can eat
-                    quietly.
+                    You don't have to worry about your details. You can eat quietly.
                   </p>
                 </div>
               </div>

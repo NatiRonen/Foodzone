@@ -4,6 +4,7 @@ import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { BsEraser } from "react-icons/bs";
 
 import { toast } from "react-toastify";
+import { Table } from "react-bootstrap";
 
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import PageLinks from "../comps/misc/pageLinks";
@@ -81,14 +82,13 @@ function StoresAdmin(props) {
   const updateStatus = async (_id, _name) => {
     let url = API_URL + "/stores/updateStatus/" + _id;
     let resp = await doApiMethod(url, "PATCH", {});
-    console.log(resp.data);
-
     if (resp.data.emailStatus === "ok") {
-      toast.success("Email sent to the store owner");
+      toast.success(
+        "Store " + _name + " is " + resp.data.data.status + ". Email sent to the store owner"
+      );
     } else {
       toast.error("Email failed to reach the store owner");
     }
-    toast.info("Store " + _name + " is " + resp.data.data.status);
     doApi();
   };
 
@@ -100,8 +100,8 @@ function StoresAdmin(props) {
   return (
     <div className="container">
       <AuthAdminComp />
-      <h1 className="display-4">Stores List</h1>
-      <div className="mb-5 col-md-3 position-absolute top-0 end-0">
+      <h1 className="display-4">Stores list</h1>
+      <div className=" col-md-3 position-absolute top-0 end-0 mt-3">
         <select ref={selectRef} onChange={onSelectOption} className="form-select">
           <option value="">All</option>
           <option value="active">Active</option>
@@ -109,7 +109,7 @@ function StoresAdmin(props) {
         </select>
       </div>
 
-      <table className="table table-striped">
+      <Table responsive striped hover>
         <thead>
           <tr>
             <th>#</th>
@@ -164,8 +164,8 @@ function StoresAdmin(props) {
             );
           })}
         </tbody>
-      </table>
-      {ar.length === 0 && !loading ? <h2 className="text-center my-5">No Stores fund</h2> : ""}
+      </Table>
+      {ar.length === 0 && !loading ? <h2 className="text-center my-5">No Stores found</h2> : ""}
       {loading ? <LottieAnimation /> : ""}
       <PageLinks
         perPage="5"

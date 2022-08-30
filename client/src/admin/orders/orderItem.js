@@ -58,6 +58,8 @@ function OrderItem(props) {
         >
           <BsInfoCircle />
         </button>
+      </td>
+      <td>
         <button
           onClick={() => {
             delOrder(item._id);

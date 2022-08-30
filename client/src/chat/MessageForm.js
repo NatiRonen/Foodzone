@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { useEffect } from "react";
-import { Form, Row, Col, FormGroup, FormControl, Button } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { IoSend } from "react-icons/io5";
@@ -15,7 +15,7 @@ function MessageForm() {
   const messageEndRef = useRef(null);
 
   useEffect(() => {
-    // scrollToBottom();
+    scrollToBottom();
   }, []);
 
   useEffect(() => {
@@ -89,9 +89,6 @@ function MessageForm() {
             />
             <div className="d-flex  align-items-center">
               <h6>{!currentRoom ? "" : serviceMsg ? roomServeiceData.name : currentRoom}</h6>
-              {/* <p className="text-muted">
-                {serviceMsg ? "" : "Keep the conversation proper and enjoyable 😃"}
-              </p> */}
             </div>
           </div>
         </div>

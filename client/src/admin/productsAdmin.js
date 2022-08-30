@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { BsEraser } from "react-icons/bs";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
+import { Table } from "react-bootstrap";
 import PageLinks from "../comps/misc/pageLinks";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import AuthAdminComp from "../comps/auth/authAdminComp";
@@ -52,8 +53,8 @@ function ProductsAdmin(props) {
   return (
     <div className="container">
       <AuthAdminComp />
-      <h1 className="display-4">Products List</h1>
-      <table className="table table-striped">
+      <h1 className="display-4">Products list</h1>
+      <Table responsive striped hover>
         <thead>
           <tr>
             <th>#</th>
@@ -99,7 +100,7 @@ function ProductsAdmin(props) {
             );
           })}
         </tbody>
-      </table>
+      </Table>
       <PageLinks
         perPage="5"
         apiUrlAmount={API_URL + "/products/amount"}

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../services/apiService";
-import { MdOutlineLocationCity, MdOutlinestorepingCart } from "react-icons/md";
-import { BsInfoCircleFill, BsChevronRight } from "react-icons/bs";
+import { BsInfoCircleFill } from "react-icons/bs";
 import { HiTemplate } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +9,7 @@ import { toast } from "react-toastify";
 import "./css/storeHome.css";
 import Product from "../comps/store/product";
 import LottieAnimation from "../comps/misc/lottieAnimation";
-import { resetCart, toggleCart } from "../redux/cartSlice";
+import { resetCart } from "../redux/cartSlice";
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 
 function StoreHome(props) {
@@ -20,19 +19,12 @@ function StoreHome(props) {
   const [category, setCategory] = useState("");
   let params = useParams();
   const dispatch = useDispatch();
-
-  const [itemsInCart, setItemsInCart] = useState(0);
   const { cart_ar } = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(resetCart()); // reset cart
     doApi();
   }, []);
-
-  useEffect(() => {
-    setItemsInCart(cart_ar.length);
-  }, [cart_ar]);
 
   const doApi = async () => {
     let url = API_URL + "/stores/single/" + params.id;

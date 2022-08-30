@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import "./css/register.css";
 import { API_URL, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
-
-import "./css/page404.css";
 import Lottie from "lottie-web";
 import AuthClientComp from "../comps/auth/authClientComp";
+import "./css/page404.css";
+import "./css/register.css";
 
 function ApplyForCourier(props) {
   let animaRef = useRef(); // for lottie-web animation
