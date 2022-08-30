@@ -83,7 +83,7 @@ function StoreForm(props) {
         <Form.Label>Info</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter Phone nuber"
+          placeholder="Store Info"
           onChange={(e) => setInfo(e.target.value)}
           value={info}
           minLength={10}
@@ -104,7 +104,11 @@ function StoreForm(props) {
         ></Form.Control>
       </Form.Group>
 
-      <ImagesSearch show={show} handleToggle={handleToggle} setImgUrl={setImgUrl} />
+      <ImagesSearch
+        show={show}
+        handleToggle={handleToggle}
+        setImgUrl={setImgUrl}
+      />
       <Button variant="primary" type="submit">
         {isLoading ? <Spinner animation="grow" /> : "Submit"}
       </Button>
