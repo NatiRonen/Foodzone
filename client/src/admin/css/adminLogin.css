@@ -1,3 +1,7 @@
+.login_bg {
+  background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
+  height: 100vh;
+}
 .login-dark {
   height:800px;
   background-size:cover;
@@ -5,7 +9,7 @@
 }
 
 .login-dark form {
-  max-width:320px;
+  max-width:530px;
   width:90%;
   background-color:#1e2833;
   padding:40px;
