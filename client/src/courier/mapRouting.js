@@ -1,19 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import RoutingCard from "./routingCard";
 import { toast } from "react-toastify";
+import io from "socket.io-client";
+import "./css_courier/courier.css";
 import LottieAnimation from "../comps/misc/lottieAnimation";
+
 import { useJsApiLoader, GoogleMap, DirectionsRenderer } from "@react-google-maps/api";
 import { calculateRoute, getCurrentAddress, MAPS_KEY } from "../services/mapServices";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Nav, Row } from "react-bootstrap";
 import OrderInfo from "../comps/orders/OrderInfo";
-import { DELIVERED_ORDER_STATUS } from "../services/consts";
+import { DELIVERED_ORDER_STATUS, READY_FOR_SHIPMENT_ORDER_STATUS } from "../services/consts";
 import { AppContext } from "../context/appContext";
 import { checkOpenShipmentLocal, removeOpenShipmentLocal } from "../services/localService";
-import "./css_courier/courier.css";
 
 function MapRouting(props) {
+  const params = useParams();
   const nav = useNavigate();
 
   const [map, setMap] = useState(/**@type google.maps.map*/ (null));
@@ -30,6 +33,7 @@ function MapRouting(props) {
   let orderId = openShipment.orderId;
   let currentPosition = openShipment.currentPosition;
 
+  console.log(currentPosition);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: MAPS_KEY,
     libraries: ["places"],
@@ -45,6 +49,7 @@ function MapRouting(props) {
     let url = API_URL + "/orders/deliveryInfo/" + orderId;
     try {
       let resp = await doApiGet(url);
+      console.log(resp.data);
       setOrderData(resp.data);
       setRoutes(resp.data);
     } catch (err) {
@@ -59,6 +64,7 @@ function MapRouting(props) {
       _data.store.address,
       _data.order.destination
     );
+    console.log(results);
     setRouteDetails(routeDetails);
     setDirectionResponse(results);
   };
