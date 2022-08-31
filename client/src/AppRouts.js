@@ -23,6 +23,7 @@ import AddProductStoreAdmin from "./storeAdmin/addProductStoreAdmin";
 import OpenOrders from "./storeAdmin/openOrders";
 // admin imports
 import LayoutAdmin from "./admin/layoutAdmin";
+import LoginAdmin from "./admin/loginAdmin";
 import HomeAdmin from "./admin/HomeAdmin";
 import UsersList from "./admin/usersList";
 import OrdersAdmin from "./admin/orders/ordersAdmin";
@@ -41,10 +42,11 @@ import LayoutCourier from "./courier/layoutCourier";
 import HomeCourier from "./courier/homeCourier";
 import OpenOrdersMap from "./courier/openOrdersMap";
 import MapRouting from "./courier/mapRouting";
-import LoginAdmin from "./admin/loginAdmin";
-// import DeliveryInfo from "./courier/deliveryInfo";
-// new login admin
 import MyOrders from "./courier/myOrders";
+// import DeliveryInfo from "./courier/deliveryInfo";
+
+// new corier login
+import LoginCourier from "./courier/loginCourier";
 
 function AppRouts() {
   return (
@@ -99,7 +101,8 @@ function AppRouts() {
         </Route>
         {/* Courier routes */}
         <Route path="/courier" element={<LayoutCourier />}>
-          <Route index element={<HomeCourier />} />
+          <Route index element={<LoginCourier />} />
+          <Route path="home" element={<HomeCourier />} />
           <Route path="mapOrders" element={<OpenOrdersMap />} />
           <Route path="takeDelivery" element={<MapRouting />} />
           <Route path="/courier/ordersHistory" element={<MyOrders />} />
