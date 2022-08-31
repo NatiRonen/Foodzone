@@ -12,9 +12,10 @@ function AuthAdminComp(props) {
       doApi();
     } else {
       // nav to login
-      nav("/logout");
+      // nav("/logout");
+      nav("./login");
       // show toast message in yellow that the user must be connected
-      toast.warning("Please login first");
+      // toast.warning("Please login first");
     }
   }, []);
 

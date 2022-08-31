@@ -41,8 +41,10 @@ import LayoutCourier from "./courier/layoutCourier";
 import HomeCourier from "./courier/homeCourier";
 import OpenOrdersMap from "./courier/openOrdersMap";
 import MapRouting from "./courier/mapRouting";
-import MyOrders from "./courier/myOrders";
+import LoginAdmin from "./admin/loginAdmin";
 // import DeliveryInfo from "./courier/deliveryInfo";
+// new login admin
+import MyOrders from "./courier/myOrders";
 
 function AppRouts() {
   return (
@@ -76,13 +78,20 @@ function AppRouts() {
           <Route path="products" element={<ProductsStoreAdmin />} />
           <Route path="orders" element={<OrdersListStore />} />
           <Route path="openOrders" element={<OpenOrders />} />
-          <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
-          <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
+          <Route
+            path="products/edit/:prodId"
+            element={<EditProductAdminStore />}
+          />
+          <Route
+            path="products/addProduct"
+            element={<AddProductStoreAdmin />}
+          />
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
           <Route index element={<HomeAdmin />} />
-          <Route path="home" element={<HomeAdmin />} />
+          <Route path="login" element={<LoginAdmin />} />
+          {/* <Route path="home" element={<HomeAdmin />} /> */}
           <Route path="users" element={<UsersList />} />
           <Route path="stores" element={<StoresAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />
