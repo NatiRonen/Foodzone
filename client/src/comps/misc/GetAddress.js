@@ -8,15 +8,17 @@ function GetAddress(props) {
     libraries: ["places"],
   });
   const setAddress = props.setAddress;
-  const address = props.address;
+  const address = props?.address;
   const addressRef = useRef();
 
   const onPlaceChanged = (e) => {
     setAddress(addressRef.current.value);
   };
   const onLoad = () => {
-    addressRef.current.value = address;
-    setAddress(address);
+    if (address) {
+      addressRef.current.value = address;
+      setAddress(address);
+    }
   };
   const onChangeInput = () => {
     setAddress("");

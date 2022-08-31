@@ -19,7 +19,7 @@ function EditProductAdminStore(props) {
 
   const doApi = async () => {
     setIsLoading(true);
-    let urlProduct = API_URL + "/products/single/" + params.prodId;
+    let urlProduct = API_URL + "/products/single/" + params.id;
     try {
       let resp2 = await doApiGet(urlProduct);
       setProduct(resp2.data);

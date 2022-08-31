@@ -10,7 +10,7 @@ import { Card, Col, ListGroup, Row } from "react-bootstrap";
 import OrderInfo from "../comps/orders/OrderInfo";
 import { DELIVERED_ORDER_STATUS } from "../services/consts";
 import { AppContext } from "../context/appContext";
-import { checkOpenShipmentLocal, remoneOpenShipment } from "../services/localService";
+import { checkOpenShipmentLocal, removeOpenShipmentLocal } from "../services/localService";
 import "./css_courier/courier.css";
 
 function MapRouting(props) {
@@ -69,7 +69,7 @@ function MapRouting(props) {
     if (resp.data.modifiedCount === 1) {
       socket.emit("status-changed", orderData.order.short_id, DELIVERED_ORDER_STATUS);
       toast.success("order completed successfully");
-      remoneOpenShipment();
+      removeOpenShipmentLocal();
       nav("../ordersHistory");
     }
   };

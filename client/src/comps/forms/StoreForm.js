@@ -4,9 +4,9 @@ import GetAddress from "../misc/GetAddress";
 import ImagesSearch from "../misc/imagesSearch";
 
 function StoreForm(props) {
-  const item = props.item;
   const doApi = props.doApi;
   const isLoading = props.isLoading;
+  const item = props.item;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -66,7 +66,7 @@ function StoreForm(props) {
       </Form.Group>
 
       <Form.Group className="mb-3 ">
-        <GetAddress setAddress={setAddress} currentAddress={address} />
+        <GetAddress setAddress={setAddress} address={address} />
       </Form.Group>
 
       <Form.Group className="mb-3 ">
@@ -104,11 +104,7 @@ function StoreForm(props) {
         ></Form.Control>
       </Form.Group>
 
-      <ImagesSearch
-        show={show}
-        handleToggle={handleToggle}
-        setImgUrl={setImgUrl}
-      />
+      <ImagesSearch show={show} handleToggle={handleToggle} setImgUrl={setImgUrl} />
       <Button variant="primary" type="submit">
         {isLoading ? <Spinner animation="grow" /> : "Submit"}
       </Button>
