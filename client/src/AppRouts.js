@@ -89,9 +89,8 @@ function AppRouts() {
         </Route>
         {/*admin*/}
         <Route path="/admin" element={<LayoutAdmin />}>
-          <Route index element={<HomeAdmin />} />
-          <Route path="login" element={<LoginAdmin />} />
-          {/* <Route path="home" element={<HomeAdmin />} /> */}
+          <Route index element={<LoginAdmin />} />
+          <Route path="home" element={<HomeAdmin />} />
           <Route path="users" element={<UsersList />} />
           <Route path="stores" element={<StoresAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />

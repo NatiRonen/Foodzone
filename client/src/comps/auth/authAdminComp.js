@@ -11,11 +11,7 @@ function AuthAdminComp(props) {
     if (checkTokenLocal()) {
       doApi();
     } else {
-      // nav to login
-      // nav("/logout");
-      nav("./login");
-      // show toast message in yellow that the user must be connected
-      // toast.warning("Please login first");
+      nav("/admin");
     }
   }, []);
 
@@ -25,11 +21,7 @@ function AuthAdminComp(props) {
       let resp = await doApiGet(url);
       if (resp.data.role != "admin") {
         toast.error("Unathorized user");
-        nav("../");
-      } else {
-        if (props.setAuthorized) {
-          props.setAuthorized(true);
-        } else return;
+        nav("/");
       }
     } catch (err) {
       //
