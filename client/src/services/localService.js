@@ -1,5 +1,6 @@
 export const SHIPMARKET_TOKEN = "tok";
 export const OPEN_SHIPMENT = "open_shipment";
+export const STORE = "store";
 
 //token
 export const saveTokenLocal = (_token) => {
@@ -32,6 +33,24 @@ export const checkOpenShipmentLocal = () => {
   }
 };
 
-export const remoneOpenShipment = () => {
+export const removeOpenShipmentLocal = () => {
   localStorage.removeItem(OPEN_SHIPMENT);
+};
+//store
+export const saveStoreLocal = (_data) => {
+  let stringData = JSON.stringify(_data);
+  localStorage.setItem(STORE, stringData);
+};
+
+export const getStoreLocal = () => {
+  if (localStorage[STORE]) {
+    let objData = JSON.parse(localStorage[STORE]);
+    return objData;
+  } else {
+    return false;
+  }
+};
+
+export const remoneStoreLocal = () => {
+  localStorage.removeItem(STORE);
 };

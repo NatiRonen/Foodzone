@@ -2,6 +2,7 @@ import React from "react";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { saveStoreLocal } from "../../services/localService";
 
 function MyStoreItem(props) {
   let nav = useNavigate();
@@ -13,6 +14,7 @@ function MyStoreItem(props) {
 
   const onClickStore = () => {
     if (item.status === "active") {
+      saveStoreLocal(item);
       nav("/storeAdmin/" + item.short_id);
     }
   };

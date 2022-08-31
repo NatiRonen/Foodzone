@@ -2,6 +2,7 @@ const ROLES = require("../utils/roles");
 const { default: axios } = require("axios");
 const { StoreModel } = require("../models/storeModel");
 const jwt = require("jsonwebtoken");
+const { UserModel } = require("../models/userModel");
 
 // if user is already logged in
 exports.auth = (req, res, next) => {
@@ -39,17 +40,18 @@ exports.authAdmin = (req, res, next) => {
 
 exports.authStoreAdmin = async (req, res, next) => {
   let token = req.header("x-api-key");
-  let idStore = req.params.idStore;
+  let storeId = req.header("store-id");
   if (!token) {
     return res.status(401).json({ err: "please log in first" });
   }
   try {
     let decodeToken = jwt.verify(token, process.env.JWT_SECRET);
+    let user = await UserModel.findOne({ _id: decodeToken._id });
     req.tokenData = decodeToken;
     //verify the user id the store's admin or system admin
     let store = await StoreModel.findOne({
-      _id: idStore,
-      adminId: decodeToken._id,
+      _id: storeId,
+      admin_short_id: user.short_id,
     });
     if (store || req.tokenData.role === ROLES.ADMIN) {
       next();

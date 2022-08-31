@@ -22,8 +22,8 @@ function Layout() {
       socket.emit("join-room-orders", order.short_id);
     });
   };
-  socket.off("status-changed").on("status-changed", (_status) => {
-    toast.info(`Your order is ${_status.replaceAll("_", " ")}`);
+  socket.off("status-changed-msg").on("status-changed-msg", (_room, _status) => {
+    toast.info(`Order ${_room} is ${_status.replaceAll("_", " ")}`);
   });
   return (
     <div className="page-container">

@@ -134,7 +134,7 @@ function Signup() {
                   required
                 />
               </Form.Group>
-              <GetAddress setAddress={setAddress} currentAddress={address} />
+              <GetAddress setAddress={setAddress} address={address} />
               <Form.Group controlId="formBasicPhone" className="mb-3 ">
                 <Form.Label>Phone</Form.Label>
                 <Form.Control

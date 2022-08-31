@@ -27,8 +27,9 @@ function Ticket(props) {
       let resp = await doApiMethod(url, "PATCH", {});
 
       if (resp.data.modifiedCount === 1) {
+        socket.emit("status-changed-sotre", params.id, _status);
         socket.emit("status-changed", item.short_id, _status);
-        socket.emit("status-changed", params.id, _status);
+        socket.emit("status-changed-msg", item.short_id, _status);
         props.doApi();
       }
     } catch (err) {
