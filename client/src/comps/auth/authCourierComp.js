@@ -22,9 +22,10 @@ function AuthCourierComp(props) {
     let url = API_URL + "/users/myInfo";
     try {
       let resp = await doApiGet(url);
-      if (resp.data.role !== COURIER_ROLE && resp.data.role !== ADMIN_ROLE) {
+      // if (resp.data.role !== COURIER_ROLE && resp.data.role !== ADMIN_ROLE) {
+      if (resp.data.role !== COURIER_ROLE) {
         toast.error("Unathorized user");
-        nav("/logout");
+        nav("/");
       }
     } catch (err) {
       // if there not token at all
