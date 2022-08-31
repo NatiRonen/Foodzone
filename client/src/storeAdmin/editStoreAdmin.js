@@ -60,7 +60,7 @@ function EditStoreAdmin(props) {
             md={5}
             className="d-flex shadow flex-direction-column align-items-center justify-content-center"
           >
-            <StoreForm item={store} doApi={doFormApi} isLoading={isLoading} />
+            {store?.address && <StoreForm item={store} doApi={doFormApi} isLoading={isLoading} />}
           </Col>
           <Col
             md={6}

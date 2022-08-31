@@ -5,9 +5,11 @@ import Lottie from "lottie-web";
 import AuthClientComp from "../comps/auth/authClientComp";
 import "./css/page404.css";
 import "./css/register.css";
+import { useNavigate } from "react-router-dom";
 
 function ApplyForCourier(props) {
   let animaRef = useRef(); // for lottie-web animation
+  const nav = useNavigate();
 
   useEffect(() => {
     Lottie.loadAnimation({
@@ -25,8 +27,9 @@ function ApplyForCourier(props) {
       if (resp.data.modifiedCount === 1) {
         toast.success("Application sent successfully");
       } else {
-        toast.error("You had already applied");
+        toast.warning("You had already applied");
       }
+      nav("/");
     } catch (error) {
       console.log(error);
       toast.error("It's not you, it's us. Please try again");

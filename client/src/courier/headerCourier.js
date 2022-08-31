@@ -1,20 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { checkOpenShipmentLocal } from "../services/localService";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
 // react icons
-import { BiHomeAlt, BiTime } from "react-icons/bi";
-import { MdLocalShipping } from "react-icons/md";
-import { FaShippingFast } from "react-icons/fa";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { BiHomeAlt } from "react-icons/bi";
+import { GoListUnordered } from "react-icons/go";
+import { MdOutlineDeliveryDining } from "react-icons/md";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { AppContext } from "../context/appContext";
 
 function HeaderCourier(props) {
+  const nav = useNavigate();
   const user = useSelector((state) => state.user);
-
+  const handleLogout = (e) => {
+    e.preventDefault();
+    nav("/logout");
+  };
   return (
-    <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
+    <Navbar key={"lg"} bg="light" expand={"lg"}>
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
@@ -36,34 +41,43 @@ function HeaderCourier(props) {
 
           <Offcanvas.Body>
             <Nav className="mx-auto">
-              <Nav.Link as={Link} to="./" href="./">
+              <Nav.Link
+                onClick={() => {
+                  nav("./");
+                }}
+              >
                 Home
-                <BiHomeAlt className="ms-1" />
               </Nav.Link>
               {!checkOpenShipmentLocal() && (
-                <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
-                  New shipment
-                  <MdLocalShipping className="ms-1" />
+                <Nav.Link
+                  onClick={() => {
+                    nav("./mapOrders");
+                  }}
+                >
+                  Take new order
                 </Nav.Link>
               )}
               {checkOpenShipmentLocal() && (
-                <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
-                  Opned shipment
-                  <FaShippingFast className="ms-1" />
+                <Nav.Link
+                  onClick={() => {
+                    nav("./takeDelivery");
+                  }}
+                >
+                  Opne shipment
                 </Nav.Link>
               )}
-              <Nav.Link as={Link} to="./OrdersHistory" href="./OrdersHistory">
+              <Nav.Link
+                onClick={() => {
+                  nav("./OrdersHistory");
+                }}
+              >
                 Orders history
-                <BiTime className="ms-1" />
               </Nav.Link>
             </Nav>
             <Nav>
               {!user && (
                 <LinkContainer to="/login">
-                  <Nav.Link>
-                    Login
-                    <FiLogIn className="ms-1" />
-                  </Nav.Link>
+                  <Nav.Link>Login</Nav.Link>
                 </LinkContainer>
               )}
               {user && (
@@ -86,13 +100,12 @@ function HeaderCourier(props) {
                   }
                   id="basic-nav-dropdown"
                 >
+                  {/* <NavDropdown.Item href="#action/3.1">Favorites</NavDropdown.Item> */}
+
                   <NavDropdown.Item>
-                    <LinkContainer to="/logout" className="text-danger">
-                      <Nav.Link>
-                        Logout
-                        <FiLogOut className="ms-1" />
-                      </Nav.Link>
-                    </LinkContainer>
+                    <Button variant="danger" onClick={handleLogout}>
+                      Logout
+                    </Button>
                   </NavDropdown.Item>
                 </NavDropdown>
               )}

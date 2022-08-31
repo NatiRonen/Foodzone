@@ -98,8 +98,4 @@ io.on("connection", (socket) => {
     console.log("status-changed-msg", room, newStatus);
     io.to(room).emit("status-changed-msg", room, newStatus);
   });
-  socket.on("status-changed-sotre", (room, newStatus) => {
-    console.log("status-changed-sotre", room, newStatus);
-    io.to(room).emit("status-changed-sotre", room, newStatus);
-  });
 });

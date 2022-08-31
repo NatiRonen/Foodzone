@@ -11,6 +11,10 @@ function GetAddress(props) {
   const address = props?.address;
   const addressRef = useRef();
 
+  // useEffect(() => {
+  //   onLoad();
+  // }, [address]);
+
   const onPlaceChanged = (e) => {
     setAddress(addressRef.current.value);
   };
