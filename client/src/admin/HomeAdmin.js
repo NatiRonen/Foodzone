@@ -1,6 +1,7 @@
 import React from "react";
-import "../comps/css/homeStrip.css";
 import { motion } from "framer-motion";
+import AuthAdminComp from "../comps/auth/authAdminComp";
+import "../comps/css/homeStrip.css";
 
 function HomeAdmin(props) {
   return (
@@ -10,6 +11,7 @@ function HomeAdmin(props) {
         backgroundImage: `url(https://images.pexels.com/photos/3184430/pexels-photo-3184430.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
       }}
     >
+      <AuthAdminComp />
       <motion.div
         className="container text_bg text-center"
         initial={{ x: "-100vw" }}

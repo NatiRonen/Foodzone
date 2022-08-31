@@ -83,7 +83,11 @@ function StoresAdmin(props) {
     let resp = await doApiMethod(url, "PATCH", {});
     if (resp.data.emailStatus === "ok") {
       toast.success(
-        "Store " + _name + " is " + resp.data.data.status + ". Email sent to the store owner"
+        "Store " +
+          _name +
+          " is " +
+          resp.data.data.status +
+          ". Email sent to the store owner"
       );
     } else {
       toast.error("Email failed to reach the store owner");
@@ -101,7 +105,11 @@ function StoresAdmin(props) {
       <AuthAdminComp />
       <h1 className="display-4">Stores list</h1>
       <div className=" col-md-3 position-absolute top-0 end-0 mt-3">
-        <select ref={selectRef} onChange={onSelectOption} className="form-select">
+        <select
+          ref={selectRef}
+          onChange={onSelectOption}
+          className="form-select"
+        >
           <option value="">All</option>
           <option value="active">Active</option>
           <option value="pending">Pending</option>
@@ -140,7 +148,11 @@ function StoresAdmin(props) {
                 <td>
                   <button
                     onClick={() => updateStatus(item._id, item.name)}
-                    className={item.status == "active" ? "btn btn-primary" : "btn btn-danger"}
+                    className={
+                      item.status == "active"
+                        ? "btn btn-primary"
+                        : "btn btn-danger"
+                    }
                   >
                     {item.status}
                   </button>
@@ -164,7 +176,11 @@ function StoresAdmin(props) {
           })}
         </tbody>
       </Table>
-      {ar.length === 0 && !loading ? <h2 className="text-center my-5">No Stores found</h2> : ""}
+      {ar.length === 0 && !loading ? (
+        <h2 className="text-center my-5">No Stores found</h2>
+      ) : (
+        ""
+      )}
       {loading ? <LottieAnimation /> : ""}
       <PageLinks
         perPage="5"
