@@ -7,6 +7,7 @@ import { Table } from "react-bootstrap";
 import PageLinks from "../comps/misc/pageLinks";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import AuthAdminComp from "../comps/auth/authAdminComp";
+import { getFromattedDate } from "../utils/dateRormated";
 
 function ProductsAdmin(props) {
   let [ar, setAr] = useState([]);
@@ -82,7 +83,7 @@ function ProductsAdmin(props) {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>{item.store_short_id}</td>
-                <td>{item.date_created}</td>
+                <td>{getFromattedDate(item.date_created)}</td>
                 <td>{item.short_id}</td>
                 <td>
                   <button

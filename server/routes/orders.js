@@ -153,6 +153,18 @@ router.get("/productsInfo/:idOrder", auth, async (req, res) => {
     res.status(500).json(error);
   }
 });
+//chart
+router.get("/userOrdersChart/:user", authAdmin, async (req, res) => {
+  try {
+    let order = await OrderModel.findOne({
+      _id: req.params.idOrder,
+    });
+    res.status(200).json(order);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
 
 router.post("/", auth, async (req, res) => {
   try {

@@ -13,8 +13,8 @@ const orderSchema = new mongoose.Schema({
   },
   total_price: Number,
   date_created: {
-    type: "String",
-    default: getFormatedTime() + " " + getFromattedDate(),
+    type: Date,
+    default: new Date(),
   },
   short_id: String,
   store_short_id: {

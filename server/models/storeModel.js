@@ -44,8 +44,8 @@ let storeSchema = new mongoose.Schema(
       default: "pending",
     },
     date_created: {
-      type: String,
-      default: getFromattedDate(),
+      type: Date,
+      default: Date.now(),
     },
     short_id: String,
     //   categories: Array,

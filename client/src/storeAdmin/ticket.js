@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
+import { getTimeAndDateFormat } from "../utils/dateRormated";
 
 function Ticket(props) {
   const item = props.item;
@@ -88,8 +89,7 @@ function Ticket(props) {
         <h3>₪ {item.total_price}</h3>
         <div className="even-date">
           <time>
-            {/* <span>{item.date_created.replace(/T/, " ").substr(0, 16)}</span> */}
-            <span>{item.date_created}</span>
+            <span>{getTimeAndDateFormat(item.date_created)}</span>
           </time>
         </div>
         <div className="even-info">

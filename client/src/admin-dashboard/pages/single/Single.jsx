@@ -12,35 +12,32 @@ import ChangeRoleModal from "./ChangeRoleModal";
 const Single = () => {
   const { state } = useLocation();
   let user = state.user;
+  const [role, setRole] = useState(user.role);
   const selectRef = useRef();
 
-  // const changeRole = async (e, _user) => {
-  //   let newRole = e.target.value;
-  //   if (window.confirm(`${_user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`)) {
-  //     let url = API_URL + `/users/changeRole/${_user._id}/${newRole}`;
-  //     try {
-  //       let resp = await doApiMethod(url, "PATCH", {});
-  //       console.log(resp.data);
-  //       if (resp.data) {
-  //         // doApi();
-  //         toast.info(`${_user.name} role's was changed to ${newRole.replaceAll("_", " ")}`);
-  //       }
-  //     } catch (err) {
-  //       alert("Something went wrong");
-  //       if (err.response) {
-  //         console.log(err.response.data);
-  //       }
-  //     }
-  //   } else {
-  //     e.target.value = _user.role;
-  //   }
-  // };
-  // const onSelectOption = () => {
-  //   let role = selectRef.current.value;
-  //   setRole(role);
-  // };
+  const changeRole = async (e) => {
+    let newRole = e.target.value;
+    if (window.confirm(`${user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`)) {
+      let url = API_URL + `/users/changeRole/${user._id}/${newRole}`;
+      try {
+        let resp = await doApiMethod(url, "PATCH", {});
+        console.log(resp.data);
+        if (resp.data) {
+          // doApi();
+          toast.info(`${user.name} role's was changed to ${newRole.replaceAll("_", " ")}`);
+          setRole(newRole);
+        }
+      } catch (err) {
+        alert("Something went wrong");
+        if (err.response) {
+          console.log(err.response.data);
+        }
+      }
+    } else {
+      e.target.value = user.role;
+    }
+  };
 
-  console.log(state);
   return (
     <>
       <div className="single">
@@ -49,8 +46,8 @@ const Single = () => {
           <Navbar />
           <div className="top">
             <div className="left">
-              <div className="editButton">
-                <ChangeRoleModal />
+              <div className="editButton p-0">
+                <ChangeRoleModal role={user.role} changeRole={changeRole} />
               </div>
               <h1 className="title">Information</h1>
               <div className="item">
@@ -71,7 +68,7 @@ const Single = () => {
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">Role:</span>
-                    <span className="itemValue">{user.role.replaceAll("_", " ")}</span>
+                    <span className="itemValue">{role.replaceAll("_", " ")}</span>
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">id:</span>
@@ -81,7 +78,7 @@ const Single = () => {
               </div>
             </div>
             <div className="right">
-              <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
+              <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" user={user} />
             </div>
           </div>
           <div className="bottom">

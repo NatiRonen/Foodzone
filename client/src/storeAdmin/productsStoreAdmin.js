@@ -7,6 +7,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdAddShoppingCart } from "react-icons/md";
 import { toast } from "react-toastify";
 import LottieAnimation from "../comps/misc/lottieAnimation";
+import { getFromattedDate } from "../utils/dateRormated";
 
 function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
@@ -95,7 +96,7 @@ function ProductsStoreAdmin(props) {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>{item?.category}</td>
-                <td>{item.date_created}</td>
+                <td>{getFromattedDate(item.date_created)}</td>
                 <td>{item.short_id}</td>
                 <td>
                   <Link

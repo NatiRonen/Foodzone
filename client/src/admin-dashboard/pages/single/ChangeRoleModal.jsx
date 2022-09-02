@@ -13,10 +13,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 import { ROLES_ARRAY } from "../../../services/consts";
+import { API_URL, doApiMethod } from "../../../services/apiService";
+import { toast } from "react-toastify";
 
-export default function ChangeRoleModal() {
+export default function ChangeRoleModal(props) {
   const [open, setOpen] = React.useState(false);
-  const [role, setRole] = React.useState("");
+  const [role, setRole] = React.useState(props.role);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,23 +29,22 @@ export default function ChangeRoleModal() {
   };
 
   const handleMaxWidthChange = (event) => {
+    props.changeRole(event);
     setRole(
       // @ts-expect-error autofill of arbitrary value is not handled.
       event.target.value
     );
+    handleClose();
   };
 
   return (
     <React.Fragment>
-      <Button variant="text" onClick={handleClickOpen}>
+      <Button variant="secondary" className="p-2" onClick={handleClickOpen}>
         Change role
       </Button>
-      <Dialog roel={role} open={open} onClose={handleClose}>
+      <Dialog fullWidth={true} maxWidth={"xs"} roel={role} open={open} onClose={handleClose}>
         <DialogTitle>Choose user role</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>
-        
-          </DialogContentText> */}
           <Box
             noValidate
             component="form"
@@ -55,7 +56,7 @@ export default function ChangeRoleModal() {
             }}
           >
             <FormControl sx={{ mt: 2, minWidth: 200 }}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
+              <InputLabel htmlFor="max-width">Role</InputLabel>
               <Select
                 autoFocus
                 value={role}
@@ -66,12 +67,10 @@ export default function ChangeRoleModal() {
                   id: "max-width",
                 }}
               >
-                <MenuItem value={false}>false</MenuItem>
-
                 {ROLES_ARRAY.map((item, idx) => {
                   return (
                     <MenuItem key={idx} value={item}>
-                      {item}
+                      {item.replaceAll("_", " ")}
                     </MenuItem>
                   );
                 })}

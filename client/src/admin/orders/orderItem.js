@@ -2,6 +2,7 @@ import React from "react";
 import { BsInfoCircle, BsEraser } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { API_URL, doApiMethod } from "../../services/apiService";
+import { getTimeAndDateFormat } from "../../utils/dateRormated";
 
 function OrderItem(props) {
   const item = props.item;
@@ -41,7 +42,7 @@ function OrderItem(props) {
           {item?.status?.replaceAll("_", " ")}
         </span>
       </td>
-      <td>{item.date_created}</td>
+      <td>{getTimeAndDateFormat(item.date_created)}</td>
       {/* <td>{item.destination.label}</td> */}
       <td>{item.store_short_id}</td>
       <td>₪ {item.total_price}</td>
