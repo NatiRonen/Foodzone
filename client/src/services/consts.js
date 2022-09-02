@@ -9,3 +9,5 @@ export const PAID_ORDER_STATUS = "paid";
 export const READY_FOR_SHIPMENT_ORDER_STATUS = "ready_for_shipment";
 export const ON_THE_WAY_ORDER_STATUS = "on_the_way";
 export const DELIVERED_ORDER_STATUS = "delivered";
+
+export const ROLES_ARRAY = ["user", "store_admin", "courier", "apply_for_courier", "admin"];
