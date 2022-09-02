@@ -41,36 +41,20 @@ function HeaderCourier(props) {
 
           <Offcanvas.Body>
             <Nav className="mx-auto">
-              <Nav.Link
-                onClick={() => {
-                  nav("./");
-                }}
-              >
+              <Nav.Link as={Link} to="/" href="/">
                 Home
               </Nav.Link>
               {!checkOpenShipmentLocal() && (
-                <Nav.Link
-                  onClick={() => {
-                    nav("./mapOrders");
-                  }}
-                >
+                <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
                   Take new order
                 </Nav.Link>
               )}
               {checkOpenShipmentLocal() && (
-                <Nav.Link
-                  onClick={() => {
-                    nav("./takeDelivery");
-                  }}
-                >
+                <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
                   Opne shipment
                 </Nav.Link>
               )}
-              <Nav.Link
-                onClick={() => {
-                  nav("./OrdersHistory");
-                }}
-              >
+              <Nav.Link as={Link} to="./ordersHistory" href="./ordersHistory">
                 Orders history
               </Nav.Link>
             </Nav>
@@ -100,8 +84,6 @@ function HeaderCourier(props) {
                   }
                   id="basic-nav-dropdown"
                 >
-                  {/* <NavDropdown.Item href="#action/3.1">Favorites</NavDropdown.Item> */}
-
                   <NavDropdown.Item>
                     <Button variant="danger" onClick={handleLogout}>
                       Logout

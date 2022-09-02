@@ -58,7 +58,7 @@ router.get("/allOrders", auth, async (req, res) => {
   let reverse = req.query.reverse == "yes" ? -1 : 1;
   let user_id = req.query.user_id;
   let status = req.query.status;
-  let courier = req.query.courier;
+  let courier_short_id = req.query.courier;
 
   try {
     let filter = user_id ? { user_id } : {};
@@ -67,8 +67,8 @@ router.get("/allOrders", auth, async (req, res) => {
       : {
           ...filter,
         };
-    filter = courier
-      ? { ...filter, courier }
+    filter = courier_short_id
+      ? { ...filter, courier_short_id }
       : {
           ...filter,
         };

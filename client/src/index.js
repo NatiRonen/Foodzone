@@ -14,6 +14,7 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { DarkModeContextProvider } from "./admin-dashboard/context/darkModeContext";
 const persistedStore = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -21,7 +22,9 @@ root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistedStore}>
       <ToastContainer position={"top-center"} />
-      <App />
+      <DarkModeContextProvider>
+        <App />
+      </DarkModeContextProvider>
     </PersistGate>
   </Provider>
 );
