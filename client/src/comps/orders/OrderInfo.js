@@ -107,7 +107,7 @@ function OrderInfo(props) {
                         <div className="summary-item">
                           <span className="text">Date</span>
                           <span className="price">
-                            {getTimeAndDateFormat(orderInfo.date_created)}
+                            {orderInfo.date_created && getTimeAndDateFormat(orderInfo.date_created)}
                           </span>
                         </div>
                         <div className="summary-item">

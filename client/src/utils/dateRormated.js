@@ -8,6 +8,15 @@ export const getFromattedDate = (_date) => {
   }).format(_date);
   return _date;
 };
+export const getDayAndMonth = (_date) => {
+  // returns date in format of mm-dd
+  _date = new Date(_date);
+  _date = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+  }).format(_date);
+  return _date;
+};
 
 export const getFormatedTime = (_date) => {
   _date = new Date(_date);

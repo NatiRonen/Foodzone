@@ -8,33 +8,30 @@ import { useEffect, useRef, useState } from "react";
 import { API_URL, doApiMethod } from "../../../services/apiService";
 import { toast } from "react-toastify";
 import ChangeRoleModal from "./ChangeRoleModal";
+import Button from "@mui/material/Button";
 
-const Single = () => {
+const SingleStore = () => {
   const { state } = useLocation();
-  let user = state.user;
-  const [role, setRole] = useState(user.role);
-  const selectRef = useRef();
+  let item = state.item;
+  const [status, setStatus] = useState(item.status);
 
-  const changeRole = async (e) => {
-    let newRole = e.target.value;
-    if (window.confirm(`${user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`)) {
-      let url = API_URL + `/users/changeRole/${user._id}/${newRole}`;
-      try {
-        let resp = await doApiMethod(url, "PATCH", {});
-        console.log(resp.data);
-        if (resp.data) {
-          // doApi();
-          toast.info(`${user.name} role's was changed to ${newRole.replaceAll("_", " ")}`);
-          setRole(newRole);
-        }
-      } catch (err) {
-        alert("Something went wrong");
-        if (err.response) {
-          console.log(err.response.data);
-        }
-      }
+  const statusTottle = () => {
+    if (status === "pending") setStatus("active");
+    else {
+      setStatus("pending");
+    }
+  };
+
+  const updateStatus = async () => {
+    let url = API_URL + "/stores/updateStatus/" + item._id;
+    let resp = await doApiMethod(url, "PATCH", {});
+    if (resp.data.emailStatus === "ok") {
+      toast.success(
+        "Store " + item.name + " is " + resp.data.data.status + ". Email sent to the store owner"
+      );
+      statusTottle();
     } else {
-      e.target.value = user.role;
+      toast.error("Email failed to reach the store owner");
     }
   };
 
@@ -47,38 +44,40 @@ const Single = () => {
           <div className="top">
             <div className="left">
               <div className="editButton p-0">
-                <ChangeRoleModal role={user.role} changeRole={changeRole} />
+                <Button variant="secondary" className="p-2" onClick={updateStatus}>
+                  Change status
+                </Button>
               </div>
               <h1 className="title">Information</h1>
               <div className="item">
-                <img src={user.picture} alt="" className="itemImg" />
+                <img src={item.imgUrl} alt="" className="itemImg" />
                 <div className="details">
-                  <h1 className="itemTitle">{user.name}</h1>
+                  <h1 className="itemTitle">{item.name}</h1>
+                  <div className="detailItem">
+                    <span className="itemKey">id:</span>
+                    <span className="itemValue">{item.short_id}</span>
+                  </div>
                   <div className="detailItem">
                     <span className="itemKey">Email:</span>
-                    <span className="itemValue">{user.email}</span>
+                    <span className="itemValue">{item.email}</span>
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">Phone:</span>
-                    <span className="itemValue">{user.phone}</span>
+                    <span className="itemValue">{item.phone}</span>
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">Address:</span>
-                    <span className="itemValue">{user.address}</span>
+                    <span className="itemValue">{item.address}</span>
                   </div>
                   <div className="detailItem">
-                    <span className="itemKey">Role:</span>
-                    <span className="itemValue">{role.replaceAll("_", " ")}</span>
-                  </div>
-                  <div className="detailItem">
-                    <span className="itemKey">id:</span>
-                    <span className="itemValue">{user.short_id}</span>
+                    <span className="itemKey">Status:</span>
+                    <span className="itemValue">{status}</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="right">
-              <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" user={user} />
+              <Chart aspect={3 / 1} title="item Spending" item={item} />
             </div>
           </div>
           <div className="bottom">
@@ -91,4 +90,4 @@ const Single = () => {
   );
 };
 
-export default Single;
+export default SingleStore;
