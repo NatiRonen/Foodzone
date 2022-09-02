@@ -8,7 +8,7 @@ export const userColumns = [
       return (
         <div className="cellWithImg">
           <img className="cellImg" src={params.row.picture} alt="avatar" />
-          {params.row.username}
+          {params.row.name}
         </div>
       );
     },
@@ -29,7 +29,7 @@ export const userColumns = [
     headerName: "Role",
     width: 160,
     renderCell: (params) => {
-      return <div className={`cellWithStatus ${params.row.role}`}>{params.rolr}</div>;
+      return <div className={`cellWithStatus ${params.row}`}>{params.row.role}</div>;
     },
   },
 ];

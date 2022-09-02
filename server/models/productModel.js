@@ -26,8 +26,8 @@ let productScheam = new mongoose.Schema(
       required: [true, "can't be blank"],
     },
     date_created: {
-      type: String,
-      default: getFromattedDate(),
+      type: Date,
+      default: Date.now(),
     },
     store_short_id: String,
     short_id: String,

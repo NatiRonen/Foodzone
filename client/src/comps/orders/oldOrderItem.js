@@ -1,6 +1,8 @@
 import React from "react";
 import { ImInfo } from "react-icons/im";
 
+import { getTimeAndDateFormat } from "../../utils/dateRormated";
+
 function oldOrderItem(props) {
   let item = props.item;
   let i = props.i;
@@ -21,8 +23,8 @@ function oldOrderItem(props) {
             <span className="fw-bold">Total Price:</span> ₪ {item.total_price}
           </div>
           <div>
-            <span className="fw-bold">Date: </span>
-            {item.date_created}
+            <span className="fw-bold">Time and date: </span>
+            {getTimeAndDateFormat(item.date_created)}
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 import { BsInfoCircle } from "react-icons/bs";
 import { API_URL, doApiGet } from "../services/apiService";
 import { useSelector } from "react-redux";
+import { getTimeAndDateFormat } from "../utils/dateRormated";
 
 function MyOrders(props) {
   const [ar, setAr] = useState([]);
@@ -59,7 +60,7 @@ function MyOrders(props) {
                   </span>
                 </td>
                 <td>{item.short_id}</td>
-                <td>{item.date_created}</td>
+                <td>{getTimeAndDateFormat(item.date_created)}</td>
                 <td>{item.destination}</td>
                 <td>₪ {item.total_price}</td>
                 <td>{item.products_ar.length}</td>

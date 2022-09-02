@@ -1,5 +1,7 @@
 import "./chart.scss";
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { useEffect, useState } from "react";
+import { API_URL } from "../../../services/apiService";
 
 const data = [
   { name: "January", Total: 1200 },
@@ -11,6 +13,14 @@ const data = [
 ];
 
 const Chart = ({ aspect, title }) => {
+  const [data, setData] = useState();
+  useEffect(() => {
+    doApi();
+  }, []);
+
+  const doApi = async () => {
+    let url = API_URL + "/orders/allOrders?user_id:";
+  };
   return (
     <div className="chart">
       <div className="title">{title}</div>
