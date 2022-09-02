@@ -37,12 +37,13 @@ import MapRouting from "./courier/mapRouting";
 // new login admin
 import MyOrders from "./courier/myOrders";
 import List from "./admin-dashboard/pages/list/List";
-import Single from "./admin-dashboard/pages/single/Single";
 import New from "./admin-dashboard/pages/new/New";
 import { productInputs, userInputs } from "./admin-dashboard/formSource";
 import AdminHome from "./admin-dashboard/pages/home/AdminHome";
 import { DarkModeContext } from "./admin-dashboard/context/darkModeContext";
 import "./admin-dashboard/style/dark.scss";
+import SingleUser from "./admin-dashboard/pages/single/SingleUser";
+import SingleStore from "./admin-dashboard/pages/single/singleStore";
 function AppRouts() {
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -92,13 +93,18 @@ function AppRouts() {
             <Route path="login" element={<LoginAdmin />} />
             <Route path="users">
               <Route index element={<List data="users" />} />
-              <Route path="single" element={<Single />} />
-              <Route path="new" element={<New inputs={userInputs} title="Add New User" />} />
+              <Route path="single" element={<SingleUser />} />
+              {/* <Route path="new" element={<New  title="Add New User" />} /> */}
+            </Route>
+            <Route path="stores">
+              <Route index element={<List data="stores" />} />
+              <Route path=":storeId" element={<SingleStore />} />
+              {/* <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} /> */}
             </Route>
             <Route path="products">
               <Route index element={<List data="products" />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} />
+              {/* <Route path=":productId" element={<Single />} /> */}
+              {/* <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} /> */}
             </Route>
           </Route>
           <Route path="/*" element={<Page404 />} />

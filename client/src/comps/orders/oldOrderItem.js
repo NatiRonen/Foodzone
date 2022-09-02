@@ -25,6 +25,7 @@ function oldOrderItem(props) {
           <div>
             <span className="fw-bold">Time and date: </span>
             {getTimeAndDateFormat(item.date_created)}
+            {/* {item.date_created} */}
           </div>
         </div>
 

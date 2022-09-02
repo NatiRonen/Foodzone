@@ -56,12 +56,12 @@ router.get("/allOrders", auth, async (req, res) => {
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "_id";
   let reverse = req.query.reverse == "yes" ? -1 : 1;
-  let user_id = req.query.user_id;
+  let client_short_id = req.query.client;
   let status = req.query.status;
   let courier_short_id = req.query.courier;
 
   try {
-    let filter = user_id ? { user_id } : {};
+    let filter = client_short_id ? { client_short_id } : {};
     filter = status
       ? { ...filter, status }
       : {
@@ -154,17 +154,17 @@ router.get("/productsInfo/:idOrder", auth, async (req, res) => {
   }
 });
 //chart
-router.get("/userOrdersChart/:user", authAdmin, async (req, res) => {
-  try {
-    let order = await OrderModel.findOne({
-      _id: req.params.idOrder,
-    });
-    res.status(200).json(order);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-});
+// router.get("/userOrdersChart/:client", authAdmin, async (req, res) => {
+//   try {
+//     let orders = await OrderModel.find({
+//       client_short_id: req.params.client,
+//     });
+//     res.status(200).json(order);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json(error);
+//   }
+// });
 
 router.post("/", auth, async (req, res) => {
   try {
