@@ -1,11 +1,16 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { storeColumns, userColumns, userRows } from "../../datatablesource";
+import {
+  OrderColumns,
+  storeColumns,
+  userColumns,
+  userRows,
+} from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../../../services/apiService";
 import { toast } from "react-toastify";
-function StoresData() {
+function OrdersData() {
   const [data, setData] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +19,7 @@ function StoresData() {
   }, []);
 
   const doApi = async () => {
-    let url = API_URL + `/stores?perPage=990`;
+    let url = API_URL + `/orders/allOrders?perPage=990`;
     setLoading(true);
     try {
       let resp = await doApiGet(url);
@@ -33,18 +38,18 @@ function StoresData() {
   };
 
   const handleDelete = async (_idDel) => {
-    if (window.confirm("Are you sure you want to delete?")) {
+    if (window.confirm("Are you sure you want to delete the order?")) {
       try {
-        let url = API_URL + "/stores/" + _idDel;
+        let url = API_URL + "/orders/" + _idDel;
         let resp = await doApiMethod(url, "DELETE", {});
         if (resp.data.deletedCount) {
-          toast.info("Stores deleted !");
+          toast.info("Order deleted");
         }
-        // to show the new list without the Store that we deleted
+        // to show the new list without the order that we deleted
         doApi();
       } catch (err) {
         console.log(err.response);
-        toast.error(err.response.data.err);
+        toast.error("It's not you, it's us. Please try again");
       }
     }
   };
@@ -79,16 +84,10 @@ function StoresData() {
   if (loading || !data) return "";
   return (
     <div className="datatable">
-      {/* <div className="datatableTitle">
-        Add New User
-        <Link to="/users/new" className="link">
-          Add New
-        </Link>
-      </div> */}
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={storeColumns.concat(actionColumn)}
+        columns={OrderColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
@@ -97,4 +96,4 @@ function StoresData() {
   );
 }
 
-export default StoresData;
+export default OrdersData;

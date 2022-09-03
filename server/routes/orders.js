@@ -1,5 +1,11 @@
 const express = require("express");
-const { auth, payPalAuth, authAdmin, authStoreAdmin, authCourier } = require("../middlewares/auth");
+const {
+  auth,
+  payPalAuth,
+  authAdmin,
+  authStoreAdmin,
+  authCourier,
+} = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { OrderModel } = require("../models/orderModel");
 const { ProductModel } = require("../models/productModel");
@@ -59,6 +65,7 @@ router.get("/allOrders", auth, async (req, res) => {
   let client_short_id = req.query.client;
   let status = req.query.status;
   let courier_short_id = req.query.courier;
+  let store_short_id = req.query.store;
 
   try {
     let filter = client_short_id ? { client_short_id } : {};
@@ -69,6 +76,11 @@ router.get("/allOrders", auth, async (req, res) => {
         };
     filter = courier_short_id
       ? { ...filter, courier_short_id }
+      : {
+          ...filter,
+        };
+    filter = store_short_id
+      ? { ...filter, store_short_id }
       : {
           ...filter,
         };
@@ -135,7 +147,10 @@ router.get("/deliveryInfo/:idOrder", authCourier, async (req, res) => {
     let store = await StoreModel.findOne({
       short_id: order.store_short_id,
     });
-    let user = await UserModel.findOne({ short_id: order.client_short_id }, { name: 1, phone: 1 });
+    let user = await UserModel.findOne(
+      { short_id: order.client_short_id },
+      { name: 1, phone: 1 }
+    );
     res.status(200).json({ order, store, user });
   } catch (error) {
     res.status(500).json(error);
@@ -154,17 +169,27 @@ router.get("/productsInfo/:idOrder", auth, async (req, res) => {
   }
 });
 //chart
-// router.get("/userOrdersChart/:client", authAdmin, async (req, res) => {
-//   try {
-//     let orders = await OrderModel.find({
-//       client_short_id: req.params.client,
-//     });
-//     res.status(200).json(order);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json(error);
-//   }
-// });
+router.get("/orderedProduct/:prodShortId", authAdmin, async (req, res) => {
+  let product = req.params.prodShortId;
+  try {
+    let orders = await OrderModel.find(
+      {
+        products_ar: { $elemMatch: { short_id: product } },
+      },
+      {
+        date_created: 1,
+        products_ar: { $elemMatch: { short_id: product } },
+        _id: 0,
+      }
+    );
+
+    res.status(200).json(orders);
+    console.log(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
 
 router.post("/", auth, async (req, res) => {
   try {
@@ -279,7 +304,7 @@ router.patch("/:orderId", auth, async (req, res) => {
 router.delete("/:delId", authAdmin, async (req, res) => {
   try {
     let data = await OrderModel.deleteOne({
-      _id: orderId,
+      _id: req.params.delId,
     });
     // modifiedCount
     res.json(data);

@@ -58,10 +58,17 @@ function UsersData() {
         console.log(params);
         return (
           <div className="cellAction">
-            <Link to="./single" state={{ user: params.row }} style={{ textDecoration: "none" }}>
+            <Link
+              to="./single"
+              state={{ user: params.row }}
+              style={{ textDecoration: "none" }}
+            >
               <div className="viewButton">View</div>
             </Link>
-            <div className="deleteButton" onClick={() => handleDelete(params.row._id)}>
+            <div
+              className="deleteButton"
+              onClick={() => handleDelete(params.row._id)}
+            >
               Delete
             </div>
           </div>
@@ -72,12 +79,12 @@ function UsersData() {
   if (loading || !data) return "";
   return (
     <div className="datatable">
-      <div className="datatableTitle">
+      {/* <div className="datatableTitle">
         Add New User
         <Link to="/users/new" className="link">
           Add New
         </Link>
-      </div>
+      </div> */}
       <DataGrid
         className="datagrid"
         rows={data}
