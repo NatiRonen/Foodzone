@@ -47,12 +47,13 @@ import LoginAdmin from "./admin/loginAdmin";
 import MyOrders from "./courier/myOrders";
 import List from "./admin-dashboard/pages/list/List";
 import New from "./admin-dashboard/pages/new/New";
-import { productInputs, userInputs } from "./admin-dashboard/formSource";
 import AdminHome from "./admin-dashboard/pages/home/AdminHome";
 import { DarkModeContext } from "./admin-dashboard/context/darkModeContext";
 import "./admin-dashboard/style/dark.scss";
 import SingleUser from "./admin-dashboard/pages/single/SingleUser";
 import SingleStore from "./admin-dashboard/pages/single/singleStore";
+import SingleProduct from "./admin-dashboard/pages/single/SingleProduct";
+import SingleOrder from "./admin-dashboard/pages/single/SingleOrder";
 function AppRouts() {
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -87,8 +88,14 @@ function AppRouts() {
             <Route path="products" element={<ProductsStoreAdmin />} />
             <Route path="orders" element={<OrdersListStore />} />
             <Route path="openOrders" element={<OpenOrders />} />
-            <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
-            <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
+            <Route
+              path="products/edit/:prodId"
+              element={<EditProductAdminStore />}
+            />
+            <Route
+              path="products/addProduct"
+              element={<AddProductStoreAdmin />}
+            />
           </Route>
           {/*admin*/}
           <Route path="/admin" element={<LayoutAdmin />}>
@@ -122,7 +129,12 @@ function AppRouts() {
             </Route>
             <Route path="products">
               <Route index element={<List data="products" />} />
-              {/* <Route path=":productId" element={<Single />} /> */}
+              <Route path=":productId" element={<SingleProduct />} />
+              {/* <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} /> */}
+            </Route>
+            <Route path="orders">
+              <Route index element={<List data="orders" />} />
+              <Route path=":orderId" element={<SingleOrder />} />
               {/* <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} /> */}
             </Route>
           </Route>

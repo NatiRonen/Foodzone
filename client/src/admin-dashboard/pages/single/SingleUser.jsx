@@ -8,23 +8,32 @@ import { useEffect, useRef, useState } from "react";
 import { API_URL, doApiMethod } from "../../../services/apiService";
 import { toast } from "react-toastify";
 import ChangeRoleModal from "./ChangeRoleModal";
+import UserChart from "../../components/chart/UserChart";
+import ListOrdersUser from "../../components/table/ListOrdersUser";
 
 const SingleUser = () => {
   const { state } = useLocation();
   let user = state.user;
   const [role, setRole] = useState(user.role);
+  const [userOrders, setUserOrders] = useState([]);
   const selectRef = useRef();
 
   const changeRole = async (e) => {
     let newRole = e.target.value;
-    if (window.confirm(`${user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`)) {
+    if (
+      window.confirm(
+        `${user.name} role's will be changed to ${newRole.replaceAll("_", " ")}`
+      )
+    ) {
       let url = API_URL + `/users/changeRole/${user._id}/${newRole}`;
       try {
         let resp = await doApiMethod(url, "PATCH", {});
         console.log(resp.data);
         if (resp.data) {
           // doApi();
-          toast.info(`${user.name} role's was changed to ${newRole.replaceAll("_", " ")}`);
+          toast.info(
+            `${user.name} role's was changed to ${newRole.replaceAll("_", " ")}`
+          );
           setRole(newRole);
         }
       } catch (err) {
@@ -68,7 +77,9 @@ const SingleUser = () => {
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">Role:</span>
-                    <span className="itemValue">{role.replaceAll("_", " ")}</span>
+                    <span className="itemValue">
+                      {role.replaceAll("_", " ")}
+                    </span>
                   </div>
                   <div className="detailItem">
                     <span className="itemKey">id:</span>
@@ -78,12 +89,15 @@ const SingleUser = () => {
               </div>
             </div>
             <div className="right">
-              <Chart aspect={3 / 1} title="User Spending" user={user} />
+              <UserChart
+                short_id={user.short_id}
+                setUserOrders={setUserOrders}
+              />
             </div>
           </div>
           <div className="bottom">
             <h1 className="title">Last Transactions</h1>
-            <List />
+            <ListOrdersUser ar={userOrders} />
           </div>
         </div>
       </div>

@@ -29,5 +29,7 @@ export const getFormatedTime = (_date) => {
 };
 
 export const getTimeAndDateFormat = (_date) => {
-  return getFormatedTime(_date) + " " + getFromattedDate(_date);
+  if (_date) {
+    return getFormatedTime(_date) + " " + getFromattedDate(_date);
+  }
 };
