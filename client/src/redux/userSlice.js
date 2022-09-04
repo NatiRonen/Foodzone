@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveTokenLocal } from "../services/localService";
+import { deleteToken, saveTokenLocal } from "../services/localService";
 import appApi from "./appApi";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    logout: (state, { payload }) => null,
+    logout: (state, { payload }) => {
+      deleteToken();
+      return null;
+    },
     addNotifications: (state, { payload }) => {
       //actions recive roomId ad payload
       if (state.newMessages[payload]) {

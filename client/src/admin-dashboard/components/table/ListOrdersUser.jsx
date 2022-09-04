@@ -28,7 +28,7 @@ const ListOrdersUser = ({ ar }) => {
               <TableCell className="tableCell">{row.short_id}</TableCell>
               <TableCell className="tableCell">{getTimeAndDateFormat(row.date_created)}</TableCell>
               <TableCell className="tableCell">{row.total_price}</TableCell>
-              <TableCell className="tableCell">{row.status}</TableCell>
+              <TableCell className="tableCell">{row.status.replaceAll("_", " ")}</TableCell>
               <TableCell className="tableCell">
                 <div className="cellAction">
                   <Link

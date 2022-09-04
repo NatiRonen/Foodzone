@@ -4,14 +4,15 @@ import { toast } from "react-toastify";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { checkTokenLocal } from "../../services/localService";
 
-function AuthAdminComp(props) {
+function AuthAdminComp({ setAuth }) {
   let nav = useNavigate();
 
   useEffect(() => {
+    console.log("from login");
     if (checkTokenLocal()) {
       doApi();
     } else {
-      nav("/admin");
+      nav("./login");
     }
   }, []);
 
@@ -21,7 +22,9 @@ function AuthAdminComp(props) {
       let resp = await doApiGet(url);
       if (resp.data.role != "admin") {
         toast.error("Unathorized user");
-        nav("/");
+      } else {
+        setAuth(true);
+        nav("../");
       }
     } catch (err) {
       //

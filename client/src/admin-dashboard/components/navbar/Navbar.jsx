@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const [notifications, setNotifications] = useState();
   const { dispatch } = useContext(DarkModeContext);
-  const { picture, name } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const { newMessages } = useSelector((state) => state.user);
   useEffect(() => {
     if (Object.keys(newMessages).length !== 0) {
@@ -27,6 +27,7 @@ const Navbar = () => {
       setNotifications(sumValues);
     }
   };
+  console.log(user);
 
   return (
     <div className="navbar-admin ">
@@ -48,7 +49,7 @@ const Navbar = () => {
             <ListOutlinedIcon className="icon" />
           </div> */}
           <div className="item">
-            <img src={picture} alt="" className="avatar" />
+            <img src={user?.picture} alt="" className="avatar" />{" "}
           </div>
         </div>
       </div>

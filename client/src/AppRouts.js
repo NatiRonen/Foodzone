@@ -41,7 +41,7 @@ import LayoutCourier from "./courier/layoutCourier";
 import HomeCourier from "./courier/homeCourier";
 import OpenOrdersMap from "./courier/openOrdersMap";
 import MapRouting from "./courier/mapRouting";
-import LoginAdmin from "./admin/loginAdmin";
+import LoginAdmin from "./admin-dashboard/pages/loginAdmin";
 // import DeliveryInfo from "./courier/deliveryInfo";
 // new login admin
 import MyOrders from "./courier/myOrders";
@@ -110,7 +110,7 @@ function AppRouts() {
           </Route>
           <Route path="/admin-dashboard">
             <Route index element={<AdminHome />} />
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<LoginAdmin />} />
             <Route path="users">
               <Route index element={<List data="users" />} />
               <Route path="single" element={<SingleUser />} />

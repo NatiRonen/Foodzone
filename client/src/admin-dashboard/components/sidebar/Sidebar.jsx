@@ -13,15 +13,22 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../redux/userSlice";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const user = useSelector((state) => state.user);
+  const dispatchlogout = useDispatch();
+  const nav = useNavigate();
   const LOCATION = "/admin-dashboard";
+  const logoutAdmin = () => {
+    dispatchlogout(logout());
+    nav("/admin-dashboard/login");
+  };
   return (
     <div className="sidebar">
       <div className="top">
@@ -95,10 +102,16 @@ const Sidebar = () => {
               <span>Profile</span>
             </li>
           </Link>
-          <li>
-            <ExitToAppIcon className="icon" />
-            <span>Logout</span>
-          </li>
+          <Link
+            to="/admin-dashboard/login"
+            onClick={(e) => dispatchlogout(logout())}
+            style={{ textDecoration: "none" }}
+          >
+            <li>
+              <ExitToAppIcon className="icon" />
+              <span>Logout</span>
+            </li>
+          </Link>
         </ul>
       </div>
       <div className="bottom">

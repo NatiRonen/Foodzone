@@ -10,7 +10,7 @@ import Navbar from "../components/navbar/Navbar";
 function ChatAdmin() {
   return (
     <div style={{ overflowX: "hidden" }} className="container-fluid border list">
-      <AuthAdminComp />
+      {/* <AuthAdminComp /> */}
       <Sidebar />
       <div className="listContainer">
         <Navbar />
