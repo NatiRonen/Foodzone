@@ -34,7 +34,7 @@ import Checkout from "./pages/checkout";
 import OldOrders from "./pages/oldOrders";
 import OrdersListStore from "./storeAdmin/ordersListStore";
 import Chat from "./chat/Chat";
-import ChatAdmin from "./admin/chat/ChatAdmin";
+import ChatAdmin from "./admin-dashboard/chat/ChatAdmin";
 import CategoriesStoreAdmin from "./storeAdmin/categoriesStoreAdmin";
 //courier import
 import LayoutCourier from "./courier/layoutCourier";
@@ -88,14 +88,8 @@ function AppRouts() {
             <Route path="products" element={<ProductsStoreAdmin />} />
             <Route path="orders" element={<OrdersListStore />} />
             <Route path="openOrders" element={<OpenOrders />} />
-            <Route
-              path="products/edit/:prodId"
-              element={<EditProductAdminStore />}
-            />
-            <Route
-              path="products/addProduct"
-              element={<AddProductStoreAdmin />}
-            />
+            <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
+            <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
           </Route>
           {/*admin*/}
           <Route path="/admin" element={<LayoutAdmin />}>
@@ -105,7 +99,7 @@ function AppRouts() {
             <Route path="stores" element={<StoresAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
             <Route path="orders" element={<OrdersAdmin />} />
-            <Route path="chat" element={<ChatAdmin />} />
+            {/* <Route path="chat" element={<ChatAdmin />} /> */}
           </Route>
           {/* Courier routes */}
           <Route path="/courier" element={<LayoutCourier />}>
@@ -137,6 +131,7 @@ function AppRouts() {
               <Route path=":orderId" element={<SingleOrder />} />
               {/* <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} /> */}
             </Route>
+            <Route path="chat" element={<ChatAdmin />} />
           </Route>
           <Route path="/*" element={<Page404 />} />
         </Routes>

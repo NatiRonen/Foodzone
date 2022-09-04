@@ -1,11 +1,6 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import {
-  productColumns,
-  storeColumns,
-  userColumns,
-  userRows,
-} from "../../datatablesource";
+import { productColumns, storeColumns, userColumns, userRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../../../services/apiService";
@@ -61,17 +56,10 @@ function ProductsData() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link
-              to="./single"
-              state={{ item: params.row }}
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="./single" state={{ item: params.row }} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
+            <div className="deleteButton" onClick={() => handleDelete(params.row._id)}>
               Delete
             </div>
           </div>
@@ -94,7 +82,7 @@ function ProductsData() {
         columns={productColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>
   );

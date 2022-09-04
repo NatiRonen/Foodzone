@@ -4,13 +4,32 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { API_URL, doApiGet } from "../../../services/apiService";
 
-const Widget = ({ type }) => {
-  let data;
+const Widget = ({ type, amount }) => {
+  const [userAmount, setUserAmount] = useState();
+  const [sotreAmount, setStoreAmount] = useState();
+  // const [data, setData] = useState();
+  let data = null;
+  //dataorary
 
-  //temporary
-  const amount = 100;
-  const diff = 20;
+  useEffect(() => {
+    getUsersAmount();
+    getStoresAmount();
+  }, []);
+
+  const getUsersAmount = async () => {
+    let url = API_URL + "/users/amount";
+    let { data } = await doApiGet(url);
+    setUserAmount(data.amount);
+  };
+  const getStoresAmount = async () => {
+    let url = API_URL + "/stores/amount";
+    let { data } = await doApiGet(url);
+    setStoreAmount(data.amount);
+  };
 
   switch (type) {
     case "user":
@@ -18,6 +37,8 @@ const Widget = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        path: "./users",
+        amount: userAmount,
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -29,11 +50,13 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "order":
+    case "sotre":
       data = {
-        title: "ORDERS",
+        title: "STORES",
         isMoney: false,
-        link: "View all orders",
+        link: "View all stores",
+        path: "./stores",
+        amount: sotreAmount,
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -45,11 +68,13 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "earning":
+    case "order":
       data = {
-        title: "EARNINGS",
-        isMoney: true,
-        link: "View net earnings",
+        title: "ORDERS",
+        isMoney: false,
+        link: "View net orders",
+        path: "./orders",
+        amount: amount,
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -58,11 +83,13 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "balance":
+    case "sale":
       data = {
-        title: "BALANCE",
+        title: "TOTAL SALSE",
         isMoney: true,
-        link: "See details",
+        link: "",
+        path: "./",
+        amount: amount,
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -77,23 +104,19 @@ const Widget = ({ type }) => {
     default:
       break;
   }
-
+  if (!data) return "";
   return (
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "₪"} {data.amount}
         </span>
-        <span className="link">{data.link}</span>
+        <Link to={data.path} className="link text-decoration-none">
+          {data.link}
+        </Link>
       </div>
-      <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {diff} %
-        </div>
-        {data.icon}
-      </div>
+      <div className="right">{data.icon}</div>
     </div>
   );
 };

@@ -1,11 +1,5 @@
 const express = require("express");
-const {
-  auth,
-  payPalAuth,
-  authAdmin,
-  authStoreAdmin,
-  authCourier,
-} = require("../middlewares/auth");
+const { auth, payPalAuth, authAdmin, authStoreAdmin, authCourier } = require("../middlewares/auth");
 const { genShortId } = require("../utils/genShortId");
 const { OrderModel } = require("../models/orderModel");
 const { ProductModel } = require("../models/productModel");
@@ -15,10 +9,10 @@ const router = express.Router();
 
 router.get("/sotreOrders/:store_id", authStoreAdmin, async (req, res) => {
   let store_short_id = req.params.store_id;
-  let perPage = req.query.perPage || 10;
+  let perPage = req.query.perPage || 100;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
-  let sort = req.query.sort || "_id";
-  let reverse = req.query.reverse == "yes" ? -1 : 1;
+  let sort = req.query.sort || "date_created";
+  let reverse = req.query.reverse == "no" ? 1 : -1;
   let status = req.query.status;
 
   try {
@@ -48,7 +42,7 @@ router.get("/userOrder", auth, async (req, res) => {
     })
       .limit(20)
       .sort({
-        _id: -1,
+        date_created: -1,
       }); //return the last 20 orders
     res.json(data);
   } catch (error) {
@@ -60,8 +54,8 @@ router.get("/userOrder", auth, async (req, res) => {
 router.get("/allOrders", auth, async (req, res) => {
   let perPage = req.query.perPage || 10;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
-  let sort = req.query.sort || "_id";
-  let reverse = req.query.reverse == "yes" ? -1 : 1;
+  let sort = req.query.sort || "date_created";
+  let reverse = req.query.reverse == "no" ? 1 : -1;
   let client_short_id = req.query.client;
   let status = req.query.status;
   let courier_short_id = req.query.courier;
@@ -147,10 +141,7 @@ router.get("/deliveryInfo/:idOrder", authCourier, async (req, res) => {
     let store = await StoreModel.findOne({
       short_id: order.store_short_id,
     });
-    let user = await UserModel.findOne(
-      { short_id: order.client_short_id },
-      { name: 1, phone: 1 }
-    );
+    let user = await UserModel.findOne({ short_id: order.client_short_id }, { name: 1, phone: 1 });
     res.status(200).json({ order, store, user });
   } catch (error) {
     res.status(500).json(error);

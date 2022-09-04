@@ -1,10 +1,5 @@
 const express = require("express");
-const {
-  auth,
-  authStoreAdmin,
-  authAdmin,
-  authOwnership,
-} = require("../middlewares/auth");
+const { auth, authStoreAdmin, authAdmin, authOwnership } = require("../middlewares/auth");
 const { sendNewStoreEmail } = require("../utils/sendEmail");
 const { genShortId } = require("../utils/genShortId");
 const { StoreModel, validateStore } = require("../models/storeModel");
@@ -13,7 +8,7 @@ const router = express.Router();
 
 //get all stores
 router.get("/", async (req, res) => {
-  let perPage = req.query.perPage || 5;
+  let perPage = req.query.perPage || 99;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "_id";
   let reverse = req.query.reverse == "yes" ? 1 : -1;
@@ -121,9 +116,7 @@ router.post("/", auth, async (req, res) => {
     res.status(201).json(store);
   } catch (err) {
     if (err.code == 11000) {
-      return res
-        .status(400)
-        .json({ ...err, message: "store name already taken" });
+      return res.status(400).json({ ...err, message: "store name already taken" });
     }
     console.log(err);
     return res.status(500).json(err);
@@ -154,10 +147,7 @@ router.patch("/updateStatus/:idStore", authAdmin, async (req, res) => {
     let user = await UserModel.findOne({ short_id: store.admin_short_id });
     //update user's role to store admin
     if (status === "active" && user.role != "storeAdmin") {
-      let data = await UserModel.updateOne(
-        { _id: user._id },
-        { role: "storeAdmin" }
-      );
+      let data = await UserModel.updateOne({ _id: user._id }, { role: "storeAdmin" });
       console.log(data);
     } else {
       //check if the user own any other activate store
@@ -174,13 +164,9 @@ router.patch("/updateStatus/:idStore", authAdmin, async (req, res) => {
     user.imgUrl = store.imgUrl;
     // send the store owner email that his store is active
     if (sendNewStoreEmail(user)) {
-      return res
-        .status(200)
-        .json({ data, msg: "New Store email sended", emailStatus: "ok" });
+      return res.status(200).json({ data, msg: "New Store email sended", emailStatus: "ok" });
     } else {
-      return res
-        .status(200)
-        .json({ data, msg: "New Store email Not sended", emailStatus: "err" });
+      return res.status(200).json({ data, msg: "New Store email Not sended", emailStatus: "err" });
     }
   } catch (err) {
     console.log(err);
