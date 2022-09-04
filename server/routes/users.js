@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 // all users
 router.get("/usersList", authAdmin, async (req, res) => {
-  let perPage = req.query.perPage || 10;
+  let perPage = req.query.perPage || 999;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let role = req.query.role;
   try {
@@ -114,8 +114,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.put("/update", auth, async (req, res) => {
-  let { name, email, password, newPassword, address, phone, picture } =
-    req.body;
+  let { name, email, password, newPassword, address, phone, picture } = req.body;
   let decryptPass = decrypt(password);
   let decryptNewPass = null;
   if (newPassword) {
@@ -150,10 +149,7 @@ router.get("/sendResetEmail", async (req, res) => {
   let email = req.header("x-api-key");
   let rnd = random(0, 999999);
   try {
-    let data = await UserModel.findOneAndUpdate(
-      { email: email },
-      { reset_code: rnd }
-    );
+    let data = await UserModel.findOneAndUpdate({ email: email }, { reset_code: rnd });
     if (!data) {
       return res.status(404).json("user not found");
     }
@@ -164,9 +160,7 @@ router.get("/sendResetEmail", async (req, res) => {
         emailSent: true,
       });
     } else {
-      return res
-        .status(500)
-        .json({ err: "something went wrong", emailSent: false });
+      return res.status(500).json({ err: "something went wrong", emailSent: false });
     }
   } catch (error) {
     res.status(500).json(error);
@@ -195,10 +189,7 @@ router.get("/resetCode", async (req, res) => {
   let hashPass = await bcrypt.hash(decryptedPass, 10);
   //becrypt
   try {
-    let data = await UserModel.updateOne(
-      { email: email },
-      { password: hashPass }
-    );
+    let data = await UserModel.updateOne({ email: email }, { password: hashPass });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
@@ -211,10 +202,7 @@ router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
   let role = req.params.role;
   try {
     // prevent from user to changch himself or the first admin
-    let data = await UserModel.findOneAndUpdate(
-      { _id: userId },
-      { role: role }
-    );
+    let data = await UserModel.findOneAndUpdate({ _id: userId }, { role: role });
     if (!data) {
       return res.status(404).json({ err: "user not found" });
     }
@@ -246,10 +234,7 @@ router.patch("/changeRole/:userId/:role", authAdmin, async (req, res) => {
 //applying for a courier position
 router.patch("/applyingForCourier", auth, async (req, res) => {
   try {
-    let data = await UserModel.updateOne(
-      { _id: req.tokenData._id },
-      { role: "apply_for_courier" }
-    );
+    let data = await UserModel.updateOne({ _id: req.tokenData._id }, { role: "apply_for_courier" });
     res.json(data);
   } catch (err) {
     console.log(err);

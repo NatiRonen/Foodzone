@@ -7,7 +7,7 @@ import { IoSend } from "react-icons/io5";
 import InputEmoji from "react-input-emoji";
 import "./css/message.css";
 
-function MessageForm() {
+function MessageForm({ height }) {
   const [message, setMessage] = useState("");
   const [roomServeiceData, setRoomServiceData] = useState("");
   const user = useSelector((state) => state.user);
@@ -92,7 +92,7 @@ function MessageForm() {
           </div>
         </div>
         {!user && <div className="alert alert-danger">Please login</div>}
-        <div className="chat_panel mt-4">
+        <div className="chat_panel mt-4" style={{ minHeight: height }}>
           {user &&
             messages.map(({ _id: date, messagesByDate }, idx) => (
               <div key={idx}>

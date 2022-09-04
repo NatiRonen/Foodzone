@@ -14,14 +14,15 @@ function UserChart({ short_id, setUserOrders }) {
     let url = API_URL + "/orders/allOrders?client=" + short_id;
     let resp = await doApiGet(url);
     setUserOrders(resp.data);
-    let data = resp.data.map((item, idx) => {
+    let ChartDate = resp.data.map((item, idx) => {
       return {
         name: getDayAndMonth(item.date_created),
         Total: item.total_price,
       };
     });
-    data = modifyChartData(data);
-    setData(data);
+    ChartDate = modifyChartData(ChartDate);
+    console.log(ChartDate);
+    setData(ChartDate);
   };
   return <Chart aspect={3 / 1} title="User Spending" data={data} />;
 }

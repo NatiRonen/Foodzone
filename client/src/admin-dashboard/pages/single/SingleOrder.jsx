@@ -38,7 +38,7 @@ const SingleOrder = () => {
     setClient(resp.data);
   };
   const getCourier = async () => {
-    let url = API_URL + "/users/userInfo/" + item.couirer_short_id;
+    let url = API_URL + "/users/userInfo/" + item.courier_short_id;
     let resp = await doApiGet(url);
     setcourier(resp.data);
   };
@@ -85,7 +85,7 @@ const SingleOrder = () => {
                   </Link>
                   {courier && (
                     <Link
-                      className="detailItem text-decoration-none"
+                      className="detailItem text-decoration-none ms-3"
                       to="../../users/single"
                       state={{ user: courier }}
                     >

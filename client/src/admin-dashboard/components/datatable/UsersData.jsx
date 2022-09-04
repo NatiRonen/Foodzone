@@ -58,17 +58,10 @@ function UsersData() {
         console.log(params);
         return (
           <div className="cellAction">
-            <Link
-              to="./single"
-              state={{ user: params.row }}
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="./single" state={{ user: params.row }} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
+            <div className="deleteButton" onClick={() => handleDelete(params.row._id)}>
               Delete
             </div>
           </div>
@@ -91,7 +84,7 @@ function UsersData() {
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
+        // checkboxSelection
       />
     </div>
   );

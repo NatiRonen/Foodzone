@@ -26,15 +26,13 @@ const ListOrdersUser = ({ ar }) => {
           {ar.map((row, idx) => (
             <TableRow key={row._id}>
               <TableCell className="tableCell">{row.short_id}</TableCell>
-              <TableCell className="tableCell">
-                {getTimeAndDateFormat(row.date_created)}
-              </TableCell>
+              <TableCell className="tableCell">{getTimeAndDateFormat(row.date_created)}</TableCell>
               <TableCell className="tableCell">{row.total_price}</TableCell>
               <TableCell className="tableCell">{row.status}</TableCell>
               <TableCell className="tableCell">
                 <div className="cellAction">
                   <Link
-                    to="../../orders/single"
+                    to="/admin-dashboard/orders/single"
                     state={{ item: row }}
                     style={{ textDecoration: "none" }}
                   >
