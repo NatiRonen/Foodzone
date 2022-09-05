@@ -32,19 +32,19 @@ function AuthStoreAdminComp(props) {
         if (resp.data.length > 0) return;
         else {
           toast.error("You are not the owner of this store");
-          nav("../");
+          nav("/");
           return;
         }
       } else {
         toast.error("Plase Wait for admin approval");
-        nav("../");
+        nav("/");
         return;
       }
     } catch (err) {
       //
       console.log(err.response);
       toast.error("Something went wrong...");
-      nav("../");
+      nav("/");
     }
   };
 

@@ -37,14 +37,14 @@ function Footer(props) {
             )}
             {user.role === COURIER_ROLE && (
               <Nav.Link className="text-secondary" href="/courier">
-                Couriers section
+                Courier dashboard
                 <GoPackage className="ms-1" />
               </Nav.Link>
             )}
             {user.role === ADMIN_ROLE && (
               <Nav.Item>
                 <Nav.Link className="text-secondary" href="/admin-dashboard">
-                  Admin section
+                  Admin dashboard
                   <MdAdminPanelSettings className="ms-1" />
                 </Nav.Link>
               </Nav.Item>

@@ -7,14 +7,15 @@ import { GoListUnordered } from "react-icons/go";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AppContext } from "../context/appContext";
+import { logout } from "../redux/userSlice";
 
 function HeaderCourier(props) {
-  const nav = useNavigate();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"}>
@@ -41,39 +42,23 @@ function HeaderCourier(props) {
             {user && (
               <>
                 <Nav className="mx-auto">
-                  <Nav.Link
-                    onClick={() => {
-                      nav("./");
-                    }}
-                  >
+                  <Nav.Link as={Link} to="./" href="./">
                     Home
                     <BiHomeAlt className="ms-1" />
                   </Nav.Link>
                   {!checkOpenShipmentLocal() && (
-                    <Nav.Link
-                      onClick={() => {
-                        nav("./mapOrders");
-                      }}
-                    >
+                    <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
                       Take new order
                       <FaMapMarkedAlt className="ms-1" />
                     </Nav.Link>
                   )}
                   {checkOpenShipmentLocal() && (
-                    <Nav.Link
-                      onClick={() => {
-                        nav("./takeDelivery");
-                      }}
-                    >
+                    <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
                       Opne shipment
                       <MdOutlineDeliveryDining className="ms-1" />
                     </Nav.Link>
                   )}
-                  <Nav.Link
-                    onClick={() => {
-                      nav("./OrdersHistory");
-                    }}
-                  >
+                  <Nav.Link as={Link} to="./ordersHistory" href="./ordersHistory">
                     Orders history
                     <GoListUnordered className="ms-1" />
                   </Nav.Link>
@@ -104,67 +89,17 @@ function HeaderCourier(props) {
                       }
                       id="basic-nav-dropdown"
                     >
-                      {/* <NavDropdown.Item href="#action/3.1">Favorites</NavDropdown.Item> */}
-
                       <NavDropdown.Item>
-                        <LinkContainer to="/logout" className="text-danger">
+                        <LinkContainer
+                          to="/courier/login"
+                          onClick={(e) => dispatch(logout())}
+                          className="text-danger"
+                        >
                           <Nav.Link>
                             Logout
                             <FiLogOut className="ms-1" />
                           </Nav.Link>
                         </LinkContainer>
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  )}
-                </Nav>
-                <Nav className="mx-auto">
-                  <Nav.Link as={Link} to="/" href="/">
-                    Home
-                  </Nav.Link>
-                  {!checkOpenShipmentLocal() && (
-                    <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
-                      Take new order
-                    </Nav.Link>
-                  )}
-                  {checkOpenShipmentLocal() && (
-                    <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
-                      Opne shipment
-                    </Nav.Link>
-                  )}
-                  <Nav.Link as={Link} to="./ordersHistory" href="./ordersHistory">
-                    Orders history
-                  </Nav.Link>
-                </Nav>
-                <Nav>
-                  {!user && (
-                    <LinkContainer to="/login">
-                      <Nav.Link>Login</Nav.Link>
-                    </LinkContainer>
-                  )}
-                  {user && (
-                    <NavDropdown
-                      title={
-                        <>
-                          <img
-                            src={user.picture}
-                            style={{
-                              width: 30,
-                              height: 30,
-                              marginRadius: 10,
-                              objectFit: "cover",
-                              borderRadius: "50%",
-                              marginRight: "8px",
-                            }}
-                          />
-                          {user.name}
-                        </>
-                      }
-                      id="basic-nav-dropdown"
-                    >
-                      <NavDropdown.Item>
-                        <Button variant="danger" onClick={handleLogout}>
-                          Logout
-                        </Button>
                       </NavDropdown.Item>
                     </NavDropdown>
                   )}

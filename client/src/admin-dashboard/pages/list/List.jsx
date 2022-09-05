@@ -5,6 +5,7 @@ import UsersData from "../../components/datatable/UsersData";
 import StoresData from "../../components/datatable/StoresData";
 import ProductsData from "../../components/datatable/productsData";
 import OrdersData from "../../components/datatable/OrdersData";
+import AuthAdminComp from "../../../comps/auth/authAdminComp";
 
 const List = ({ data }) => {
   const getDataTable = () => {
@@ -28,6 +29,7 @@ const List = ({ data }) => {
 
   return (
     <div className="list">
+      <AuthAdminComp />
       <Sidebar />
       <div className="listContainer">
         <Navbar />

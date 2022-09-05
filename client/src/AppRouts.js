@@ -46,6 +46,9 @@ import SingleStore from "./admin-dashboard/pages/single/singleStore";
 import SingleProduct from "./admin-dashboard/pages/single/SingleProduct";
 import SingleOrder from "./admin-dashboard/pages/single/SingleOrder";
 import LoginStore from "./storeAdmin/loginStore";
+import LoginAdmin from "./admin-dashboard/pages/loginAdmin";
+import ChatAdmin from "./admin-dashboard/chat/ChatAdmin";
+import LoginCourier from "./courier/loginCourier";
 function AppRouts() {
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -87,6 +90,7 @@ function AppRouts() {
           {/* Courier routes */}
           <Route path="/courier" element={<LayoutCourier />}>
             <Route index element={<HomeCourier />} />
+            <Route path="login" element={<LoginCourier />} />
             <Route path="mapOrders" element={<OpenOrdersMap />} />
             <Route path="takeDelivery" element={<MapRouting />} />
             <Route path="/courier/ordersHistory" element={<MyOrders />} />

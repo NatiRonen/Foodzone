@@ -1,16 +1,16 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import AuthAdminComp from "../../comps/auth/authAdminComp";
 import MessageForm from "../../chat/MessageForm";
 import SideBarAdmin from "./SideBarAdmin";
 import "../../chat/css/newChat.css";
 import Sidebar from "../components/sidebar/Sidebar";
 import Navbar from "../components/navbar/Navbar";
+import AuthAdminComp from "../../comps/auth/authAdminComp";
 
 function ChatAdmin() {
   return (
     <div style={{ overflowX: "hidden" }} className="container-fluid border list">
-      {/* <AuthAdminComp /> */}
+      <AuthAdminComp />
       <Sidebar />
       <div className="listContainer">
         <Navbar />

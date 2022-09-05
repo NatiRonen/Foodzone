@@ -18,8 +18,6 @@ const AdminHome = () => {
   const [salesToday, setSalesToday] = useState("");
   const [orderAmount, setOrderAmount] = useState();
   const [totalSales, settotalSales] = useState();
-  const [auth, setAuth] = useState(false);
-  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     main();
   }, []);
@@ -85,29 +83,27 @@ const AdminHome = () => {
   };
   return (
     <>
-      <AuthAdminComp setAuth={setAuth} />
-      {auth && (
-        <div className="home">
-          <Sidebar />
-          <div className="homeContainer">
-            {<Navbar />}
-            <div className="widgets">
-              <Widget type="user" />
-              <Widget type="sotre" amount={orderAmount} />
-              <Widget type="order" amount={orderAmount} />
-              <Widget type="sale" amount={totalSales} />
-            </div>
-            <div className="charts">
-              <Featured salse={salesToday} />
-              <Chart title="Last 6 Months (Total incomes)" aspect={2 / 1} data={ordersData} />
-            </div>
-            <div className="listContainer">
-              <div className="listTitle">Latest Transactions</div>
-              <ListOrdersUser ar={allOrders} />
-            </div>
+      <AuthAdminComp />
+      <div className="home">
+        <Sidebar />
+        <div className="homeContainer">
+          {<Navbar />}
+          <div className="widgets">
+            <Widget type="user" />
+            <Widget type="sotre" amount={orderAmount} />
+            <Widget type="order" amount={orderAmount} />
+            <Widget type="sale" amount={totalSales} />
+          </div>
+          <div className="charts">
+            <Featured salse={salesToday} />
+            <Chart title="Last 6 Months (Total incomes)" aspect={2 / 1} data={ordersData} />
+          </div>
+          <div className="listContainer">
+            <div className="listTitle">Latest Transactions</div>
+            <ListOrdersUser ar={allOrders} />
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

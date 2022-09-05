@@ -13,8 +13,7 @@ function AuthCourierComp(props) {
     if (checkTokenLocal()) {
       doApi();
     } else {
-      toast.error("Please log in");
-      nav("/login");
+      nav("/courier/login");
     }
   }, []);
 
@@ -22,7 +21,6 @@ function AuthCourierComp(props) {
     let url = API_URL + "/users/myInfo";
     try {
       let resp = await doApiGet(url);
-      // if (resp.data.role !== COURIER_ROLE && resp.data.role !== ADMIN_ROLE) {
       if (resp.data.role !== COURIER_ROLE) {
         toast.error("Unathorized user");
         nav("/");
