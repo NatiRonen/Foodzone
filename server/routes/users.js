@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 // all users
 router.get("/usersList", authAdmin, async (req, res) => {
-  let perPage = req.query.perPage || 10;
+  let perPage = req.query.perPage || 999;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let role = req.query.role;
   try {
@@ -44,6 +44,16 @@ router.get("/amount", async (req, res) => {
 });
 
 // user info
+router.get("/userInfo/:short_id", authAdmin, async (req, res) => {
+  try {
+    let data = await UserModel.findOne({ short_id: req.params.short_id });
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 router.get("/myInfo", auth, async (req, res) => {
   try {
     let data = await UserModel.findOne({ _id: req.tokenData._id });

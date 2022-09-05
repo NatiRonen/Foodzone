@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import "../comps/css/homeStrip.css";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function HomeStore(props) {
   return (
@@ -16,8 +17,9 @@ function HomeStore(props) {
         animate={{ x: 0 }}
         transition={{ delay: 0.5, duration: 0.7 }}
       >
-        <h2>Welcome to your store</h2>
+        <h2 className="text-light">Welcome to your store</h2>
       </motion.div>
+      <AuthStoreAdminComp />
     </div>
   );
 }

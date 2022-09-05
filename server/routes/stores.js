@@ -4,11 +4,12 @@ const { sendNewStoreEmail } = require("../utils/sendEmail");
 const { genShortId } = require("../utils/genShortId");
 const { StoreModel, validateStore } = require("../models/storeModel");
 const { UserModel } = require("../models/userModel");
+const ROLES = require("../utils/roles");
 const router = express.Router();
 
 //get all stores
 router.get("/", async (req, res) => {
-  let perPage = req.query.perPage || 5;
+  let perPage = req.query.perPage || 99;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "_id";
   let reverse = req.query.reverse == "yes" ? 1 : -1;
@@ -20,18 +21,33 @@ router.get("/", async (req, res) => {
       .limit(perPage)
       .skip(page * perPage)
       .sort({ [sort]: reverse });
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
 });
+router.get("/storeInfo/:short_id", authAdmin, async (req, res) => {
+  try {
+    let data = await StoreModel.findOne({ short_id: req.params.short_id });
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
 //test
 // get user stores
 router.get("/userStores", auth, async (req, res) => {
+  let storeShortId = req.params.storeShortId;
+
   try {
     let user = await UserModel.findOne({ _id: req.tokenData._id });
-    let data = await StoreModel.find({ admin_short_id: user.short_id }).sort({
+    let filter = storeShortId
+      ? { short_id: storeShortId, admin_short_id: user.short_id }
+      : { admin_short_id: user.short_id };
+    let data = await StoreModel.find(filter).sort({
       date_created: -1,
     });
     res.json(data);
@@ -136,8 +152,8 @@ router.patch("/updateStatus/:idStore", authAdmin, async (req, res) => {
     //get user info for the email and update role
     let user = await UserModel.findOne({ short_id: store.admin_short_id });
     //update user's role to store admin
-    if (status === "active" && user.role != "storeAdmin") {
-      let data = await UserModel.updateOne({ _id: user._id }, { role: "storeAdmin" });
+    if (status === "active" && user.role != ROLES.STORE_ADMIN) {
+      let data = await UserModel.updateOne({ _id: user._id }, { role: ROLES.STORE_ADMIN });
       console.log(data);
     } else {
       //check if the user own any other activate store

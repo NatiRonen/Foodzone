@@ -9,10 +9,10 @@ const router = express.Router();
 
 router.get("/sotreOrders/:store_id", authStoreAdmin, async (req, res) => {
   let store_short_id = req.params.store_id;
-  let perPage = req.query.perPage || 10;
+  let perPage = req.query.perPage || 100;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
-  let sort = req.query.sort || "_id";
-  let reverse = req.query.reverse == "yes" ? -1 : 1;
+  let sort = req.query.sort || "date_created";
+  let reverse = req.query.reverse == "no" ? 1 : -1;
   let status = req.query.status;
 
   try {
@@ -42,7 +42,7 @@ router.get("/userOrder", auth, async (req, res) => {
     })
       .limit(20)
       .sort({
-        _id: -1,
+        date_created: -1,
       }); //return the last 20 orders
     res.json(data);
   } catch (error) {
@@ -54,21 +54,27 @@ router.get("/userOrder", auth, async (req, res) => {
 router.get("/allOrders", auth, async (req, res) => {
   let perPage = req.query.perPage || 10;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
-  let sort = req.query.sort || "_id";
-  let reverse = req.query.reverse == "yes" ? -1 : 1;
-  let user_id = req.query.user_id;
+  let sort = req.query.sort || "date_created";
+  let reverse = req.query.reverse == "no" ? 1 : -1;
+  let client_short_id = req.query.client;
   let status = req.query.status;
-  let courier = req.query.courier;
+  let courier_short_id = req.query.courier;
+  let store_short_id = req.query.store;
 
   try {
-    let filter = user_id ? { user_id } : {};
+    let filter = client_short_id ? { client_short_id } : {};
     filter = status
       ? { ...filter, status }
       : {
           ...filter,
         };
-    filter = courier
-      ? { ...filter, courier }
+    filter = courier_short_id
+      ? { ...filter, courier_short_id }
+      : {
+          ...filter,
+        };
+    filter = store_short_id
+      ? { ...filter, store_short_id }
       : {
           ...filter,
         };
@@ -148,6 +154,28 @@ router.get("/productsInfo/:idOrder", auth, async (req, res) => {
       _id: req.params.idOrder,
     });
     res.status(200).json(order);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+//chart
+router.get("/orderedProduct/:prodShortId", authAdmin, async (req, res) => {
+  let product = req.params.prodShortId;
+  try {
+    let orders = await OrderModel.find(
+      {
+        products_ar: { $elemMatch: { short_id: product } },
+      },
+      {
+        date_created: 1,
+        products_ar: { $elemMatch: { short_id: product } },
+        _id: 0,
+      }
+    );
+
+    res.status(200).json(orders);
+    console.log(orders);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -267,7 +295,7 @@ router.patch("/:orderId", auth, async (req, res) => {
 router.delete("/:delId", authAdmin, async (req, res) => {
   try {
     let data = await OrderModel.deleteOne({
-      _id: orderId,
+      _id: req.params.delId,
     });
     // modifiedCount
     res.json(data);

@@ -7,6 +7,8 @@ import { BsEraser, BsInfoCircle } from "react-icons/bs";
 import { toast } from "react-toastify";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import OrderInfo from "../comps/orders/OrderInfo";
+import { getTimeAndDateFormat } from "../utils/dateRormated";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function OrdersListStore() {
   const [orders, setOrders] = useState([]);
@@ -58,6 +60,7 @@ function OrdersListStore() {
 
   return (
     <>
+      <AuthStoreAdminComp />
       <OrderInfo handleToggle={handleToggle} show={show} item={orderInfo} />;
       <div className="container">
         <h1 className="display-4">Orders</h1>
@@ -88,7 +91,7 @@ function OrdersListStore() {
               return (
                 <tr key={item._id}>
                   <td>{i + 1}</td>
-                  <td>{item.date_created}</td>
+                  <td>{getTimeAndDateFormat(item.date_created)}</td>
                   <td>{item.short_id}</td>
                   <td>{item.client_short_id}</td>
                   <td>{item.total_price}</td>

@@ -14,6 +14,7 @@ import OrderInfo from "../comps/orders/OrderInfo";
 import { DELIVERED_ORDER_STATUS, READY_FOR_SHIPMENT_ORDER_STATUS } from "../services/consts";
 import { AppContext } from "../context/appContext";
 import { checkOpenShipmentLocal, removeOpenShipmentLocal } from "../services/localService";
+import AuthCourierComp from "../comps/auth/authCourierComp";
 
 function MapRouting(props) {
   const params = useParams();
@@ -83,6 +84,7 @@ function MapRouting(props) {
   if (!isLoaded || !orderData) return <LottieAnimation />;
   return (
     <>
+      <AuthCourierComp />
       <Row className="p-4 g-3">
         <Col md={3}>
           <Card style={{ width: "100%" }}>

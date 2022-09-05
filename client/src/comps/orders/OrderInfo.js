@@ -4,6 +4,7 @@ import { ImInfo } from "react-icons/im";
 import { Button, Modal } from "react-bootstrap";
 import LottieAnimation from "../misc/lottieAnimation";
 import { Row, Col } from "react-bootstrap";
+import { getTimeAndDateFormat } from "../../utils/dateRormated";
 
 function OrderInfo(props) {
   let show = props.show;
@@ -105,7 +106,9 @@ function OrderInfo(props) {
                         </div>
                         <div className="summary-item">
                           <span className="text">Date</span>
-                          <span className="price">{orderInfo.date_created}</span>
+                          <span className="price">
+                            {orderInfo.date_created && getTimeAndDateFormat(orderInfo.date_created)}
+                          </span>
                         </div>
                         <div className="summary-item">
                           <span className="text">Items</span>

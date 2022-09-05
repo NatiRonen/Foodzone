@@ -1,20 +1,21 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet } from "../../services/apiService";
+import { ADMIN_ROLE, STOER_ADMIN_ROLE } from "../../services/consts";
 import { checkTokenLocal } from "../../services/localService";
 
 function AuthStoreAdminComp(props) {
   let nav = useNavigate();
+  const params = useParams();
+  const LOCATION = "/storeAdmin/" + params.id;
 
   useEffect(() => {
     if (checkTokenLocal()) {
       doApi();
     } else {
       // nav to login
-      nav("/logout");
-      // show toast message in yellow that the user must be connected
-      toast.warning("Please login first");
+      nav(LOCATION + "/login");
     }
   }, []);
 
@@ -22,19 +23,28 @@ function AuthStoreAdminComp(props) {
     let url = API_URL + "/users/myInfo";
     try {
       let resp = await doApiGet(url);
-      if (resp.data.role === "store_admin" || resp.data.role === "admin") {
-        props.setAuthorized(true);
+      if (resp.data.role === ADMIN_ROLE) {
         return;
+      } else if (resp.data.role === STOER_ADMIN_ROLE) {
+        let url = API_URL + "/stores/userStores?storeShortId=" + params.id;
+        let resp = await doApiGet(url);
+        console.log(resp.data.length > 0);
+        if (resp.data.length > 0) return;
+        else {
+          toast.error("You are not the owner of this store");
+          nav("/");
+          return;
+        }
       } else {
         toast.error("Plase Wait for admin approval");
-        nav("../");
+        nav("/");
         return;
       }
     } catch (err) {
       //
       console.log(err.response);
       toast.error("Something went wrong...");
-      nav("../");
+      nav("/");
     }
   };
 

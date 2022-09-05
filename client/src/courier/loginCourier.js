@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../redux/appApi";
 import { encrypt } from "../utils/encryption";
 import ResetPass from "../comps/general/resetPass";
-import "../admin/css/adminLogin.css";
+import "../admin-dashboard/style/adminLogin.css";
 
 function LoginCourier(props) {
   const [email, setEmail] = useState("");
@@ -28,8 +28,7 @@ function LoginCourier(props) {
     console.log(resp.data);
     if (resp.data) {
       if (resp.data.user.role === "courier") {
-        toast.success("You are now logged in");
-        nav("./home");
+        nav("../");
       } else {
         toast.error("Unathorized user");
         nav("/");
@@ -61,9 +60,7 @@ function LoginCourier(props) {
           </div>
           {error && (
             <p className="alert alert-danger">
-              {error.data?.err
-                ? error.data.err
-                : "It's not you, it's up. Please thy again later."}
+              {error.data?.err ? error.data.err : "It's not you, it's up. Please thy again later."}
             </p>
           )}
           <Form.Group className="mb-3 text-start">
@@ -94,22 +91,13 @@ function LoginCourier(props) {
             {error?.status === 401 ? ( //403 - unauthorized
               <p className="text-center">
                 Forgot your password?
-                <span
-                  className="text-primary"
-                  style={{ cursor: "pointer" }}
-                  onClick={handleToggle}
-                >
+                <span className="text-primary" style={{ cursor: "pointer" }} onClick={handleToggle}>
                   {" "}
                   resst password
                 </span>
               </p>
             ) : (
-              <p className="text-center ">
-                Don't have an account?{" "}
-                <Link className="text-decoration-none" to="/signup">
-                  Signup
-                </Link>
-              </p>
+              <></>
             )}
           </div>
         </Form>

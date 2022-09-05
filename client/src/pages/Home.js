@@ -13,9 +13,16 @@ function Home(props) {
   }, []);
 
   const doApi = async () => {
-    let url = API_URL + "/stores?perPage=6&status=active";
-    let resp = await doApiGet(url);
-    setShops_ar(resp.data);
+    try {
+      let url = API_URL + "/stores?perPage=6&status=active";
+      let resp = await doApiGet(url);
+      if (resp.data) {
+        console.log(resp.data);
+        setShops_ar(resp.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -24,9 +31,10 @@ function Home(props) {
       <main className="container">
         <Info />
         <div className="row">
-          {shops_ar.map((item) => {
-            return <StoreCard key={item._id} item={item} />;
-          })}
+          {shops_ar.length > 0 &&
+            shops_ar.map((item) => {
+              return <StoreCard key={item._id} item={item} />;
+            })}
         </div>
         <div className="text-center">
           <Link className="animaLink" to="/stores">
