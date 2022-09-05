@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { ImInfo } from "react-icons/im";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import LottieAnimation from "../misc/lottieAnimation";
 import { Row, Col } from "react-bootstrap";
 import { getTimeAndDateFormat } from "../../utils/dateRormated";
+import Timer from "../misc/timer";
 
 function OrderInfo(props) {
-  let show = props.show;
-  let handleToggle = props.handleToggle;
-  let item = props.item;
+  const show = props.show;
+  const handleToggle = props.handleToggle;
+  const item = props.item;
   const [loading, setLoading] = useState(false);
-  let [productsAr, setProductsAr] = useState([]);
-  let [orderInfo, setOrderInfo] = useState({});
+  const [productsAr, setProductsAr] = useState([]);
+  const [orderInfo, setOrderInfo] = useState({});
+  const time = 10;
 
   useEffect(() => {
     setLoading(true);
@@ -38,13 +40,16 @@ function OrderInfo(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Order details</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Order details
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {loading ? (
           <LottieAnimation />
         ) : (
           <section className="shopping-cart">
+            <Timer time={time} />
             <div className="container">
               <div className="content">
                 <div className="row">
@@ -58,7 +63,9 @@ function OrderInfo(props) {
                             className="row justify-content-between align-items-center p-2"
                           >
                             <div className="col-1">
-                              <div className="mt-2 text-center fw-bold">{i + 1}</div>
+                              <div className="mt-2 text-center fw-bold">
+                                {i + 1}
+                              </div>
                             </div>
                             <div className="col-5 info">
                               <p className="fw-bold mb-3">{item.name}</p>
@@ -68,7 +75,6 @@ function OrderInfo(props) {
 
                             <div className="col-6">
                               <img
-                                // style={{ height: "120px", width: "200px" }}
                                 className="img-fluid mx-auto d-block"
                                 src={item.imgUrl}
                               />
@@ -102,12 +108,15 @@ function OrderInfo(props) {
                         </div>
                         <div className="summary-item">
                           <span className="text">Status</span>
-                          <span className="price">{orderInfo.status?.replaceAll("_", " ")}</span>
+                          <span className="price">
+                            {orderInfo.status?.replaceAll("_", " ")}
+                          </span>
                         </div>
                         <div className="summary-item">
                           <span className="text">Date</span>
                           <span className="price">
-                            {orderInfo.date_created && getTimeAndDateFormat(orderInfo.date_created)}
+                            {orderInfo.date_created &&
+                              getTimeAndDateFormat(orderInfo.date_created)}
                           </span>
                         </div>
                         <div className="summary-item">
@@ -116,7 +125,9 @@ function OrderInfo(props) {
                         </div>
                         <div className="summary-item">
                           <span className="text">Total price</span>
-                          <span className="price">₪ {orderInfo.total_price}</span>
+                          <span className="price">
+                            ₪ {orderInfo.total_price}
+                          </span>
                         </div>
                       </React.Fragment>
                     </div>
@@ -128,9 +139,6 @@ function OrderInfo(props) {
           </section>
         )}
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={handleToggle}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }
