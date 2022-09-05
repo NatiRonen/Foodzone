@@ -5,6 +5,7 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 import Ticket from "./ticket";
 import "./css/ordersPanel.css";
 import { AppContext } from "../context/appContext";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function OpenOrders(props) {
   const [orders, setOrders] = useState([]);
@@ -43,6 +44,7 @@ function OpenOrders(props) {
 
   return (
     <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
+      <AuthStoreAdminComp />
       <section className="container p-4">
         <h1 className="orders_titel">Opened orders</h1>
         {orders.length === 0 && (

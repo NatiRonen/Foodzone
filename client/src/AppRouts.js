@@ -21,13 +21,7 @@ import ProductsStoreAdmin from "./storeAdmin/productsStoreAdmin";
 import EditProductAdminStore from "./storeAdmin/editProductAdminStore";
 import AddProductStoreAdmin from "./storeAdmin/addProductStoreAdmin";
 import OpenOrders from "./storeAdmin/openOrders";
-// admin imports
-import LayoutAdmin from "./admin/layoutAdmin";
-import HomeAdmin from "./admin/HomeAdmin";
-import UsersList from "./admin/usersList";
-import OrdersAdmin from "./admin/orders/ordersAdmin";
-import StoresAdmin from "./admin/storesAdmin";
-import ProductsAdmin from "./admin/productsAdmin";
+
 import HomeStore from "./storeAdmin/HomeStore";
 import FavsProducts from "./pages/favsProducts";
 import Checkout from "./pages/checkout";
@@ -54,6 +48,7 @@ import SingleUser from "./admin-dashboard/pages/single/SingleUser";
 import SingleStore from "./admin-dashboard/pages/single/singleStore";
 import SingleProduct from "./admin-dashboard/pages/single/SingleProduct";
 import SingleOrder from "./admin-dashboard/pages/single/SingleOrder";
+import LoginStore from "./storeAdmin/loginStore";
 function AppRouts() {
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -83,6 +78,7 @@ function AppRouts() {
           {/*store admin*/}
           <Route path="/storeAdmin/:id" element={<LayoutStore />}>
             <Route index element={<HomeStore />} />
+            <Route path="login" element={<LoginStore />} />
             <Route path="editStore" element={<EditStoreAdmin />} />
             <Route path="categories" element={<CategoriesStoreAdmin />} />
             <Route path="products" element={<ProductsStoreAdmin />} />
@@ -91,16 +87,7 @@ function AppRouts() {
             <Route path="products/edit/:prodId" element={<EditProductAdminStore />} />
             <Route path="products/addProduct" element={<AddProductStoreAdmin />} />
           </Route>
-          {/*admin*/}
-          <Route path="/admin" element={<LayoutAdmin />}>
-            <Route index element={<LoginAdmin />} />
-            <Route path="home" element={<HomeAdmin />} />
-            <Route path="users" element={<UsersList />} />
-            <Route path="stores" element={<StoresAdmin />} />
-            <Route path="products" element={<ProductsAdmin />} />
-            <Route path="orders" element={<OrdersAdmin />} />
-            {/* <Route path="chat" element={<ChatAdmin />} /> */}
-          </Route>
+
           {/* Courier routes */}
           <Route path="/courier" element={<LayoutCourier />}>
             <Route index element={<HomeCourier />} />

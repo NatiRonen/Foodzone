@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { motion } from "framer-motion";
 import ProductForm from "../comps/forms/ProductForm";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function AddProductStoreAdmin(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +36,8 @@ function AddProductStoreAdmin(props) {
       transition={{ delay: 0.5, duration: 0.7 }}
     >
       <Container>
+        <AuthStoreAdminComp />
+
         <Row className="justify-content-between align-items-center" style={{ minHeight: "87vh" }}>
           <Col
             md={5}

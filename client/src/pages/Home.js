@@ -30,7 +30,7 @@ function Home(props) {
       <HomeStrip image="/images/slider.jpg" />
       <main className="container">
         <Info />
-        {/* <div className="row">
+        <div className="row">
           {shops_ar.length > 0 &&
             shops_ar.map((item) => {
               return <StoreCard key={item._id} item={item} />;
@@ -40,7 +40,7 @@ function Home(props) {
           <Link className="animaLink" to="/stores">
             Get All Stores
           </Link>
-        </div> */}
+        </div>
       </main>
     </React.Fragment>
   );

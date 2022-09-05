@@ -23,12 +23,7 @@ const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const user = useSelector((state) => state.user);
   const dispatchlogout = useDispatch();
-  const nav = useNavigate();
   const LOCATION = "/admin-dashboard";
-  const logoutAdmin = () => {
-    dispatchlogout(logout());
-    nav("/admin-dashboard/login");
-  };
   return (
     <div className="sidebar">
       <div className="top">

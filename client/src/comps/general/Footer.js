@@ -43,7 +43,7 @@ function Footer(props) {
             )}
             {user.role === ADMIN_ROLE && (
               <Nav.Item>
-                <Nav.Link className="text-secondary" href="/admin">
+                <Nav.Link className="text-secondary" href="/admin-dashboard">
                   Admin section
                   <MdAdminPanelSettings className="ms-1" />
                 </Nav.Link>

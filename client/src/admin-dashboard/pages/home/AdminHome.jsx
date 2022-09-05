@@ -47,13 +47,15 @@ const AdminHome = () => {
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     data = data.filter(({ date_created }) => new Date(date_created) > sixMonthsAgo);
     data = data.map((item, idx) => {
-      let nonth = String(new Date(item.date_created).getMonth() + 1).padStart(2, "0");
+      let month = String(new Date(item.date_created).getMonth() + 1).padStart(2, "0");
       return {
-        name: nonth,
+        name: month,
         Total: item.total_price,
       };
     });
-    return modifyChartData(data);
+    data = modifyChartData(data);
+    console.log(data);
+    return data;
   };
 
   const getAllOrders = async () => {
