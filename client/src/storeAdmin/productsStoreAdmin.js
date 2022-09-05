@@ -8,6 +8,7 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { toast } from "react-toastify";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import { getFromattedDate } from "../utils/dateRormated";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function ProductsStoreAdmin(props) {
   const [products, setProducts] = useState([]);
@@ -53,6 +54,8 @@ function ProductsStoreAdmin(props) {
 
   return (
     <div className="container overflow-scroll">
+      <AuthStoreAdminComp />
+
       <h1 className="display-4">Products</h1>
       <button
         onClick={() => {

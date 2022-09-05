@@ -45,6 +45,7 @@ import SingleUser from "./admin-dashboard/pages/single/SingleUser";
 import SingleStore from "./admin-dashboard/pages/single/singleStore";
 import SingleProduct from "./admin-dashboard/pages/single/SingleProduct";
 import SingleOrder from "./admin-dashboard/pages/single/SingleOrder";
+import LoginStore from "./storeAdmin/loginStore";
 function AppRouts() {
   const { darkMode } = useContext(DarkModeContext);
   return (
@@ -74,6 +75,7 @@ function AppRouts() {
           {/*store admin*/}
           <Route path="/storeAdmin/:id" element={<LayoutStore />}>
             <Route index element={<HomeStore />} />
+            <Route path="login" element={<LoginStore />} />
             <Route path="editStore" element={<EditStoreAdmin />} />
             <Route path="categories" element={<CategoriesStoreAdmin />} />
             <Route path="products" element={<ProductsStoreAdmin />} />

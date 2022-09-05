@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import OrderInfo from "../comps/orders/OrderInfo";
 import { getTimeAndDateFormat } from "../utils/dateRormated";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function OrdersListStore() {
   const [orders, setOrders] = useState([]);
@@ -59,6 +60,7 @@ function OrdersListStore() {
 
   return (
     <>
+      <AuthStoreAdminComp />
       <OrderInfo handleToggle={handleToggle} show={show} item={orderInfo} />;
       <div className="container">
         <h1 className="display-4">Orders</h1>

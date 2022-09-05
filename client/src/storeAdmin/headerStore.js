@@ -4,16 +4,18 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { BiHomeAlt, BiCategory } from "react-icons/bi";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { HiTemplate, HiOutlineClipboardList } from "react-icons/hi";
+import { logout } from "../redux/userSlice";
 
 function HeaderStore(props) {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <Navbar key={"lg"} bg="light" expand={"lg"} sticky={"top"} collapseOnSelect>
@@ -65,7 +67,7 @@ function HeaderStore(props) {
             </Nav>
             <Nav>
               {!user && (
-                <LinkContainer to="/login">
+                <LinkContainer to="./login">
                   <Nav.Link>
                     Login
                     <FiLogIn className="ms-1" />
@@ -93,7 +95,13 @@ function HeaderStore(props) {
                   id="basic-nav-dropdown"
                 >
                   <NavDropdown.Item>
-                    <LinkContainer to="/logout" className="text-danger">
+                    <LinkContainer
+                      to="./login"
+                      className="text-danger"
+                      // as={Link}
+                      // href="./login"
+                      onClick={(e) => dispatch(logout())}
+                    >
                       <Nav.Link>
                         Logout
                         <FiLogOut className="ms-1" />

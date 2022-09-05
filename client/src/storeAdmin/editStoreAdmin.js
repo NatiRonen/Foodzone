@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
-import "../admin/css/formStore.css";
+// import "../admin/css/formStore.css";
 import { motion } from "framer-motion";
 import { Col, Container, Form, Row, Spinner, Button } from "react-bootstrap";
 import StoreForm from "../comps/forms/StoreForm";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function EditStoreAdmin(props) {
   let params = useParams();
@@ -54,6 +55,8 @@ function EditStoreAdmin(props) {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.7 }}
     >
+      <AuthStoreAdminComp />
+
       <Container>
         <Row className="justify-content-between" style={{ height: "90.7vh" }}>
           <Col

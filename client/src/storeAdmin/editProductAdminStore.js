@@ -5,6 +5,7 @@ import { API_URL, doApiGet, doApiMethod } from "../services/apiService";
 import { Col, Container, Row } from "react-bootstrap";
 import ProductForm from "../comps/forms/ProductForm";
 import { motion } from "framer-motion";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function EditProductAdminStore(props) {
   const [product, setProduct] = useState(null);
@@ -54,6 +55,8 @@ function EditProductAdminStore(props) {
       transition={{ delay: 0.5, duration: 0.7 }}
     >
       <Container>
+        <AuthStoreAdminComp />
+
         <Row className="justify-content-between align-items-center" style={{ height: "87vh" }}>
           <Col
             md={5}

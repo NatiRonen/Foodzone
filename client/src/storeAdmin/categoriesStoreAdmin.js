@@ -7,6 +7,7 @@ import LottieAnimation from "../comps/misc/lottieAnimation";
 import { FiTrash2 } from "react-icons/fi";
 import { BiAddToQueue } from "react-icons/bi";
 import "./css/categories.css";
+import AuthStoreAdminComp from "../comps/auth/authStoreAdminComp";
 
 function CategoriesStoreAdmin() {
   const [loading, setloading] = useState(true);
@@ -43,6 +44,7 @@ function CategoriesStoreAdmin() {
   };
   return (
     <div className="container">
+      <AuthStoreAdminComp />
       <h1 className="display-4 mb-5">Categories</h1>
       <div className="container">
         <div className="row d-flex justify-content-center align-items-center">

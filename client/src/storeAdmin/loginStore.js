@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { BsFillShieldLockFill } from "react-icons/bs";
+import { BiStore } from "react-icons/bi";
 import { Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { motion } from "framer-motion";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
+import "../admin-dashboard/style/adminLogin.css";
 import { useLoginUserMutation } from "../redux/appApi";
 import { encrypt } from "../utils/encryption";
 import ResetPass from "../comps/general/resetPass";
-import "./css/adminLogin.css";
 
-function LoginAdmin(props) {
+function LoginStore(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
@@ -26,9 +26,8 @@ function LoginAdmin(props) {
     let resp = await loginUser({ email, password: encryptPass });
     console.log(resp.data);
     if (resp.data) {
-      if (resp.data.user.role === "admin") {
-        toast.success("You are now logged in Admin ");
-        nav("./home");
+      if (resp.data.user) {
+        nav("../");
       } else {
         toast.error("Unathorized user");
         nav("/");
@@ -56,13 +55,11 @@ function LoginAdmin(props) {
         <Form onSubmit={handleLogin}>
           <h2 className="text-center">Admin Login</h2>
           <div className="illustration">
-            <BsFillShieldLockFill />
+            <BiStore />
           </div>
           {error && (
             <p className="alert alert-danger">
-              {error.data?.err
-                ? error.data.err
-                : "It's not you, it's up. Please thy again later."}
+              {error.data?.err ? error.data.err : "It's not you, it's up. Please thy again later."}
             </p>
           )}
           <Form.Group className="mb-3 text-start">
@@ -93,22 +90,13 @@ function LoginAdmin(props) {
             {error?.status === 401 ? ( //403 - unauthorized
               <p className="text-center">
                 Forgot your password?
-                <span
-                  className="text-primary"
-                  style={{ cursor: "pointer" }}
-                  onClick={handleToggle}
-                >
+                <span className="text-primary" style={{ cursor: "pointer" }} onClick={handleToggle}>
                   {" "}
                   resst password
                 </span>
               </p>
             ) : (
-              <p className="text-center ">
-                Don't have an account?{" "}
-                <Link className="text-decoration-none" to="/signup">
-                  Signup
-                </Link>
-              </p>
+              ""
             )}
           </div>
         </Form>
@@ -117,4 +105,4 @@ function LoginAdmin(props) {
   );
 }
 
-export default LoginAdmin;
+export default LoginStore;
