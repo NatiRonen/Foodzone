@@ -15,6 +15,7 @@ function Ticket(props) {
 
   useEffect(() => {
     socket.emit("join-room-orders", item.short_id);
+    socket.off("status-changed-msg");
   }, []);
 
   socket.off("status-changed").on("status-changed", () => {
@@ -31,7 +32,7 @@ function Ticket(props) {
       if (resp.data.modifiedCount === 1) {
         socket.emit("status-changed", params.id, _status);
         socket.emit("status-changed", item.short_id, _status);
-        socket.emit("status-changed-msg", item.short_id, _status);
+        // socket.emit("status-changed-msg", item.short_id, _status);
         props.doApi();
       }
     } catch (err) {

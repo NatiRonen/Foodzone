@@ -15,6 +15,7 @@ import { logout } from "../redux/userSlice";
 
 function HeaderCourier(props) {
   const user = useSelector((state) => state.user);
+  const { openShipment } = useContext(AppContext);
   const dispatch = useDispatch();
 
   return (
@@ -46,15 +47,15 @@ function HeaderCourier(props) {
                     Home
                     <BiHomeAlt className="ms-1" />
                   </Nav.Link>
-                  {!checkOpenShipmentLocal() && (
+                  {!openShipment && (
                     <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
                       Take new order
                       <FaMapMarkedAlt className="ms-1" />
                     </Nav.Link>
                   )}
-                  {checkOpenShipmentLocal() && (
+                  {openShipment && (
                     <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
-                      Opne shipment
+                      Open shipment
                       <MdOutlineDeliveryDining className="ms-1" />
                     </Nav.Link>
                   )}

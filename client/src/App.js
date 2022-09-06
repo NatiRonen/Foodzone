@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import AppRouts from "./AppRouts";
 import { AppContext, socket } from "./context/appContext";
+import { checkOpenShipmentLocal } from "./services/localService";
 
 function App() {
   const [rooms, setRooms] = useState([]);
@@ -12,6 +13,8 @@ function App() {
 
   const [clients, setClients] = useState([]);
   const [serviceMsg, setServiceMsg] = useState(false);
+
+  const [openShipment, setOpenShipment] = useState(checkOpenShipmentLocal() ? true : false);
 
   const [displayFooter, setDisplayFooter] = useState(true);
 
@@ -33,6 +36,8 @@ function App() {
         setServiceMsg,
         displayFooter,
         setDisplayFooter,
+        openShipment,
+        setOpenShipment,
       }}
     >
       <div className="App">

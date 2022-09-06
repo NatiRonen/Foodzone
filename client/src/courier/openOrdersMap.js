@@ -76,7 +76,7 @@ function OpenOrdersMap(props) {
 
   if (!isLoaded) return <LottieAnimation />;
   return (
-    <div style={{ width: "100%", height: "100vh" }} className="container map-container">
+    <div style={{ width: "100%", height: "100vh" }} className=" map-container">
       <AuthCourierComp />
       {show && (
         <PopupMap

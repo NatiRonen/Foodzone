@@ -28,7 +28,7 @@ function MapRouting(props) {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  const { socket } = useContext(AppContext);
+  const { socket, setOpenShipment } = useContext(AppContext);
 
   let openShipment = checkOpenShipmentLocal();
   let orderId = openShipment.orderId;
@@ -77,6 +77,7 @@ function MapRouting(props) {
       socket.emit("status-changed", orderData.order.short_id, DELIVERED_ORDER_STATUS);
       toast.success("order completed successfully");
       removeOpenShipmentLocal();
+      setOpenShipment(false);
       nav("../ordersHistory");
     }
   };
