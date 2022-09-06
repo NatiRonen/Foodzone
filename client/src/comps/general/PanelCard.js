@@ -86,11 +86,7 @@ export default function PanelCard({ type }) {
         className="text-decoration-none"
         onClick={() => dispatch(logout())}
       >
-        <Card
-          sx={{ maxWidth: 345, minHeight: 400 }}
-          className="shadow"
-          onClick={() => nav(data.url)}
-        >
+        <Card sx={{ maxWidth: 345, minHeight: 400 }} className="shadow">
           <CardActionArea>
             <CardMedia component="img" height="140" image={data.img} alt={data.titel} />
 

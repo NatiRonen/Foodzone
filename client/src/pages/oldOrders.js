@@ -13,7 +13,7 @@ function OldOrders(props) {
   const [allTotal, setAllTotal] = useState(0);
   const [show, setShow] = useState(false);
   const [orderInfo, setOrderInfo] = useState(null);
-
+  const [timer, setTimer] = useState(10);
   const { socket } = useContext(AppContext);
 
   const handleToggle = () => setShow(!show);
@@ -42,13 +42,14 @@ function OldOrders(props) {
     }
   };
 
-  socket.off("status-changed").on("status-changed", () => {
+  socket.off("status-changed").on("status-changed", (newStatus, durationInSec) => {
+    setTimer(durationInSec);
     doApi();
   });
 
   return (
     <>
-      <OrderInfo handleToggle={handleToggle} show={show} item={orderInfo} />;
+      <OrderInfo handleToggle={handleToggle} show={show} item={orderInfo} timer={timer} />;
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

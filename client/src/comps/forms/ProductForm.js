@@ -58,7 +58,7 @@ function ProductForm({ item, doApi, isLoading }) {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3 ">
+        <Form.Group className="mb-3 " controlId="exampleForm.ControlTextarea1">
           <Form.Label>Info</Form.Label>
           <Form.Control
             type="text"
@@ -105,6 +105,8 @@ function ProductForm({ item, doApi, isLoading }) {
             onChange={(e) => setPrice(e.target.value)}
             value={price}
             required
+            as="textarea"
+            rows={3}
           ></Form.Control>
         </Form.Group>
 

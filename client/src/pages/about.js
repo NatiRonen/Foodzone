@@ -3,10 +3,6 @@ import { motion } from "framer-motion";
 import Developers from "../comps/general/developers";
 import "./css/about.css";
 import PanelCard from "../comps/general/PanelCard";
-import { Row, Col } from "react-bootstrap";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 
 function About(props) {
@@ -62,22 +58,20 @@ function About(props) {
             Click on each card will direct you to the match interface with suitable user details
             prepared in advance for display purposes.
           </p>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} justifyContent="space-evenly">
-              <Grid item lg={3}>
-                <PanelCard type="client" />
-              </Grid>
-              <Grid item lg={3}>
-                <PanelCard type="courier" />
-              </Grid>
-              <Grid item lg={3}>
-                <PanelCard type="storeOwner" />
-              </Grid>
-              <Grid item lg={3}>
-                <PanelCard type="admin" />
-              </Grid>
+          <Grid container spacing={2} justifyContent="space-evenly">
+            <Grid item lg={3}>
+              <PanelCard type="client" />
             </Grid>
-          </Box>
+            <Grid item lg={3}>
+              <PanelCard type="courier" />
+            </Grid>
+            <Grid item lg={3}>
+              <PanelCard type="storeOwner" />
+            </Grid>
+            <Grid item lg={3}>
+              <PanelCard type="admin" />
+            </Grid>
+          </Grid>
 
           {/* <div className="row">
             <Developers devInfo={dev1Info} />

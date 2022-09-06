@@ -4,13 +4,14 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "../css/timer.css";
 
 function Timer(props) {
-  let time = props.time;
+  let time = 10;
 
   const formatRemainingTime = (_time) => {
+    const hours = Math.floor(_time / 3600);
     const minutes = Math.floor((_time % 3600) / 60);
     const seconds = _time % 60;
 
-    return `${minutes}:${seconds}`;
+    return `${hours}:${minutes}:${seconds}`;
   };
 
   const renderTime = ({ remainingTime }) => {
