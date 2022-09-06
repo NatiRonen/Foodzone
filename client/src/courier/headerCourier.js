@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { checkOpenShipmentLocal, checkTokenLocal } from "../services/localService";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 // react icons
 import { BiHomeAlt } from "react-icons/bi";
 import { GoListUnordered } from "react-icons/go";
@@ -19,7 +18,7 @@ function HeaderCourier(props) {
   const dispatch = useDispatch();
 
   return (
-    <Navbar key={"lg"} bg="light" expand={"lg"}>
+    <Navbar key={"lg"} bg="light" expand={"lg"} collapseOnSelect>
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
@@ -29,86 +28,76 @@ function HeaderCourier(props) {
             />
           </Navbar.Brand>
         </LinkContainer>
-        <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
-        <Navbar.Offcanvas
-          id={`offcanvasNavbar-expand-lg`}
-          aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-          placement="end"
-        >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
-          </Offcanvas.Header>
-
-          <Offcanvas.Body>
-            {user && (
-              <>
-                <Nav className="mx-auto">
-                  <Nav.Link as={Link} to="./" href="./">
-                    Home
-                    <BiHomeAlt className="ms-1" />
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          {user && (
+            <>
+              <Nav className="mx-auto">
+                <Nav.Link as={Link} to="./" href="./">
+                  Home
+                  <BiHomeAlt className="ms-1" />
+                </Nav.Link>
+                {!openShipment && (
+                  <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
+                    Take new order
+                    <FaMapMarkedAlt className="ms-1" />
                   </Nav.Link>
-                  {!openShipment && (
-                    <Nav.Link as={Link} to="./mapOrders" href="./mapOrders">
-                      Take new order
-                      <FaMapMarkedAlt className="ms-1" />
-                    </Nav.Link>
-                  )}
-                  {openShipment && (
-                    <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
-                      Open shipment
-                      <MdOutlineDeliveryDining className="ms-1" />
-                    </Nav.Link>
-                  )}
-                  <Nav.Link as={Link} to="./ordersHistory" href="./ordersHistory">
-                    Orders history
-                    <GoListUnordered className="ms-1" />
+                )}
+                {openShipment && (
+                  <Nav.Link as={Link} to="./takeDelivery" href="./takeDelivery">
+                    Open shipment
+                    <MdOutlineDeliveryDining className="ms-1" />
                   </Nav.Link>
-                </Nav>
-                <Nav>
-                  {!user && (
-                    <LinkContainer to="/login">
-                      <Nav.Link>Login</Nav.Link>
-                    </LinkContainer>
-                  )}
-                  {user && (
-                    <NavDropdown
-                      title={
-                        <>
-                          <img
-                            src={user.picture}
-                            style={{
-                              width: 30,
-                              height: 30,
-                              marginRadius: 10,
-                              objectFit: "cover",
-                              borderRadius: "50%",
-                              marginRight: "8px",
-                            }}
-                          />
-                          {user.name}
-                        </>
-                      }
-                      id="basic-nav-dropdown"
-                    >
-                      <NavDropdown.Item>
-                        <LinkContainer
-                          to="/courier/login"
-                          onClick={(e) => dispatch(logout())}
-                          className="text-danger"
-                        >
-                          <Nav.Link>
-                            Logout
-                            <FiLogOut className="ms-1" />
-                          </Nav.Link>
-                        </LinkContainer>
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  )}
-                </Nav>
-              </>
-            )}
-          </Offcanvas.Body>
-        </Navbar.Offcanvas>
+                )}
+                <Nav.Link as={Link} to="./ordersHistory" href="./ordersHistory">
+                  Orders history
+                  <GoListUnordered className="ms-1" />
+                </Nav.Link>
+              </Nav>
+              <Nav>
+                {!user && (
+                  <LinkContainer to="/login">
+                    <Nav.Link>Login</Nav.Link>
+                  </LinkContainer>
+                )}
+                {user && (
+                  <NavDropdown
+                    title={
+                      <>
+                        <img
+                          src={user.picture}
+                          style={{
+                            width: 30,
+                            height: 30,
+                            marginRadius: 10,
+                            objectFit: "cover",
+                            borderRadius: "50%",
+                            marginRight: "8px",
+                          }}
+                        />
+                        {user.name}
+                      </>
+                    }
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item>
+                      <LinkContainer
+                        to="/courier/login"
+                        onClick={(e) => dispatch(logout())}
+                        className="text-danger"
+                      >
+                        <Nav.Link>
+                          Logout
+                          <FiLogOut className="ms-1" />
+                        </Nav.Link>
+                      </LinkContainer>
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                )}
+              </Nav>
+            </>
+          )}
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

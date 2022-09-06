@@ -34,102 +34,97 @@ function Navigation() {
               />
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-md`} />
-          <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand-lg`}
-            aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-            placement="end"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>ShipMarket</Offcanvas.Title>
-            </Offcanvas.Header>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav className="mx-auto  text-muted">
+              <Nav.Link as={Link} to="/" href="/">
+                Home
+                <BiHomeAlt className="ms-1" />
+              </Nav.Link>
+              <Nav.Link as={Link} to="/about" href="/about">
+                About
+                <BsInfoCircle className="ms-1" />
+              </Nav.Link>
+              <Nav.Link as={Link} to="/stores" href="/stores">
+                Stores
+                <IoStorefrontOutline className="ms-1" />
+              </Nav.Link>
+            </Nav>
 
-            <Offcanvas.Body>
-              <Nav className="mx-auto  text-muted">
-                <Nav.Link as={Link} to="/" href="/">
-                  Home
-                  <BiHomeAlt className="ms-1" />
-                </Nav.Link>
-                <Nav.Link as={Link} to="/about" href="/about">
-                  About
-                  <BsInfoCircle className="ms-1" />
-                </Nav.Link>
-                <Nav.Link as={Link} to="/stores" href="/stores">
-                  Stores
-                  <IoStorefrontOutline className="ms-1" />
-                </Nav.Link>
-              </Nav>
-
-              <Nav>
-                {!user && (
-                  <LinkContainer to="/login" className="text-primary">
-                    <Nav.Link>
-                      Login
-                      <FiLogIn className="ms-1" />
-                    </Nav.Link>
-                  </LinkContainer>
-                )}
-                {user && (
-                  <NavDropdown
-                    title={
-                      <>
-                        <img
-                          src={user.picture}
-                          style={{
-                            width: 30,
-                            height: 30,
-                            marginRadius: 10,
-                            objectFit: "cover",
-                            borderRadius: "50%",
-                            marginRight: "8px",
-                          }}
-                        />
-                        {user.name}
-                      </>
-                    }
-                    id="basic-nav-dropdown"
-                  >
-                    {favs.length > 0 && (
-                      <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
-                        Favorites
-                        <AiOutlineStar className="ms-1" />
+            <Nav>
+              {!user && (
+                <LinkContainer to="/login" className="text-primary">
+                  <Nav.Link>
+                    Login
+                    <FiLogIn className="ms-1" />
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+              {user && (
+                <NavDropdown
+                  title={
+                    <>
+                      <img
+                        src={user.picture}
+                        style={{
+                          width: 30,
+                          height: 30,
+                          marginRadius: 10,
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                          marginRight: "8px",
+                        }}
+                      />
+                      {user.name}
+                    </>
+                  }
+                  id="basic-nav-dropdown"
+                >
+                  {favs.length > 0 && (
+                    <NavDropdown.Item as={Link} to="/favorites" href="/favorites">
+                      Favorites
+                      <AiOutlineStar className="ms-1" />
+                    </NavDropdown.Item>
+                  )}
+                  <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
+                    Orders
+                    <BiTime className="ms-1" />
+                  </NavDropdown.Item>
+                  {cart_ar.length > 0 && (
+                    <>
+                      <NavDropdown.Item
+                        as={Link}
+                        to="#"
+                        href="#"
+                        onClick={() => dispatch(toggleCart())}
+                      >
+                        Cart
+                        <HiOutlineShoppingCart className="ms-1" />
                       </NavDropdown.Item>
-                    )}
-                    <NavDropdown.Item as={Link} to="/oldOrders" href="/oldOrders">
-                      Orders
-                      <BiTime className="ms-1" />
-                    </NavDropdown.Item>
-                    {cart_ar.length > 0 && (
-                      <>
-                        <NavDropdown.Item onClick={() => dispatch(toggleCart())}>
-                          Cart
-                          <HiOutlineShoppingCart className="ms-1" />
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
-                          Checkout
-                          <BsCartCheck className="ms-1" />
-                        </NavDropdown.Item>
-                      </>
-                    )}
-                    <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
-                      Account
-                      <BiUserCircle className="ms-1" />
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
+                      <NavDropdown.Item as={Link} to="/checkout" href="/checkout">
+                        Checkout
+                        <BsCartCheck className="ms-1" />
+                      </NavDropdown.Item>
+                    </>
+                  )}
+                  <NavDropdown.Item as={Link} to="/uptateAccount" href="/uptateAccount">
+                    Account
+                    <BiUserCircle className="ms-1" />
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
 
-                    <NavDropdown.Item>
-                      <LinkContainer to="/logout" className="text-danger">
-                        <Nav.Link>
-                          Logout
-                          <FiLogOut className="ms-1" />
-                        </Nav.Link>
-                      </LinkContainer>
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                )}
-              </Nav>
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
+                  <NavDropdown.Item>
+                    <LinkContainer to="/logout" className="text-danger">
+                      <Nav.Link>
+                        Logout
+                        <FiLogOut className="ms-1" />
+                      </Nav.Link>
+                    </LinkContainer>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>
