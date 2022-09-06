@@ -16,8 +16,8 @@ function Home(props) {
     try {
       let url = API_URL + "/stores?perPage=6&status=active";
       let resp = await doApiGet(url);
-      if (resp.data) {
-        console.log(resp.data);
+      if (Array.isArray(resp.data)) {
+        console.log(resp.data.length > 0);
         setShops_ar(resp.data);
       }
     } catch (error) {

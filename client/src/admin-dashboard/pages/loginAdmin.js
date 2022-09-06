@@ -5,7 +5,7 @@ import { Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { motion } from "framer-motion";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { encrypt } from "../../utils/encryption";
 import ResetPass from "../../comps/general/resetPass";
 import "../style/adminLogin.css";
@@ -17,6 +17,14 @@ function LoginAdmin(props) {
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
   const [show, setShow] = useState(false);
   const nav = useNavigate();
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state?.user) {
+      setEmail(state.user.email);
+      setPassword(state.user.password);
+    }
+  }, [state]);
 
   const handleToggle = () => setShow(!show);
 
@@ -39,7 +47,7 @@ function LoginAdmin(props) {
 
   useEffect(() => {
     if (localStorage["tok"]) {
-      nav("./home");
+      nav("./");
     }
   }, []);
 

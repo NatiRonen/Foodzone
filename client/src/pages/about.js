@@ -2,6 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import Developers from "../comps/general/developers";
 import "./css/about.css";
+import PanelCard from "../comps/general/PanelCard";
+import { Row, Col } from "react-bootstrap";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 function About(props) {
   let dev1Info = {
@@ -22,7 +28,7 @@ function About(props) {
     name: "Nati Ronen",
     job: "FullStack Developer",
     info: "Full Stack developer, gradutated practical course at Ort Singalovski. Autodidact and passionate about web development.",
-    img: "https://media-exp1.licdn.com/dms/image/D4D35AQFWJwQStA0bZA/profile-framedphoto-shrink_200_200/0/1655922199384?e=1662300000&v=beta&t=TPiNFjVgejlml_yyBqAghFxRBI1J5QuQyt76IIhBfVE",
+    img: "https://avatars.githubusercontent.com/u/91008729?v=4",
     Facebook: "",
     Twitter: "",
     Instagram: "",
@@ -43,21 +49,40 @@ function About(props) {
               transition={{ delay: 0.5, duration: 0.7 }}
               className="col-md-7 text-center"
             >
-              <h3 className="mb-3">Experienced & Professional Team</h3>
-              <h6 className="subtitle">
-                A food delivery platform for creating stores, ordering food and
-                managing deliveries. The client side consist of 4 panels:
-                customers, store owners, couriers and admin, and authentications
-                for each panel. System sets orders and route to the client
-                address through the store. Technologies: client side: react |
-                redux server side: node.js |express | jwt | soket.io DB: MongoDB
-              </h6>
+              <h3 className="mb-3">ShipMarket project</h3>
+              <p className="subtitle fs-6">
+                A food delivery platform for creating stores, ordering food and managing deliveries.
+                The client side consist of 4 interfaces: clients, store owners, couriers and back
+                office, with authentications for each. The System sets orders and route to the
+                client address through the store.
+              </p>
             </motion.div>
           </div>
-          <div className="row">
+          <p className="text-center text-muted mb-3">
+            Click on each card will direct you to the match interface with suitable user details
+            prepared in advance for display purposes.
+          </p>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2} justifyContent="space-evenly">
+              <Grid item lg={3}>
+                <PanelCard type="client" />
+              </Grid>
+              <Grid item lg={3}>
+                <PanelCard type="courier" />
+              </Grid>
+              <Grid item lg={3}>
+                <PanelCard type="storeOwner" />
+              </Grid>
+              <Grid item lg={3}>
+                <PanelCard type="admin" />
+              </Grid>
+            </Grid>
+          </Box>
+
+          {/* <div className="row">
             <Developers devInfo={dev1Info} />
             <Developers devInfo={dev2Info} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

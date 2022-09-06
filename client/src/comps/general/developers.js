@@ -25,6 +25,7 @@ function Developers(props) {
             src={devInfo.img}
             alt="wrapkit"
             className="img-fluid rounded-circle mx-auto d-block"
+            // size="100px"
           />
         </div>
         <div className="text-center">
@@ -37,10 +38,7 @@ function Developers(props) {
                 " "
               ) : (
                 <li className="list-inline-item about_icons">
-                  <a
-                    href={devInfo.Facebook}
-                    className="text-decoration-none d-block px-1"
-                  >
+                  <a href={devInfo.Facebook} className="text-decoration-none d-block px-1">
                     <BsFacebook />
                   </a>
                 </li>
