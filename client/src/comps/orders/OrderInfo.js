@@ -5,7 +5,6 @@ import { Modal } from "react-bootstrap";
 import LottieAnimation from "../misc/lottieAnimation";
 import { Row, Col } from "react-bootstrap";
 import { getTimeAndDateFormat } from "../../utils/dateRormated";
-import Timer from "../misc/timer";
 
 function OrderInfo({ show, handleToggle, item, timer }) {
   const [loading, setLoading] = useState(false);
@@ -43,7 +42,6 @@ function OrderInfo({ show, handleToggle, item, timer }) {
           <LottieAnimation />
         ) : (
           <section className="shopping-cart">
-            <Timer time={timer} />
             <div className="container">
               <div className="content">
                 <div className="row">

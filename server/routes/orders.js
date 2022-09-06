@@ -52,7 +52,7 @@ router.get("/userOrder", auth, async (req, res) => {
 });
 
 router.get("/allOrders", auth, async (req, res) => {
-  let perPage = req.query.perPage || 10;
+  let perPage = req.query.perPage || 100;
   let page = req.query.page >= 1 ? req.query.page - 1 : 0;
   let sort = req.query.sort || "date_created";
   let reverse = req.query.reverse == "no" ? 1 : -1;

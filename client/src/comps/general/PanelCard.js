@@ -13,7 +13,6 @@ import { logout } from "../../redux/userSlice";
 
 export default function PanelCard({ type }) {
   const dispatch = useDispatch();
-  const nav = useNavigate();
   const CLIENT = {
     email: "client@gmail.com",
     password: "2468",
@@ -86,7 +85,7 @@ export default function PanelCard({ type }) {
         className="text-decoration-none"
         onClick={() => dispatch(logout())}
       >
-        <Card sx={{ maxWidth: 345, minHeight: 400 }} className="shadow">
+        <Card sx={{ maxWidth: 345, minHeight: 400, borderRadius: "16px" }} className="shadow">
           <CardActionArea>
             <CardMedia component="img" height="140" image={data.img} alt={data.titel} />
 

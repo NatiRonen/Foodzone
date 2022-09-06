@@ -16,8 +16,7 @@ function PopupItem(props) {
   // let currentPosition = { lat: 31.9461538, lng: 34.881139 };
   const nav = useNavigate();
   const [routeDetails, setRouteDetails] = useState({});
-  const [durationInSec, SetDuratoinInSec] = useState({});
-  const { socket } = useContext(AppContext);
+  const { socket, setOpenShipment } = useContext(AppContext);
 
   useEffect(() => {
     setRoute();
@@ -25,12 +24,7 @@ function PopupItem(props) {
 
   const setRoute = async () => {
     let currAddress = await getCurrentAddress(currentPosition);
-    const { routeDetails, durationInSec } = await calculateRoute(
-      currAddress,
-      storeAddress,
-      order.destination
-    );
-    SetDuratoinInSec(durationInSec);
+    const { routeDetails } = await calculateRoute(currAddress, storeAddress, order.destination);
     setRouteDetails(routeDetails);
   };
 
@@ -38,14 +32,10 @@ function PopupItem(props) {
     let url = API_URL + "/orders/" + order._id + "?status=" + ON_THE_WAY_ORDER_STATUS;
     let resp = await doApiMethod(url, "PATCH", {});
     if (resp.data.modifiedCount === 1) {
-      socket.emit(
-        "status-changed",
-        order.short_id,
-        ON_THE_WAY_ORDER_STATUS,
-        routeDetails.duration,
-        durationInSec
-      );
+      socket.off("status-changed-msg", order.short_id);
+      socket.emit("status-changed", order.short_id, ON_THE_WAY_ORDER_STATUS, routeDetails.duration);
       saveOpenShipmentLocal({ currentPosition, orderId: order._id });
+      setOpenShipment(true);
       nav("../takeDelivery");
     }
   };

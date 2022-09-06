@@ -31,8 +31,7 @@ export const calculateRoute = async (_origin, _stopPoint, _destination) => {
   let totalDuration =
     results.routes[0].legs[0].duration.value + results.routes[0].legs[1].duration.value;
   let routeDetails = handleRouteDetails(totalDistance, totalDuration);
-  console.log(totalDuration);
-  return { results, routeDetails, durationInSec: totalDuration };
+  return { results, routeDetails };
 };
 
 export const handleRouteDetails = (_distance, _duration) => {

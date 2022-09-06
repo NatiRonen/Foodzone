@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { BiHomeAlt, BiCategory } from "react-icons/bi";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { BiStore } from "react-icons/bi";
 import { HiTemplate, HiOutlineClipboardList } from "react-icons/hi";
 import { logout } from "../redux/userSlice";
 
@@ -94,6 +95,10 @@ function HeaderStore(props) {
                   }
                   id="basic-nav-dropdown"
                 >
+                  <NavDropdown.Item as={Link} to="/myStores" href="/myStores">
+                    My stores
+                    <BiStore className="ms-1" />
+                  </NavDropdown.Item>
                   <NavDropdown.Item>
                     <LinkContainer
                       to="./login"

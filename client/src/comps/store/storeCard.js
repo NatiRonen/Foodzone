@@ -21,7 +21,7 @@ function StoreCard({ item }) {
 
   return (
     <Link to={"/store/" + item.short_id} className="text-decoration-none">
-      <Card sx={{ minHeight: 400, borderRadius: "16px", boxShadow: 3 }} className="shadow">
+      <Card sx={{ minHeight: 350, borderRadius: "16px", boxShadow: 3 }} className="shadow">
         <CardActionArea>
           <CardMedia
             component="img"

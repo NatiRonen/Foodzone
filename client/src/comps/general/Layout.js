@@ -22,8 +22,12 @@ function Layout() {
       socket.emit("join-room-orders", order.short_id);
     });
   };
-  socket.off("status-changed-msg").on("status-changed-msg", (_room, _status) => {
-    toast.info(`Order ${_room} is ${_status.replaceAll("_", " ")}`);
+  socket.off("status-changed-msg").on("status-changed-msg", (_room, _status, _duration) => {
+    let msg = `Order ${_room} is ${_status.replaceAll("_", " ")}`;
+    if (_duration) {
+      msg = msg + ". Estimated delivery time:" + _duration;
+    }
+    toast.info(msg);
   });
   return (
     <div className="page-container">

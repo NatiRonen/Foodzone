@@ -75,7 +75,7 @@ function PopupMap(props) {
           })}
         </ListGroup>
         <hr className="mt-0" />
-        <div className="small">{item.orders.length} opened orders</div>
+        <div className="small">{item.orders.length} open orders</div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleToggle}>

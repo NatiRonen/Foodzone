@@ -46,7 +46,7 @@ function OpenOrders(props) {
     <div className="container-fluid bg_color" style={{ minHeight: "91vh" }}>
       <AuthStoreAdminComp />
       <section className="container p-4">
-        <h1 className="orders_titel">Opened orders</h1>
+        <h1 className="orders_titel">Open orders</h1>
         {orders.length === 0 && (
           <div style={{ height: " 90.7vh" }} className="container">
             <h2 className="display-3 text-center mt-5">No Orders</h2>

@@ -42,8 +42,8 @@ function OldOrders(props) {
     }
   };
 
-  socket.off("status-changed").on("status-changed", (newStatus, durationInSec) => {
-    setTimer(durationInSec);
+  socket.off("status-changed").on("status-changed", (newStatus, duration) => {
+    console.log(duration);
     doApi();
   });
 
