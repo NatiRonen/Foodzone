@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     res.status(500).json(error);
   }
 });
-router.get("/storeInfo/:short_id", authAdmin, async (req, res) => {
+router.get("/storeInfo/:short_id", auth, async (req, res) => {
   try {
     let data = await StoreModel.findOne({ short_id: req.params.short_id });
     console.log(data);

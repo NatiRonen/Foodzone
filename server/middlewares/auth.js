@@ -56,25 +56,21 @@ exports.authStoreAdmin = async (req, res, next) => {
         _id: storeId,
         admin_short_id: user.short_id,
       });
-      if (store || req.tokenData.role === ROLES.ADMIN) {
+      if (store) {
         next();
       } else {
         return res.status(401).json({ err: "Access denied" });
       }
     }
   } catch (err) {
-    return res
-      .status(401)
-      .json({ err: "Token invalid (if you hacker) or expired" });
+    return res.status(401).json({ err: "Token invalid (if you hacker) or expired" });
   }
 };
 
 exports.authCourier = (req, res, next) => {
   let token = req.header("x-api-key");
   if (!token) {
-    return res
-      .status(401)
-      .json({ err: "You must send token in header to this endpoint" });
+    return res.status(401).json({ err: "You must send token in header to this endpoint" });
   }
   try {
     let decodeToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -84,14 +80,10 @@ exports.authCourier = (req, res, next) => {
       req.tokenData = decodeToken;
       next();
     } else {
-      return res
-        .status(401)
-        .json({ err: "You must be courier in this endpoint" });
+      return res.status(401).json({ err: "You must be courier in this endpoint" });
     }
   } catch (err) {
-    return res
-      .status(401)
-      .json({ err: "Token invalid (if you hacker) or expired" });
+    return res.status(401).json({ err: "Token invalid (if you hacker) or expired" });
   }
 };
 

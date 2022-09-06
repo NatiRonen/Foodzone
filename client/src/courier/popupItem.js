@@ -32,7 +32,7 @@ function PopupItem(props) {
     let url = API_URL + "/orders/" + order._id + "?status=" + ON_THE_WAY_ORDER_STATUS;
     let resp = await doApiMethod(url, "PATCH", {});
     if (resp.data.modifiedCount === 1) {
-      socket.emit("status-changed", order.short_id, ON_THE_WAY_ORDER_STATUS);
+      socket.emit("status-changed", order.short_id, ON_THE_WAY_ORDER_STATUS, routeDetails.duration);
       saveOpenShipmentLocal({ currentPosition, orderId: order._id });
       nav("../takeDelivery");
     }

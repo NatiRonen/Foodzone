@@ -20,7 +20,7 @@ function EditProductAdminStore(props) {
 
   const doApi = async () => {
     setIsLoading(true);
-    let urlProduct = API_URL + "/products/single/" + params.id;
+    let urlProduct = API_URL + "/products/single/" + params.prodId;
     try {
       let resp2 = await doApiGet(urlProduct);
       setProduct(resp2.data);
@@ -62,7 +62,7 @@ function EditProductAdminStore(props) {
             md={5}
             className="d-flex py-5 shadow flex-direction-column align-items-center justify-content-center"
           >
-            <ProductForm item={product} doApi={doFormApi} isLoading={isLoading} />
+            {product && <ProductForm item={product} doApi={doFormApi} isLoading={isLoading} />}
           </Col>
           <Col
             md={6}
