@@ -32,7 +32,7 @@ export const userColumns = [
     width: 160,
     renderCell: (params) => {
       return (
-        <div className={`cellWithStatus ${params.row}`}>{params.row.role}</div>
+        <div className={`cellWithStatus ${params.row}`}>{params.row.role.replaceAll("_", " ")}</div>
       );
     },
   },
@@ -63,11 +63,7 @@ export const storeColumns = [
     headerName: "Status",
     width: 160,
     renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row}`}>
-          {params.row.status}
-        </div>
-      );
+      return <div className={`cellWithStatus ${params.row}`}>{params.row.status}</div>;
     },
   },
 ];
@@ -92,11 +88,7 @@ export const productColumns = [
     headerName: "Category",
     width: 160,
     renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row}`}>
-          {params.row.category}
-        </div>
-      );
+      return <div className={`cellWithStatus ${params.row}`}>{params.row.category}</div>;
     },
   },
   {
@@ -104,9 +96,7 @@ export const productColumns = [
     headerName: "Price",
     width: 160,
     renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row}`}>{params.row.price}</div>
-      );
+      return <div className={`cellWithStatus ${params.row}`}>{params.row.price}</div>;
     },
   },
 ];
@@ -139,11 +129,7 @@ export const OrderColumns = [
     headerName: "Total Price",
     width: 160,
     renderCell: (params) => {
-      return (
-        <div className={`cellWithStatus ${params.row}`}>
-          {params.row.total_price}
-        </div>
-      );
+      return <div className={`cellWithStatus ${params.row}`}>{params.row.total_price}</div>;
     },
   },
   {

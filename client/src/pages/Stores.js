@@ -7,6 +7,7 @@ import Search from "../comps/general/search";
 import StoreCard from "../comps/store/storeCard";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import { motion } from "framer-motion";
+import Grid from "@mui/material/Grid";
 
 function AllStores(props) {
   const [shops_ar, setShops_ar] = useState([]);
@@ -51,11 +52,16 @@ function AllStores(props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.7 }}
-        className="row"
       >
-        {shopsSearched.map((item) => {
-          return <StoreCard key={item._id} item={item} />;
-        })}
+        <Grid container spacing={2} justifyContent="space-evenly">
+          {shopsSearched.map((item) => {
+            return (
+              <Grid item md={4} sm={6}>
+                <StoreCard key={item._id} item={item} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </motion.div>
       {loading ? <LottieAnimation /> : ""}
       {shops_ar.length === 0 && !loading && (

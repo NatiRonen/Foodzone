@@ -79,7 +79,7 @@ function StoreForm(props) {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-3 ">
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Info</Form.Label>
         <Form.Control
           type="text"
@@ -87,6 +87,8 @@ function StoreForm(props) {
           onChange={(e) => setInfo(e.target.value)}
           value={info}
           minLength={10}
+          as="textarea"
+          rows={3}
           required
         />
       </Form.Group>

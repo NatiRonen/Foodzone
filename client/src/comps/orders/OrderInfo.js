@@ -7,14 +7,10 @@ import { Row, Col } from "react-bootstrap";
 import { getTimeAndDateFormat } from "../../utils/dateRormated";
 import Timer from "../misc/timer";
 
-function OrderInfo(props) {
-  const show = props.show;
-  const handleToggle = props.handleToggle;
-  const item = props.item;
+function OrderInfo({ show, handleToggle, item, timer }) {
   const [loading, setLoading] = useState(false);
   const [productsAr, setProductsAr] = useState([]);
   const [orderInfo, setOrderInfo] = useState({});
-  const time = 10;
 
   useEffect(() => {
     setLoading(true);
@@ -40,16 +36,14 @@ function OrderInfo(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Order details
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Order details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {loading ? (
           <LottieAnimation />
         ) : (
           <section className="shopping-cart">
-            <Timer time={time} />
+            <Timer time={timer} />
             <div className="container">
               <div className="content">
                 <div className="row">
@@ -63,9 +57,7 @@ function OrderInfo(props) {
                             className="row justify-content-between align-items-center p-2"
                           >
                             <div className="col-1">
-                              <div className="mt-2 text-center fw-bold">
-                                {i + 1}
-                              </div>
+                              <div className="mt-2 text-center fw-bold">{i + 1}</div>
                             </div>
                             <div className="col-5 info">
                               <p className="fw-bold mb-3">{item.name}</p>
@@ -74,10 +66,7 @@ function OrderInfo(props) {
                             </div>
 
                             <div className="col-6">
-                              <img
-                                className="img-fluid mx-auto d-block"
-                                src={item.imgUrl}
-                              />
+                              <img className="img-fluid mx-auto d-block" src={item.imgUrl} />
                             </div>
                           </div>
                         );
@@ -108,15 +97,12 @@ function OrderInfo(props) {
                         </div>
                         <div className="summary-item">
                           <span className="text">Status</span>
-                          <span className="price">
-                            {orderInfo.status?.replaceAll("_", " ")}
-                          </span>
+                          <span className="price">{orderInfo.status?.replaceAll("_", " ")}</span>
                         </div>
                         <div className="summary-item">
                           <span className="text">Date</span>
                           <span className="price">
-                            {orderInfo.date_created &&
-                              getTimeAndDateFormat(orderInfo.date_created)}
+                            {orderInfo.date_created && getTimeAndDateFormat(orderInfo.date_created)}
                           </span>
                         </div>
                         <div className="summary-item">
@@ -125,9 +111,7 @@ function OrderInfo(props) {
                         </div>
                         <div className="summary-item">
                           <span className="text">Total price</span>
-                          <span className="price">
-                            ₪ {orderInfo.total_price}
-                          </span>
+                          <span className="price">₪ {orderInfo.total_price}</span>
                         </div>
                       </React.Fragment>
                     </div>

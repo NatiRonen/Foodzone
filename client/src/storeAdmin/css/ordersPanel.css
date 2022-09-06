@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald');
-
 .bg_color {
     background: #dadde6;
     font-family: arial;
@@ -71,9 +70,6 @@
 
 .card-cont {
     display: table-cell;
-    /* font-size: 75%; */
-    font-size: 1.4em;
-    padding: 10px 10px 30px 50px;
 }
 
 .order_card .badge {
@@ -81,6 +77,7 @@
     font-size: 1.3em;
     margin: 12px;
 }
+
 .card-cont h3 {
     color: #3C3C3C;
     font-size: 130%;
@@ -89,7 +86,7 @@
 .prod_img {
     height: 50px;
     width: 60px;
-    border-radius:50px;
+    border-radius: 50px;
 }
 
 @media screen and (max-width: 1150px) {

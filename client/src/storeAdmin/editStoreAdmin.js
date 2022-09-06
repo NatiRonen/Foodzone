@@ -45,7 +45,7 @@ function EditStoreAdmin(props) {
     } catch (err) {
       console.log(err.response);
       alert("There problem try again later");
-      nav("/storeAdmin");
+      nav("/storeAdmin/" + params.id);
     }
   };
 

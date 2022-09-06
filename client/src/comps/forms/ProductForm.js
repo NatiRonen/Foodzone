@@ -4,11 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import ImagesSearch from "../misc/imagesSearch";
 
-function ProductForm(props) {
-  const item = props?.item;
-  const doApi = props.doApi;
-  const isLoading = props.isLoading;
-
+function ProductForm({ item, doApi, isLoading }) {
   const [name, setName] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [info, setInfo] = useState("");
@@ -62,11 +58,11 @@ function ProductForm(props) {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3 ">
+        <Form.Group className="mb-3 " controlId="exampleForm.ControlTextarea1">
           <Form.Label>Info</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Phone nuber"
+            placeholder="Enter product description"
             onChange={(e) => setInfo(e.target.value)}
             value={info}
             minLength={10}
@@ -109,6 +105,8 @@ function ProductForm(props) {
             onChange={(e) => setPrice(e.target.value)}
             value={price}
             required
+            as="textarea"
+            rows={3}
           ></Form.Control>
         </Form.Group>
 

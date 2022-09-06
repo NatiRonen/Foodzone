@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { motion } from "framer-motion";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useLoginUserMutation } from "../redux/appApi";
 import "./css/Login.css";
@@ -16,6 +16,15 @@ function Login() {
   const [loginUser, { isLoading, error }] = useLoginUserMutation();
   const [show, setShow] = useState(false);
   const nav = useNavigate();
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state?.user) {
+      setEmail(state.user.email);
+      setPassword(state.user.password);
+      console.log(state.user.password, state.user.email);
+    }
+  }, [state]);
 
   const handleToggle = () => setShow(!show);
 
@@ -24,7 +33,6 @@ function Login() {
     let encryptPass = encrypt(password);
     let resp = await loginUser({ email, password: encryptPass });
     if (resp.data) {
-      toast.success("You are now logged in ");
       nav("/");
     } else {
       console.log(error);
