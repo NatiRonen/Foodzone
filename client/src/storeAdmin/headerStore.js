@@ -37,7 +37,7 @@ function HeaderStore(props) {
               <BiHomeAlt className="ms-1" />
             </Nav.Link>
             <Nav.Link as={Link} to="./openOrders" href="./openOrders">
-              Opened orders
+              Open orders
               <HiOutlineClipboardList className="ms-1" />
             </Nav.Link>
             <Nav.Link as={Link} to="./categories" href="./categories">
