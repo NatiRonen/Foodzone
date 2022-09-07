@@ -61,7 +61,7 @@ function LoginStore(props) {
       >
         <ResetPass handleToggle={handleToggle} show={show} />
         <Form onSubmit={handleLogin}>
-          <h2 className="text-center">Admin Login</h2>
+          <h2 className="text-center">Store Login</h2>
           <div className="illustration">
             <BiStore />
           </div>

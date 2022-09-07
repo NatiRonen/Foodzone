@@ -54,7 +54,7 @@ function About(props) {
               </p>
             </motion.div>
           </div>
-          <p className="text-center text-muted mb-3">
+          <p className="text-center text-muted mb-5">
             Click on each card will direct you to the match interface with suitable user details
             prepared in advance for display purposes.
           </p>

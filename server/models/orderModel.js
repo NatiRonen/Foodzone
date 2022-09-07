@@ -14,7 +14,7 @@ const orderSchema = new mongoose.Schema({
   total_price: Number,
   date_created: {
     type: Date,
-    default: new Date(),
+    default: Date.now(),
   },
   short_id: String,
   store_short_id: {

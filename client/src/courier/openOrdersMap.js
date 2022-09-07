@@ -7,6 +7,8 @@ import "./css_courier/courier.css";
 import LottieAnimation from "../comps/misc/lottieAnimation";
 import { AppContext } from "../context/appContext";
 import AuthCourierComp from "../comps/auth/authCourierComp";
+import { toast } from "react-toastify";
+import { READY_FOR_SHIPMENT_ORDER_STATUS } from "../services/consts";
 
 const STORE_ICON =
   "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parcel_package_box_delivery-64.png";
@@ -53,6 +55,7 @@ function OpenOrdersMap(props) {
         item.store.coordinates = await getGeoCodings(item.store.address);
         item.orders.forEach((order) => {
           socket.emit("join-room-orders", order.short_id);
+          socket.off("status-changed-msg");
         });
       }
       console.log(storesOrdersArray);
@@ -67,6 +70,12 @@ function OpenOrdersMap(props) {
     let resp = await doApiGet(url);
     resp.data.forEach((store) => {
       socket.emit("join-room-orders", store.short_id);
+      socket.off("status-changed-msg").on("status-changed-msg", (_room, _status) => {
+        if (_status === READY_FOR_SHIPMENT_ORDER_STATUS) {
+          let msg = `Order ${_room} is ${_status.replaceAll("_", " ")}`;
+          toast.info(msg);
+        }
+      });
     });
   };
   socket.off("status-changed").on("status-changed", () => {

@@ -127,6 +127,7 @@ function SideBarAdmin() {
                 setOpen(false);
                 handelAddRmoveRoom(newForum);
                 setNewForum("");
+                getRooms();
               }}
             />
             <input

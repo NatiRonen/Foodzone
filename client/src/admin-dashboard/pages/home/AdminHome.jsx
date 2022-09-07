@@ -18,6 +18,7 @@ const AdminHome = () => {
   const [salesToday, setSalesToday] = useState("");
   const [orderAmount, setOrderAmount] = useState();
   const [totalSales, settotalSales] = useState();
+  const [lastTenOrders, setLastTenOrders] = useState();
   useEffect(() => {
     main();
   }, []);
@@ -25,6 +26,8 @@ const AdminHome = () => {
   const main = async () => {
     let allOrders = await getAllOrders();
     setAllOrders(allOrders);
+    let lastTen = allOrders.slice(-10);
+    setLastTenOrders(lastTen);
     setOrderAmount(allOrders.length);
     let sum = sumTotalSalse(allOrders);
     settotalSales(sum);
@@ -100,7 +103,7 @@ const AdminHome = () => {
           </div>
           <div className="listContainer">
             <div className="listTitle">Latest Transactions</div>
-            <ListOrdersUser ar={allOrders} />
+            <ListOrdersUser ar={lastTenOrders} />
           </div>
         </div>
       </div>

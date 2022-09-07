@@ -5,6 +5,8 @@ import { AppContext } from "../context/appContext";
 import { API_URL, doApiMethod } from "../services/apiService";
 import { getTimeAndDateFormat } from "../utils/dateRormated";
 import ListGroup from "react-bootstrap/ListGroup";
+import { toast } from "react-toastify";
+import { ON_THE_WAY_ORDER_STATUS, READY_FOR_SHIPMENT_ORDER_STATUS } from "../services/consts";
 
 function Ticket(props) {
   const item = props.item;
@@ -15,7 +17,12 @@ function Ticket(props) {
 
   useEffect(() => {
     socket.emit("join-room-orders", item.short_id);
-    socket.off("status-changed-msg");
+    socket.off("status-changed-msg").on("status-changed-msg", (_room, _status) => {
+      if (_status === ON_THE_WAY_ORDER_STATUS) {
+        let msg = `Order ${_room} is ${_status.replaceAll("_", " ")}`;
+        toast.info(msg);
+      }
+    });
   }, []);
 
   socket.off("status-changed").on("status-changed", () => {
