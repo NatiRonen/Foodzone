@@ -18,7 +18,7 @@ const AdminHome = () => {
   const [salesToday, setSalesToday] = useState("");
   const [orderAmount, setOrderAmount] = useState();
   const [totalSales, settotalSales] = useState();
-  const [lastTenOrders, setLastTenOrders] = useState();
+  const [lastTenOrders, setLastTenOrders] = useState([]);
   useEffect(() => {
     main();
   }, []);
